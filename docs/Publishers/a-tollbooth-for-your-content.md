@@ -1,15 +1,16 @@
 ---
-title: A Tollbooth for your Content
-excerpt: >-
-  TollBit allows you to quickly set up a paid API in front of your website in as
-  little as 15 minutes with no coding. This effectively puts your data behind a
-  paywall, and allows you to immediately start charging bots for on demand
-  access.
+title: Introduction
+excerpt: Learn how to set up TollBit to monitize your data.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
+# A Tollbooth for your Content
+
+TollBit allows you to quickly set up a paid API in front of your website in as little as 15 minutes with no coding.
+This effectively puts your data behind a paywall, and allows you to immediately start charging bots for on demand access.
+
 ## Overview
 
 To onboard onto TollBit, you will go through the following steps.
