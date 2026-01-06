@@ -3,7 +3,7 @@ title: Getting Started with TollBit
 excerpt: >-
   This page will help you get started with TollBit. You'll be up and running in
   a jiffy!
-hidden: false
+hidden: true
 ---
 # Welcome to ReadMe
 
