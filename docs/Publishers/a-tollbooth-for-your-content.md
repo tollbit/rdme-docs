@@ -1,0 +1,35 @@
+---
+title: A Tollbooth for your Content
+excerpt: >-
+  TollBit allows you to quickly set up a paid API in front of your website in as
+  little as 15 minutes with no coding. This effectively puts your data behind a
+  paywall, and allows you to immediately start charging bots for on demand
+  access.
+deprecated: false
+hidden: false
+metadata:
+  robots: index
+---
+## Overview
+
+To onboard onto TollBit, you will go through the following steps.
+
+1. Create an account on our platform. Go to [our dashboard](https://app.tollbit.com) to set up an account for your organization.
+1. [Invite other users](/publisher-org#invite-members) to your newly created org. You will likely need to invite
+IT, legal and finance users to your org to complete onboarding, review terms, and set up your payout method.
+1. [Add and verify your properties](/set-up-property). Invite your IT team to do some lightweight configuration in
+your DNS settings to fully verify your properties.
+1. [Set up your integration](/publisher-logging). We support the most popular CDNs and can quickly get you valuable
+insight into your bot traffic and setting up your paywall for monetization. 
+1. View analytics (docs coming soon). Review your bot analytics insights including referral metrics, traffic status, and bot activity by user agent.
+1. [Onboard to the marketplace](/publisher-marketplace). Set a price on your content, along with any license agreements and content filtering.
+
+## Getting Started
+
+To get started, go to [our dashboard](https://app.tollbit.com) to set up an account.
+
+When first creating an account on the platform, you will be prompted to create your organization. This should represent your top level company. If you were a publisher
+ACME Inc., and you had websites example1.com, example2.com, your organization should be called "ACME". The websites example1.com and example2.com will be added as properties afterwards.
+
+Note that each org can only have one payout method linked. This is fine for most orgs, but if your company prefer to keep accounting separate for a subset of your
+properties, you can create additional orgs after your first org and add properties to those, and then add payment separately for each org.
