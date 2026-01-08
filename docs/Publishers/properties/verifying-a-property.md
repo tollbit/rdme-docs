@@ -25,15 +25,15 @@ Navigate to your DNS provider and create a new NS record for the subdomain. If y
 ns1.edge.tollbit.com
 ```
 
-```bash
+```
 ns2.edge.tollbit.com
 ```
 
-```bash
+```
 ns3.edge.tollbit.com
 ```
 
-```bash
+```
 ns4.edge.tollbit.com
 ```
 
