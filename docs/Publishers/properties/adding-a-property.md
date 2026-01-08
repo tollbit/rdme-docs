@@ -2,12 +2,11 @@
 title: Adding a Property
 excerpt: Learn how to add your property to the TollBit platform.
 ---
-
 # Adding a Property
 
 When you first log in to your org, you will be taken to the property overview page. If you don't have any properties configured, you will see this form that you can use to create your property. Create your property by giving it a name and inputting the domain name, i.e. `example.com` for your property.
 
-![](/add-property.png)
+<Image align="center" border={false} src="https://files.readme.io/dc6502750b74405d276e9317f9415e244f404c84d53fdf8400719da52f9e78f0-add-property.png" />
 
 Once you've added your property, we will automatically fetch your sitemap through your `robots.txt` to determine your site's layout.
 
