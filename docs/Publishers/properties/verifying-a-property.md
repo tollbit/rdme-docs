@@ -21,7 +21,7 @@ As part of verification, we will also set up the `tollbit` subdomain in your reg
 
 Navigate to your DNS provider and create a new NS record for the subdomain. If your main website were `www.example.com` or `example.com`, the subdomain must be `tollbit.example.com`. Point the NS records at the following domains:
 
-```bash
+```
 ns1.edge.tollbit.com
 ```
 
