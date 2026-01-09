@@ -11,8 +11,8 @@ Follow these steps to set up an integration into our platform if you use Datadom
 
 On your Datadome dashboard, open the Management tab in the bottom left of the navigation bar. Choose Monetize. Under TollBit, choose “Enable”. 
 
-![](/integrations-datadome-service-1.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-datadome-service-1.png)
 
 Under Access Controls > AI agents, you can configure each agent from the default Allow option to the Monetize option. This would forward the bot over to your TollBit subdomain going forward.
 
-![](/integrations-datadome-service-2.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-datadome-service-2.png)

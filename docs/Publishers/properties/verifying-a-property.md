@@ -6,7 +6,7 @@ excerpt: Learn how to verify your property ownership through DNS configuration.
 
 Once you create a property, we need to verify your ownership of the domain before we can continue with your TollBit integration. Once you have created a property and invited the necessary team members, you will see the property verification page below:
 
-<Image align="center" border={false} src="https://files.readme.io/3aa5a4d167694c1d8402c95eebce113813d41d7b272f90c182b6304e361a309d-verify-property.png" />
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/verify-property.png)
 
 ## DNS Configuration
 

@@ -17,9 +17,9 @@ secret key as the custom header `TollbitKey`. See the following screenshots for
 an example of the configuration. Once you have added these headers, you should
 be able to click the `Verify` button and add your log drain.
 
-![](/log-drain-1.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/log-drain-1.png)
 
-![](/log-drain-2.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/log-drain-2.png)
 
 ### Vercel Bot Paywall
 
@@ -33,6 +33,6 @@ Create a new rule. Set the rule to look at the User Agent and selected `Matches 
 
 Set the rule to redirect to your TollBit subdomain by changing the `Then` option to `Redirect` and copy in your TollBit subdomain. The rule should look like this when you're finished
 
-![](/vercel-waf-rule.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/vercel-waf-rule.png)
 
 Finally, click save rule. The change won't go into effect until you publish the change to go live.

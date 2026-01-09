@@ -63,7 +63,7 @@ If you are not on Enterprise, read on to set up a worker to forward logs.
   seconds your logs over to us. Most websites are already doing this, but if you
   are not certain, you can check by going into your site's DNS page and ensuring
   that your main site's DNS settings have proxy status as `Proxied`.
-  ![](/cloudflare-proxied.png)
+  ![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-proxied.png)
 </Callout>
 
 If you already have an existing worker that is intercepting requests for your
@@ -76,30 +76,30 @@ Log into your [CloudFlare Dashboard](https://dash.cloudflare.com/) and click on
 the "Compute (Workers)" tab to have it open as a dropdown, and click on "Workers
 & Pages".
 
-![](/cloudflare-sidebar.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-sidebar.png)
 
 Click on the blue "Create" button near the top.
 
-![](/cloudflare-workers-and-pages.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-workers-and-pages.png)
 
 This will take you to a get started screen. Choose the option to create a hello
 world worker, as we were be overwriting all the worker code in the next few
 steps anyways.
 
-![](/cloudflare-worker-get-started.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-worker-get-started.png)
 
 Next will be a screen where you can name your worker and see the initial code
 that it will be running. Set the name to something TollBit related such as
 `tollbit-worker`, and click deploy. We will be modifying the worker code
 shortly.
 
-![](/worker-creation.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/worker-creation.png)
 
 ### Updating the Worker Code
 
 Once your worker has finished deploying, click "Edit code".
 
-![](/cloudflare-edit-code.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-edit-code.png)
 
 In the `worker.js` file, delete everything and copy the following code over
 exactly, making sure to replace `YOUR_SECRET_KEY_HERE` with the secret key you
@@ -255,7 +255,7 @@ like to forward logs for, and click into it. On the left panel, click into
 `*.<your_site.com>/*`, or a custom path if you only want to forward logs for
 certain URL patterns. Under workers, choose the worker that you just created.
 
-![](/add-route.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/add-route.png)
 
 Once you are ready, click "Save", and you are all set!
 
@@ -281,7 +281,7 @@ be "Empty".
 
 Your route page will then look something like the following.
 
-![](/cloudflare-worker-route-disable.png)
+![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-worker-route-disable.png)
 
 If you aren't sure which route to disable, consider running the worker on your full site
 and then using the top pages chart in our analytics platform to understand any routes you
