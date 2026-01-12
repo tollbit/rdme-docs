@@ -63,7 +63,7 @@ If you are not on Enterprise, read on to set up a worker to forward logs.
   seconds your logs over to us. Most websites are already doing this, but if you
   are not certain, you can check by going into your site's DNS page and ensuring
   that your main site's DNS settings have proxy status as `Proxied`.
-  <Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-proxied.png" alt="Cloudflare Proxied" />
+  <Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-proxied.png" alt="Cloudflare Proxied" />
 </Callout>
 
 If you already have an existing worker that is intercepting requests for your
@@ -76,30 +76,30 @@ Log into your [CloudFlare Dashboard](https://dash.cloudflare.com/) and click on
 the "Compute (Workers)" tab to have it open as a dropdown, and click on "Workers
 & Pages".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-sidebar.png" alt="Cloudflare Sidebar" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-sidebar.png" alt="Cloudflare Sidebar" />
 
 Click on the blue "Create" button near the top.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-workers-and-pages.png" alt="Cloudflare Workers And Pages" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-workers-and-pages.png" alt="Cloudflare Workers And Pages" />
 
 This will take you to a get started screen. Choose the option to create a hello
 world worker, as we were be overwriting all the worker code in the next few
 steps anyways.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-worker-get-started.png" alt="Cloudflare Worker Get Started" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-get-started.png" alt="Cloudflare Worker Get Started" />
 
 Next will be a screen where you can name your worker and see the initial code
 that it will be running. Set the name to something TollBit related such as
 `tollbit-worker`, and click deploy. We will be modifying the worker code
 shortly.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/worker-creation.png" alt="Worker Creation" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/worker-creation.png" alt="Worker Creation" />
 
 ### Updating the Worker Code
 
 Once your worker has finished deploying, click "Edit code".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-edit-code.png" alt="Cloudflare Edit Code" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-edit-code.png" alt="Cloudflare Edit Code" />
 
 In the `worker.js` file, delete everything and copy the following code over
 exactly, making sure to replace `YOUR_SECRET_KEY_HERE` with the secret key you
@@ -255,7 +255,7 @@ like to forward logs for, and click into it. On the left panel, click into
 `*.<your_site.com>/*`, or a custom path if you only want to forward logs for
 certain URL patterns. Under workers, choose the worker that you just created.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/add-route.png" alt="Add Route" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/add-route.png" alt="Add Route" />
 
 Once you are ready, click "Save", and you are all set!
 
@@ -281,7 +281,7 @@ be "Empty".
 
 Your route page will then look something like the following.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/cloudflare-worker-route-disable.png" alt="Cloudflare Worker Route Disable" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-route-disable.png" alt="Cloudflare Worker Route Disable" />
 
 If you aren't sure which route to disable, consider running the worker on your full site
 and then using the top pages chart in our analytics platform to understand any routes you

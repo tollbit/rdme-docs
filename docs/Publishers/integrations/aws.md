@@ -98,7 +98,7 @@ a WAF rule to detect bots, and then have CloudFront redirect bot traffic.
 First, go to the WAF & Shield and create a new Web ACL. Ensure that the ACL being created is for CloudFront distributions.
 Add your existing CloudFront distribution to this ACL under the "Associated AWS resources" section of the page.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/aws-acl-configuration.png" alt="Aws Acl Configuration" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/aws-acl-configuration.png" alt="Aws Acl Configuration" />
 
 Once you've created the ACL, you can choose any rules you'd like to enable bot detection. AWS Marketplace has managed bot detection
 rules that you can add to your ACL. We will provide our own WAF rule as well. To use our WAF rule, select the option for using your own
@@ -426,7 +426,7 @@ rules and rule groups, and use the JSON editor. Copy and paste the following rul
 This will detect the top known AI bots. Next, for the action, be sure to choose "Allow" and to add a custom header. Ours is called `bot`, but
 feel free to make this anything unique.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/waf-action.png" alt="Waf Action" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/waf-action.png" alt="Waf Action" />
 
 Next, navigate to the CloudFront product and to the "Functions" tab. Create a new function and paste in the following javascript:
 

@@ -19,19 +19,19 @@ See the Imperva docs [here](https://docs-cybersec.thalesgroup.com/bundle/cloud-a
 
 Step 1 - Go to account management on the top right corner of the Imperva portal
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-1-logs.png" alt="Integrations Imperva 1 Logs" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-1-logs.png" alt="Integrations Imperva 1 Logs" />
 
 Step 2 - Under Siem logs and Log Configuration, add a connection and at the bottom of the pop-up, select Amazon S3 as the delivery method. Once selected, add in your bucket credentials and then test the connection before clicking ‘Create’
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-2-logs.png" alt="Integrations Imperva 2 Logs" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-2-logs.png" alt="Integrations Imperva 2 Logs" />
 
 Step 3 - Under the Log Configuration portal, choose “Add Log Type” in the Connection that was just created for S3. Please select Cloud WAF as the service type. 
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-4-logs.png" alt="Integrations Imperva 4 Logs" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-4-logs.png" alt="Integrations Imperva 4 Logs" />
 
 Step 4 - There are a few additional configuration options to select within Data sets. Choose ‘Security Logs and Access Logs’ under Default website log level option. The format will be ‘CEF’ and you can optionally select to Compress Logs as well. 
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-5-logs.png" alt="Integrations Imperva 5 Logs" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-5-logs.png" alt="Integrations Imperva 5 Logs" />
 
 Step 5 - Once saved, the log data should start dropping into your S3 bucket in a few minutes. You may need to coordinate with the imperva support team to ensure that dates are appended to log file names. After you see the logs generated with dates in the file names, place the IAM policy in your S3 bucket before emailing team@tollbit.com your bucket details. The IAM policy can be found [here](https://docs.tollbit.com/integrations/#other).
 
@@ -41,11 +41,11 @@ Enabling the TollBit bot paywall can be set up with Imperva’s Security Rules t
 
 Step 1 - On the Imperva home page, select the Site you’re looking to set up the Paywall for.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-1-paywall.png" alt="Integrations Imperva 1 Paywall" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-1-paywall.png" alt="Integrations Imperva 1 Paywall" />
 
 Step 2 - On the left navigation for the Website navigation, select Security Rules and then add a Rule as shown in the screenshot below. 
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-2-paywall.png" alt="Integrations Imperva 2 Paywall" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-2-paywall.png" alt="Integrations Imperva 2 Paywall" />
 
 Step 3 - In the Rule, under the filtering condition, choose ABP Action in the If condition, the ‘==’ operator, and in the value field, copy and paste the following snippet below:
 
@@ -55,12 +55,12 @@ User-Agent contains "ChatGPT-User" | User-Agent contains "GPTBot" | User-Agent c
 
 Note you can customize this user agent string to support any user agent that you’d like for the bot paywall.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-3-paywall.png" alt="Integrations Imperva 3 Paywall" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-3-paywall.png" alt="Integrations Imperva 3 Paywall" />
 
 Step 4 - Under the Rule Action, select the redirect action with response code 302, and choose the following From and To fields for yoursite (example in screenshot below):
 - From: https://yoursite.com/*
 - To: https://tollbit.yoursite.com/$1 
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-imperva-4-paywall.png" alt="Integrations Imperva 4 Paywall" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-imperva-4-paywall.png" alt="Integrations Imperva 4 Paywall" />
 
 Step 5 - Click on Save, and your bot paywall configuration should be live immediately.

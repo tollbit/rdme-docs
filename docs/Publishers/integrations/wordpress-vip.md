@@ -19,4 +19,4 @@ Select TollBit from the Integrations Center list to access the information page 
 To add the Integration to an organization, select the button labeled “+ Add to Organization” located at the top of the right-hand column.
 If the current user has an Org admin role for more than one organization, the organization to which the Integration will be added must be selected from the auto-generated option dropdown after the button is selected.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/integrations-wordpress-service-1.png" alt="Integrations Wordpress Service 1" />
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-wordpress-service-1.png" alt="Integrations Wordpress Service 1" />
