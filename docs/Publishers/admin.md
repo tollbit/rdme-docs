@@ -11,13 +11,13 @@ If you are an admin for your organization, you will be able to invite other memb
 
 You can invite new members to your organization and assign them roles when they join.
 
-![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/invite-members.png)
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/invite-members.png" alt="Invite Members" />
 
 ## Manage Members
 
 You can manage your existing members, change their roles, or remove them from your organization.
 
-![](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/manage-members.png)
+<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/rdme-docs/public/manage-members.png" alt="Manage Members" />
 
 ## Add payment
 
