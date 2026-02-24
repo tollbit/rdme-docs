@@ -6,7 +6,7 @@ excerpt: Learn how to add your property to the TollBit platform.
 
 When you first log in to your org, you will be taken to the property overview page. If you don't have any properties configured, you will see this form that you can use to create your property. Create your property by giving it a name and inputting the domain name, i.e. `example.com` for your property.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/add-property.png" alt="Add Property" />
+<Image align="center" src="https://files.readme.io/d87c20bacea844167e1d608f6685203cbbce252086314ed6ba4070d624f34792-Screenshot_2026-02-24_at_5.28.32_PM.png" />
 
 Once you've added your property, we will automatically fetch your sitemap through your `robots.txt` to determine your site's layout.
 
