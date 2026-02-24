@@ -2,7 +2,6 @@
 title: Admin
 excerpt: Manage your organization, invite members, and configure payment settings.
 ---
-
 # Manage your Organization
 
 If you are an admin for your organization, you will be able to invite other members to the TollBit dashboard. To get started, navigate to the [Settings](https://app.tollbit.com/settings) page.
@@ -11,13 +10,13 @@ If you are an admin for your organization, you will be able to invite other memb
 
 You can invite new members to your organization and assign them roles when they join.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/invite-members.png" alt="Invite Members" />
+<Image align="center" src="https://files.readme.io/bdb85fb8748b05c9ecbdf1cd00eb9c4dcf0594dea785da8bb759c2a567093be3-Screenshot_2026-02-24_at_5.33.01_PM.png" />
 
 ## Manage Members
 
 You can manage your existing members, change their roles, or remove them from your organization.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/manage-members.png" alt="Manage Members" />
+<Image align="center" src="https://files.readme.io/7bdd956af73ec6ea055d54a93d6225411e49a63f06da9a41683190e0832ee4fd-Screenshot_2026-02-24_at_5.33.31_PM.png" />
 
 ## Add payment
 
@@ -28,4 +27,3 @@ In order to receive payment for the access to your content, you must add your pa
 </Callout>
 
 You can only add one payment method per organization. This is fine for most orgs, but for those that prefer to keep accounting separate for subsets of their properties, they can create and manage multiple orgs, each with its own set of properties, and set payment information separate for each org.
-
