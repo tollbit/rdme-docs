@@ -6,13 +6,13 @@ excerpt: Learn how to verify your property ownership through DNS configuration.
 
 Once you create a property, we need to verify your ownership of the domain before we can continue with your TollBit integration. Once you have created a property and invited the necessary team members, you will see the property verification page below:
 
-![Verify Property](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/verify-property.png)
+<Image align="center" src="https://files.readme.io/d4f5b71769fe63ac71ae592e7247e2617c9856f132670e81d086ed7851d98bdd-Screenshot_2026-02-24_at_5.29.47_PM.png" />
 
 ## DNS Configuration
 
 ### Step 1: Create TXT Record
 
-In your domain's DNS settings, create a TXT record for your top level domain (`example.com`, **not** `tollbit.example.com`. This might be a field called "name" or "host" when creating this record). Copy the TXT record value from the TollBit dashboard (it will look like `tollbit-domain-verification=...`) and paste it into the TXT you created. If you are unable to put the TXT record on your top level domain (if you already have a CNAME), you can put the TXT record on the `_tollbit-validation` subdomain. Looking at the full host, this would be `_tollbit-validation.example.com`. 
+In your domain's DNS settings, create a TXT record for your top level domain (`example.com`, **not** `tollbit.example.com`. This might be a field called "name" or "host" when creating this record). Copy the TXT record value from the TollBit dashboard (it will look like `tollbit-domain-verification=...`) and paste it into the TXT you created. If you are unable to put the TXT record on your top level domain (if you already have a CNAME), you can put the TXT record on the `_tollbit-validation` subdomain. Looking at the full host, this would be `_tollbit-validation.example.com`.
 
 ### Step 2: Set Up Subdomain
 
