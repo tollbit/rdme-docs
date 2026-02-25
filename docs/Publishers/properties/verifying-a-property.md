@@ -36,10 +36,10 @@ ns3.edge.tollbit.com
 ns4.edge.tollbit.com
 ```
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
 </Callout>
 
 ## Next Steps
 
-Once your property is verified, you can proceed to set up [integrations](../integrations) and configure your [marketplace settings](../marketplace).
+Once your property is verified, you can proceed to set up [integrations](integrations) and configure your [marketplace settings](marketplace).
