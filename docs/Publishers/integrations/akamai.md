@@ -4,7 +4,6 @@ excerpt: Learn how to integrate TollBit with Akamai.
 ---
 # Akamai
 
-
 We provide a way for all Akamai customers to stream logs to our platform.
 
 ### Create a Stream with DataStream 2
@@ -98,7 +97,7 @@ For the operator value, use `is one of` without case sensitivity. These settings
 Ensure that the path is preserved in the redirect. Akamai has an example of this in their [docs](https://techdocs.akamai.com/cloudlets/docs/review-available-match-types-edge-redirector#edge-redirector-regular-expression-example)
 and we should be able to follow it by setting the redirect url to `https://tollbit.<your_site>/\2`. The `\2` should preserve the path.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
   first rule that matches. If you have other Cloudlets with rules that also
   intercept requests, they may match before the rule you just added.
@@ -106,9 +105,11 @@ and we should be able to follow it by setting the redirect url to `https://tollb
 
 Click save rule to save your changes, and you should be ready to activate! Follow the steps [here](https://techdocs.akamai.com/cloudlets/docs/activate-cloudlets-beh-prop-manager) to do so.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="🚧">
   The rule you just added **will intercept** and potentially **redirect**
   traffic to your main site. Please ensure that you have tested this in a test
   environment or for a small subset of pages before activating this across your
   entire site.
 </Callout>
+
+<br />
