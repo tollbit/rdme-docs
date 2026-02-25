@@ -18,12 +18,12 @@ To onboard onto TollBit, you will go through the following steps.
 1. Create an account on our platform. Go to <Anchor label="our dashboard" target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account for your organization.
 2. [Invite other users](admin#invite-members)  to your newly created org. You will likely need to invite
    IT, legal and finance users to your org to complete onboarding, review terms, and set up your payout method.
-3. [Add and verify your properties](/set-up-property). Invite your IT team to do some lightweight configuration in
+3. [Add and verify your properties](adding-a-property). Invite your IT team to do some lightweight configuration in
    your DNS settings to fully verify your properties.
-4. [Set up your integration](/publisher-logging). We support the most popular CDNs and can quickly get you valuable
+4. [Set up your integration](integrations). We support the most popular CDNs and can quickly get you valuable
    insight into your bot traffic and setting up your paywall for monetization.
 5. View analytics (docs coming soon). Review your bot analytics insights including referral metrics, traffic status, and bot activity by user agent.
-6. [Onboard to the marketplace](/publisher-marketplace). Set a price on your content, along with any license agreements and content filtering.
+6. [Onboard to the marketplace](marketplace). Set a price on your content, along with any license agreements and content filtering.
 
 ## Getting Started
 
