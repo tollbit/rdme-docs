@@ -15,8 +15,8 @@ This effectively puts your data behind a paywall, and allows you to immediately 
 
 To onboard onto TollBit, you will go through the following steps.
 
-1. Create an account on our platform. Go to [our dashboard](https://app.tollbit.com) to set up an account for your organization.
-2. [Invite other users](/publisher-org#invite-members) to your newly created org. You will likely need to invite
+1. Create an account on our platform. Go to <Anchor label="our dashboard" target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account for your organization.
+2. [Invite other users](docs/admin#invite-members) to your newly created org. You will likely need to invite
    IT, legal and finance users to your org to complete onboarding, review terms, and set up your payout method.
 3. [Add and verify your properties](/set-up-property). Invite your IT team to do some lightweight configuration in
    your DNS settings to fully verify your properties.
