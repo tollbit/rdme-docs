@@ -10,10 +10,12 @@ When you first log in to your org, you will be taken to the property overview pa
 
 Once you've added your property, we will automatically fetch your sitemap through your `robots.txt` to determine your site's layout.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   We recommend publishers maintain a `robots.txt` file and a sitemap that is kept up to date. However, this is not required to onboard onto TollBit.
 </Callout>
 
 ## Next Steps
 
 After adding your property, you'll need to [verify your property ownership](verifying-a-property) before you can continue with your TollBit integration.
+
+<br />
