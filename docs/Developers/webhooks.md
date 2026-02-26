@@ -1,6 +1,13 @@
 ---
 title: Webhooks
-excerpt: Receive real-time notifications when content becomes available from TollBit publishers, and retrieve webhook delivery history.
+excerpt: >-
+  Receive real-time notifications when content becomes available from TollBit
+  publishers, and retrieve webhook delivery history.
+next:
+  pages:
+    - slug: devv1webhookhistory
+      title: /dev/v1/webhook/history
+      type: endpoint
 ---
 
 # Webhooks
