@@ -9,4 +9,4 @@ We run periodic review on the main pages of TollBit publisher sites to understan
 
 Note that the syncs are setup initially once a site is onboarded, and then nightly afterwards to ensure we have an up to date structural understanding of the site. There may also be periodic requests to a small number of main pages or feeds to understand what changed.
 
-Our user agent will be called "tollbot", stylized as "tollbot/1.0". Please whitelist this user agent. You can also find our IPs here: [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt).
+Our user agent will be called "tollbot", stylized as "tollbot/1.0". Please whitelist this user agent. You can also find our IPs here: <Anchor label="https://tollbit.com/static-ips.txt" target="_blank" href="https://tollbit.com/static-ips.txt">https://tollbit.com/static-ips.txt</Anchor>.
