@@ -59,10 +59,8 @@ curl -G https://tollbit.pioneervalleygazette.com/daydream \
 
 ## What's next?
 
-Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the TollBit API:
+Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the TollBit API:)
 
 * <Anchor label="Checkout the TollBit Developer Dashboard" target="_blank" href="https://hack.tollbit.com">Checkout the TollBit Developer Dashboard</Anchor>
 * [Go over the dashboard overview](dev-overview)
-* <Anchor label="Look at our Python SDK" target="_blank" href="https://github.com/tollbit/tollbit-python-sdk">Look at our Python SDK</Anchor>
-
-<br />
+* [Look at our Python SDK](https://github.com/tollbit/tollbit-python-sdk
