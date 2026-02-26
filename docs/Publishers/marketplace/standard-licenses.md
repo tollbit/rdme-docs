@@ -5,7 +5,7 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
+## Standard Licenses
 
 The TollBit platform has two standard licenses.
 
@@ -17,5 +17,13 @@ When activating rates, you are agreeing to the standard license terms. These lic
 <Callout icon="📘" theme="info">
   When you first onboard onto the platform, your rates will _not_ be active and demand side users will not be able to fetch your content through TollBit. In order to activate your rates and price your content, click the "Activate" button on the top of the rates page. Once this is active, all your rates will be live.
 </Callout>
+
+## Custom Licenses
+
+For any partners that you have struck deal with, you can upload a custom license to the user agents of that specific partner. Any requests made to TollBit with that partner's user agents will include the license that you uploaded in the transactions.
+
+## Transactions
+
+This page provides an audit trail where you can see all the requests that have been made to your website through TollBit. For each request, you are able to see the user agent that made the request, the page they hit, and the price they paid for that page.
 
 ##
