@@ -4,9 +4,8 @@ excerpt: Learn how to integrate TollBit with Vercel.
 ---
 # Vercel
 
-
 To forward logs from Vercel, follow the instructions for
-[Log Drains here](https://vercel.com/docs/observability/log-drains/configure-log-drains).
+<Anchor label="Log Drains here" target="_blank" href="https://vercel.com/docs/observability/log-drains/configure-log-drains">Log Drains here</Anchor>.
 
 To properly authenticate and verify your logs, you should use the endpoint
 `https://log.tollbit.com/log/vercel`.
@@ -17,13 +16,13 @@ secret key as the custom header `TollbitKey`. See the following screenshots for
 an example of the configuration. Once you have added these headers, you should
 be able to click the `Verify` button and add your log drain.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/log-drain-1.png" alt="Log Drain 1" />
+![Log Drain 1](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/log-drain-1.png)
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/log-drain-2.png" alt="Log Drain 2" />
+![Log Drain 2](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/log-drain-2.png)
 
 ### Vercel Bot Paywall
 
-To redirect bots to your TollBit subdomain you can use [Vercel's Custom WAF rules](https://vercel.com/docs/security/vercel-waf/custom-rules).
+To redirect bots to your TollBit subdomain you can use <Anchor label="Vercel's Custom WAF rules" target="_blank" href="https://vercel.com/docs/security/vercel-waf/custom-rules">Vercel's Custom WAF rules</Anchor>.
 
 Create a new rule. Set the rule to look at the User Agent and selected `Matches expression`. Copy the following regex as the expression to match. Feel free to modify to remove or block different bots.
 
@@ -33,6 +32,6 @@ Create a new rule. Set the rule to look at the User Agent and selected `Matches 
 
 Set the rule to redirect to your TollBit subdomain by changing the `Then` option to `Redirect` and copy in your TollBit subdomain. The rule should look like this when you're finished
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/vercel-waf-rule.png" alt="Vercel Waf Rule" />
+![Vercel Waf Rule](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/vercel-waf-rule.png)
 
 Finally, click save rule. The change won't go into effect until you publish the change to go live.
