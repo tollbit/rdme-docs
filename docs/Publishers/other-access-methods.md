@@ -2,14 +2,13 @@
 title: Other Access Methods
 excerpt: Learn how to enable NLWeb, MCP, and Agent2Agent protocols for your website.
 ---
-
 # Other Access Methods
 
 TollBit offers ways to monetize your content via various agentic protocols - including Microsoft's NLWeb, Google's Agent2Agent, and Anthropic's MCP protocols. Instructions for getting started with each protocol are in their respective sections.
 
 ## NLWeb
 
-[NLWeb](https://news.microsoft.com/source/features/company-news/introducing-nlweb-bringing-conversational-interfaces-directly-to-the-web/) is a protocol that aims to simplify the creation of natural language interfaces for websites. There are two main endpoints in the NLWeb protocol, an HTTP `/ask` endpoint and an MCP compatible `/mcp` endpoint. This allows developers and agents to seamlessly interact with your content via natural language.
+<Anchor label="NLWeb" target="_blank" href="https://news.microsoft.com/source/features/company-news/introducing-nlweb-bringing-conversational-interfaces-directly-to-the-web/">NLWeb</Anchor> is a protocol that aims to simplify the creation of natural language interfaces for websites. There are two main endpoints in the NLWeb protocol, an HTTP `/ask` endpoint and an MCP compatible `/mcp` endpoint. This allows developers and agents to seamlessly interact with your content via natural language.
 
 Your NLWeb ask endpoint will be hosted at `https://tollbit.<yoursite>/ask` and your mcp endpoint will be hosted at `https://tollbit.<yoursite>/mcp`
 
@@ -19,7 +18,7 @@ Here's what an example request to an `/ask` endpoint might look like:
 https://tollbit.time.com/ask?query=what%27s%20happening%20with%20tarrifs&mode=generate&streaming=false
 ```
 
-To test your MCP endpoint, download the official [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector) from Anthropic and follow along with our demo here.
+To test your MCP endpoint, download the official <Anchor label="MCP inspector" target="_blank" href="https://modelcontextprotocol.io/docs/tools/inspector">MCP inspector</Anchor> from Anthropic and follow along with our demo here.
 
 ### Important query parameters:
 
@@ -29,9 +28,9 @@ To test your MCP endpoint, download the official [MCP inspector](https://modelco
 
 **`mode`**: The values here are "list", "summarize", and "generate".
 
-- `list` will simply return a list of documents that match the query.
-- `summarize` will return a list plus a summary of the contents of the docs.
-- `generate` will return the list plus an answer to the query based on the documents.
+* `list` will simply return a list of documents that match the query.
+* `summarize` will return a list plus a summary of the contents of the docs.
+* `generate` will return the list plus an answer to the query based on the documents.
 
 ## MCP
 
@@ -39,7 +38,7 @@ MCP is an open protocol created by Anthropic that enables AI models to securely 
 
 Your MCP endpoint will be hosted at `https://tollbit.yoursite/mcp`
 
-Please reach out to team@tollbit.com if you're interested in making your data available via MCP.
+Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you're interested in making your data available via MCP.
 
 ## Agent2Agent
 
@@ -50,4 +49,3 @@ The protocol is an open standard designed to let AI agents collaborate securely 
 Your A2A server will be hosted at `https://tollbit.capital.de/a2a`
 
 To validate and test your A2A server, you can use the a2a-inspector. Follow the instructions for starting the inspector, and for the Agent Card URL use `https://tollbit.capital.de/a2a/.well-known/agent.json`. Clicking Connect should produce an Agent card valid message and allow you to communicate with the server using the A2A protocol using the chat feature of the inspector.
-
