@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: TollBit Webhooks API
+  description: >
+    Webhooks allow your application to receive real-time notifications when
+
+    content becomes available from TollBit publishers. Instead of polling the
+
+    API repeatedly, you can register a webhook endpoint and we'll push events
+
+    to you as they happen.
+
+
+    **Webhook payload attributes:**
+
+    - sourceCuid: Account identifier for the property
+
+    - sourceHost: Domain host of the content
+
+    - contentUrl: The specific page URL for the intended content to access
+
+    - timestamp: UTC timestamp of when content was appended
+
+    - notificationType: CREATED or UPDATED
+
+
+    **Validating webhooks:** All webhooks originate from IP 52.22.183.94.
+
+    Signature is HMAC-SHA256 in the Authorization header (payload is the webhook
+
+    URL you supplied; key is the SigningSecret from the Subscription).
+    User-Agent
+
+    is "tollbot/1.0".
+  version: 1.0.0
+servers:
+  - url: https://gateway.tollbit.com
+    description: TollBit API Gateway
+paths:
+  /dev/v1/webhook/history:
+    get:
+      operationId: getWebhookHistory
+      summary: Get History
+      description: >
+        Get the history of webhooks within an optional lookback window,
+        including
+
+        specific content URLs and last attempted delivery time and status.
+      security:
+        - TollbitKey: []
+      parameters:
+        - name: next-token
+          in: query
+          required: false
+          description: >-
+            Optional pagination token. Response includes a token to retrieve the
+            next page if available.
+          schema:
+            type: string
+        - name: size
+          in: query
+          required: false
+          description: Number of items per page. Default 25. Max 1000.
+          schema:
+            type: integer
+            default: 25
+            maximum: 1000
+        - name: days-ago
+          in: query
+          required: false
+          description: Number of days back from current date to retrieve webhook history.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookHistoryResponse'
+components:
+  securitySchemes:
+    TollbitKey:
+      type: apiKey
+      in: header
+      name: TollbitKey
+      description: Your API key which can be found in the access page of the dashboard.
+  schemas:
+    WebhookHistoryResponse:
+      type: object
+      properties:
+        Items:
+          type: array
+          description: Array of webhook delivery records.
+          items:
+            $ref: '#/components/schemas/WebhookHistoryItem'
+        nextToken:
+          type: string
+          description: Optional continuation token if there are more results.
+    WebhookHistoryItem:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+          description: ID of the Subscription linking recipient org to the publisher.
+        contentUrl:
+          type: string
+          description: URL to the content that was updated (e.g. a Time.com URL).
+        deliveryUrl:
+          type: string
+          description: URL that TollBit attempted to send this webhook to.
+        eventType:
+          type: string
+          enum:
+            - CREATE
+            - UPDATE
+          description: Event type (CREATE or UPDATE).
+        lastAttempt:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp in UTC of the last attempt to send the webhook to
+            deliveryUrl.
+        lastStatus:
+          type: integer
+          description: HTTP status code of the last attempt.
+        numAttempts:
+          type: integer
+          description: Number of delivery attempts.
