@@ -27,7 +27,7 @@ To onboard onto TollBit, you will go through the following steps.
 
 ## Getting Started
 
-To get started, go to [our dashboard](https://app.tollbit.com) to set up an account.
+To get started, go to <Anchor label="our dashboard" target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account.
 
 When first creating an account on the platform, you will be prompted to create your organization. This should represent your top level company. If you were a publisher
 ACME Inc., and you had websites example1.com, example2.com, your organization should be called "ACME". The websites example1.com and example2.com will be added as properties afterwards.
