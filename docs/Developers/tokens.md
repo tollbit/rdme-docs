@@ -1,0 +1,159 @@
+---
+title: Tokens
+excerpt: Generate one-time access tokens for sanctioned content or for indexing/crawl access.
+---
+
+# Tokens
+
+Tokens are one-time access grants tied to specific pages and user agents. The token system allows authenticated access to retrieving content, with a one-time use model to ensure security.
+
+## SDKs
+
+The SDK handles token generation automatically when making API requests. Consequently, there is no documentation on generating tokens within the SDK.
+
+---
+
+## Generate Content Token
+
+Generate a valid token for sanctioned, paid access to a specific page, with the terms of the license type or `cuid` that you include in the request payload.
+
+### Endpoint
+
+```
+POST /dev/v2/tokens/content
+```
+
+**Base URL**: `https://gateway.tollbit.com`
+
+**Authentication**: Requires API key via the `TollbitKey` header.
+
+### Request headers
+
+- **`TollbitKey`** (string, required)
+  - Your API key, available in the access page of the dashboard.
+
+### Request body (JSON)
+
+- **`url`** (string, required)
+  - The specific page URL for the intended content to access.
+
+- **`userAgent`** (string, required)
+  - Unique AgentID string for who is allowed to access the page. Use the AgentID that you will use within your application. You must use a user agent you registered in the developer portal.
+
+- **`maxPriceMicros`** (integer, required)
+  - The maximum price, in micro units, that you are willing to pay for this piece of content. Leaving this unset defaults the field to 0, which only allows retrieval of free content. $1 = 1,000,000 micros.
+
+- **`currency`** (string, required)
+  - The three-letter currency code. Only `USD` is supported at the moment.
+
+- **`licenseType`** (string, required)
+  - The type of license you are requesting. Supported values: `ON_DEMAND_LICENSE`, `ON_DEMAND_FULL_USE_LICENSE`, `CUSTOM_LICENSE`.
+
+- **`licenseCuid`** (string, optional)
+  - Required only for `CUSTOM_LICENSE` types.
+
+### Response
+
+- **`token`** (string)
+  - The JWT token that can be used to make a content request.
+
+### Example request
+
+```bash
+curl https://gateway.tollbit.com/dev/v2/tokens/content \
+  -H "Content-Type: application/json" \
+  -H "TollbitKey: YOUR_API_KEY_HERE" \
+  -d '{"url": "https://example.com/article", "userAgent": "my-agent/1.0", "maxPriceMicros": 11000000, "currency": "USD", "licenseType": "ON_DEMAND_LICENSE"}'
+```
+
+### Example response (success)
+
+```json
+{
+  "token": "eyJhbGciOiJFUzI1..."
+}
+```
+
+### Example response (error)
+
+```json
+{
+  "detail": "The license...",
+  "instance": "/dev/v2/tokens/content",
+  "status": 400,
+  "title": "Bad Request",
+  "type": "about:blank"
+}
+```
+
+---
+
+## Generate Indexing Token
+
+Generate a valid token for a specific page for your user agent to fetch content for indexing purposes. Note that while you may be able to generate the token, the data provider has controls to allow or disallow access through this method of fetching content.
+
+### Endpoint
+
+```
+POST /dev/v2/tokens/crawl
+```
+
+**Base URL**: `https://gateway.tollbit.com`
+
+**Authentication**: Requires API key via the `TollbitKey` header.
+
+### Request headers
+
+- **`TollbitKey`** (string, required)
+  - Your API key, available in the access page of the dashboard.
+
+### Request body (JSON)
+
+- **`url`** (string, required)
+  - The specific page URL for the intended content to access.
+
+- **`userAgent`** (string, required)
+  - Unique AgentID string for who is allowed to access the page. Use the AgentID that you will use within your application. You must use a user agent you registered in the developer portal.
+
+### Response
+
+- **`token`** (string)
+  - The JWT token that can be used to make a content request (e.g. for Index Content).
+
+### Example request
+
+```bash
+curl https://gateway.tollbit.com/dev/v2/tokens/crawl \
+  -H "Content-Type: application/json" \
+  -H "TollbitKey: YOUR_API_KEY_HERE" \
+  -d '{"url": "https://example.com/article", "userAgent": "my-agent/1.0"}'
+```
+
+### Example response (success)
+
+```json
+{
+  "token": "eyJhbGciOiJFUzI1..."
+}
+```
+
+### Example response (error)
+
+```json
+{
+  "detail": "The license...",
+  "instance": "/dev/v2/tokens/crawl",
+  "status": 400,
+  "title": "Bad Request",
+  "type": "about:blank"
+}
+```
+
+---
+
+## Error responses
+
+- **400 Bad Request**: Invalid request (e.g. license not available, invalid parameters).
+- **401 Unauthorized**: Missing or invalid `TollbitKey` header.
+
+Error responses follow the standard format with `detail`, `instance`, `status`, `title`, and `type`.
