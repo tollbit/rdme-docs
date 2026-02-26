@@ -5,7 +5,7 @@ excerpt: Learn how to integrate TollBit with Amazon.
 ### Forwarding Logs with ALB
 
 To forward logs from an ALB, follow these steps outlined in the
-[AWS docs](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html).
+<Anchor label="AWS docs" target="_blank" href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html">AWS docs</Anchor>.
 
 Once you have started forwarding your logs to an S3 bucket, create an IAM policy
 to allow TollBit to access your logs: If your logs are already being sent to an
@@ -47,7 +47,7 @@ for instance `/service/logs/2024/12/04/log-file`
 To forward logs from Cloudfront follow these steps:
 
 Enable standard logging for your Cloudfront distribution following the
-[AWS docs](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/standard-logging.html#set-up-standard-logging).
+<Anchor label="AWS docs" target="_blank" href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/standard-logging.html#set-up-standard-logging">AWS docs</Anchor>.
 
 Point your logs at an S3 Bucket. Note, we only currently support the default
 w3c, tab delimited format with the default 33 fields that are included in the
@@ -450,7 +450,7 @@ so the actual header to look for is now called `x-amzn-waf-bot`. If this header 
 is a bot request, so we now want to forward it to our tollbit subdomain. Once you are ready, save the changes and publish this code.
 On the publish tab, you will then need to associate this function to your existing CloudFront distribution.
 
-<Callout icon="🚧">
+<Callout icon="🚧" theme="warn">
   This code snippet will run for every request to your distribution. Please
   ensure you've tested this function before completing this step.
 </Callout>
