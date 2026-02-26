@@ -4,7 +4,6 @@ excerpt: Learn how to integrate TollBit with CloudFlare.
 ---
 # CloudFlare
 
-
 We provide a way for all CloudFlare customers, regardless of plan, to forward
 HTTP logs to our platform for analytics. We recommend this method over others
 like LogPush as CloudFlare Enterprise is not required to create workers, and you
@@ -13,13 +12,13 @@ have much more control over how logs are sent.
 ### CloudFlare Enterprise
 
 If you are on the Enterprise plan, you should have access to CloudFlare's
-[Logpush](https://developers.cloudflare.com/logs/about/) feature. You may
+<Anchor label="Logpush" target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature. You may
 already be pushing logs to an S3, R2 or GCP bucket. If this is the case, we are
 able to ingest your logs from where they are already being stored.
 
 One small update you may need to make is adding the `location` response header and the `signature-agent`, `signature-input`
 and `signature` request headers to the logs. Follow
-[these steps](https://developers.cloudflare.com/logs/reference/custom-fields/#enable-custom-fields-via-dashboard)
+<Anchor label="these steps" target="_blank" href="https://developers.cloudflare.com/logs/reference/custom-fields/#enable-custom-fields-via-dashboard">these steps</Anchor>
 in Cloudflare's documentation to add this header. You will want to select
 "Response Header" as the field type and type in `location`, and select "Request Header" and type in
 `signature-agent`, `signature-input` and `signature`.
@@ -29,7 +28,7 @@ policy to your bucket to enable TollBit to process your logs:
 
 ```json
 {
-  "Version": "2025-05-07",
+  "Version": "2012-10-17",
   "Statement": [
     {
       "Sid": "AllowTollbitAccountsAccess",
@@ -50,7 +49,7 @@ policy to your bucket to enable TollBit to process your logs:
 }
 ```
 
-Once you have done that, reach out to team@tollbit.com and provide the path to
+Once you have done that, reach out to [team@tollbit.com](mailto:team@tollbit.com) and provide the path to
 your logs in your bucket and we will be able to quickly enable TollBit analytics
 for your site.
 
@@ -58,12 +57,13 @@ If you are not on Enterprise, read on to set up a worker to forward logs.
 
 ### Create new Worker
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   You must be proxying traffic through CloudFlare in order have the worker
   seconds your logs over to us. Most websites are already doing this, but if you
   are not certain, you can check by going into your site's DNS page and ensuring
   that your main site's DNS settings have proxy status as `Proxied`.
-  <Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-proxied.png" alt="Cloudflare Proxied" />
+
+  ![Cloudflare Proxied](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-proxied.png)
 </Callout>
 
 If you already have an existing worker that is intercepting requests for your
@@ -72,38 +72,38 @@ Bot Paywall section below, you will need to
 integrate this logging code with that worker. If you just have a bot deterrence
 worker set up, see that section to get a code snippet that also pushes logs.
 
-Log into your [CloudFlare Dashboard](https://dash.cloudflare.com/) and click on
+Log into your <Anchor label="CloudFlare Dashboard" target="_blank" href="https://dash.cloudflare.com/">CloudFlare Dashboard</Anchor> and click on
 the "Compute (Workers)" tab to have it open as a dropdown, and click on "Workers
 & Pages".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-sidebar.png" alt="Cloudflare Sidebar" />
+![Cloudflare Sidebar](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-sidebar.png)
 
 Click on the blue "Create" button near the top.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-workers-and-pages.png" alt="Cloudflare Workers And Pages" />
+![Cloudflare Workers And Pages](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-workers-and-pages.png)
 
 This will take you to a get started screen. Choose the option to create a hello
 world worker, as we were be overwriting all the worker code in the next few
 steps anyways.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-get-started.png" alt="Cloudflare Worker Get Started" />
+![Cloudflare Worker Get Started](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-get-started.png)
 
 Next will be a screen where you can name your worker and see the initial code
 that it will be running. Set the name to something TollBit related such as
 `tollbit-worker`, and click deploy. We will be modifying the worker code
 shortly.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/worker-creation.png" alt="Worker Creation" />
+![Worker Creation](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/worker-creation.png)
 
 ### Updating the Worker Code
 
 Once your worker has finished deploying, click "Edit code".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-edit-code.png" alt="Cloudflare Edit Code" />
+![Cloudflare Edit Code](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-edit-code.png)
 
 In the `worker.js` file, delete everything and copy the following code over
 exactly, making sure to replace `YOUR_SECRET_KEY_HERE` with the secret key you
-can find in your [portal](https://app.tollbit.com).
+can find in your <Anchor label="portal" target="_blank" href="https://app.tollbit.com">portal</Anchor>.
 
 ```js
 const CF_APP_VERSION = '1.0.0'
@@ -255,11 +255,11 @@ like to forward logs for, and click into it. On the left panel, click into
 `*.<your_site.com>/*`, or a custom path if you only want to forward logs for
 certain URL patterns. Under workers, choose the worker that you just created.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/add-route.png" alt="Add Route" />
+![Add Route](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/add-route.png)
 
 Once you are ready, click "Save", and you are all set!
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   If your main site does not use the `www` subdomain and all traffic to `www` gets
   redirected to your main site (`www.example.com` gets redirected to `example.com`),
   you will need to set your worker route to just `<your_site.com>/*`.
@@ -281,7 +281,7 @@ be "Empty".
 
 Your route page will then look something like the following.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-route-disable.png" alt="Cloudflare Worker Route Disable" />
+![Cloudflare Worker Route Disable](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-route-disable.png)
 
 If you aren't sure which route to disable, consider running the worker on your full site
 and then using the top pages chart in our analytics platform to understand any routes you
@@ -292,7 +292,7 @@ wish to filter out.
 There are several levels of bot detection and forwarding that you can configure for CloudFlare, depending on whether
 or not you are on their Enterprise plan.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   The code snippets here are for a clean CloudFlare environment. If you have
   existing workers that are processing requests from your domain, you will need
   to integrate these scripts into your existing worker.
@@ -304,7 +304,7 @@ Follow the steps described above (within the Cloudflare Analytics section) up un
 new worker. Name this working something to help you keep track of it's function (such as `bot-forwarding-worker`).
 Once you've created this worker, click into edit code and do the following to set up your forwarding worker.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   If you have already created a CloudFlare worker for log forwarding, **DO NOT**
   create a new worker. Use your existing worker when following these
   instructions. This is because you cannot have two CloudFlare workers on the
@@ -550,7 +550,7 @@ export default {
 If you are on Enterprise and are using Bot Management, you should have access to the bot score
 in the header of the request. You can replace the `checkIfBotRequest` function in the previous
 worker scripts to use something similar to the following, and you can set the `BOT_SCORE_THRESHOLD`
-to determine how strict your forwarding is. CloudFlare [lists what each score range means](https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings).
+to determine how strict your forwarding is. CloudFlare <Anchor label="lists what each score range means" target="_blank" href="https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings">lists what each score range means</Anchor>.
 
 ```js
 const checkIfBotRequest = (request) => {
@@ -573,7 +573,7 @@ const checkIfBotRequest = (request) => {
 };
 ```
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="🚧">
   This worker **will intercept** and potentially **forward** traffic from your
   site. It is crucial to make sure that you incrementally deploy this to a
   subset of your pages first and QA it thoroughly to ensure that it is not
@@ -583,4 +583,4 @@ const checkIfBotRequest = (request) => {
 
 ### Enterprise
 
-If you have CloudFlare enterprise, you should be able to use the [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription/) product to get a bot score for each request. You can add logic in the above code's `checkIfBotRequest` function to also return `true` if the bot score is lower than a certain threshold.
+If you have CloudFlare enterprise, you should be able to use the <Anchor label="Bot Management" target="_blank" href="https://developers.cloudflare.com/bots/get-started/bm-subscription/">Bot Management</Anchor> product to get a bot score for each request. You can add logic in the above code's `checkIfBotRequest` function to also return `true` if the bot score is lower than a certain threshold.
