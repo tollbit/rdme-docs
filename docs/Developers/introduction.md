@@ -2,13 +2,12 @@
 title: Introduction
 excerpt: A high level overview of TollBit and what it is.
 ---
-
 # Introduction
 
 Leverage our SDKs and documentation to build an AI agent facing internet. Get licensed real-time data from first party data sources in a few lines of code.
 
-- [Quickstart →](/docs/developers/quickstart)
-- [Explore SDKs](https://github.com/tollbit/tollbit-python-sdk)
+* [Quickstart →](quickstart)
+* <Anchor label="Explore SDKs" target="_blank" href="https://github.com/tollbit/tollbit-python-sdk">Explore SDKs</Anchor>
 
 ## Why TollBit?
 
@@ -20,9 +19,8 @@ TollBit is aiming to power this application layer of AI. We provide scalable and
 
 The _tollbit.example.com_ paradigm.
 
-When using TollBit, you have the Internet's data at your fingertips to build amazing AI applications. The key paradigm shift, is that all participating content providers will create a tollbit.example.com subdomain. Instead of scraping the human facing site, you can directly request tollbit.\<anywebsite\>.com/\<content-path\>, similarly as you have before. Except now, the response of that request is perfectly formatted for RAG and licensed for one time use because you went straight to the source, instead of through a shady scraping third party.
+When using TollBit, you have the Internet's data at your fingertips to build amazing AI applications. The key paradigm shift, is that all participating content providers will create a tollbit.example.com subdomain. Instead of scraping the human facing site, you can directly request tollbit.\<anywebsite>.com/\<content-path>, similarly as you have before. Except now, the response of that request is perfectly formatted for RAG and licensed for one time use because you went straight to the source, instead of through a shady scraping third party.
 
 ## Getting started
 
-To get started, follow our [quickstart](/docs/developers/quickstart)
-
+To get started, follow our [quickstart](quickstart)
