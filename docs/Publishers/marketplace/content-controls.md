@@ -30,6 +30,8 @@ Article filters allow you to programmatically exclude entire HTML pages from AI 
 
 If you already have a `<meta name='robots' content='noindex,nofollow'>` tag (or similar) to exclude pages from traditional web crawling, configuring an article filter to match that tag will also exclude pages containing that tag from AI access.
 
-<br />
+If you already have a `<meta name='robots' content='noindex,nofollow'>` tag (or similar) to exclude pages from traditional web crawling, configuring an article filter to match that tag will also exclude pages containing that tag from AI access.
+
+<Image align="center" src="https://files.readme.io/7190c766043b6666cc76bec976a9d9bdc56e61ea3f48a8daa24022eab90058b1-Screenshot_2026-02-26_at_10.14.29_AM.png" />
 
 <br />
