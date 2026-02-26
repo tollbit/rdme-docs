@@ -2,7 +2,6 @@
 title: Developer Dashboard Overview
 excerpt: Detailed dive into the entire Developer Dashboard and what pages mean.
 ---
-
 # Developer Dashboard Overview
 
 A full overview of the pages and main ideas presented in the [Developer Dashboard](https://hack.tollbit.com).
@@ -25,7 +24,7 @@ This is an example full User Agent string with AgentID of `tollbot`.
 
 ## Access
 
-This page allows you to copy and regenerate your secret key. Secret keys should remain secret! We use an encrypted key store so that your keys will always be secure. They are generated using native 256-bit crypto functions and encrypted using [New GCM symmetric](https://en.wikipedia.org/wiki/Galois/Counter_Mode) key algorithms.
+This page allows you to copy and regenerate your secret key. Secret keys should remain secret! We use an encrypted key store so that your keys will always be secure.
 
 ## Transactions
 
@@ -34,4 +33,3 @@ This page allows you to see your recent data access transactions and their detai
 ## Billing
 
 This page allows you to add your payment method of choice through Stripe.
-
