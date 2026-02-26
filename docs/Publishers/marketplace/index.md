@@ -2,7 +2,6 @@
 title: Marketplace
 excerpt: Learn how to price and make your content available in the TollBit marketplace.
 ---
-
 # Marketplace
 
 ## Requirements
@@ -49,8 +48,8 @@ The TollBit platform has two standard licenses.
 
 When activating rates, you are agreeing to the standard license terms. These license terms will apply each time an AI company uses your content. You can review the full licenses within your portal on the Rates page by clicking the question mark next to the license name, and rates can be independently set and activated per standard license.
 
-<Callout icon="ℹ️" theme="info">
-  When you first onboard onto the platform, your rates will *not* be active and demand side users will not be able to fetch your content through TollBit. In order to activate your rates and price your content, click the "Activate" button on the top of the rates page. Once this is active, all your rates will be live.
+<Callout icon="📘">
+  When you first onboard onto the platform, your rates will _not_ be active and demand side users will not be able to fetch your content through TollBit. In order to activate your rates and price your content, click the "Activate" button on the top of the rates page. Once this is active, all your rates will be live.
 </Callout>
 
 ## Custom Licenses
@@ -65,27 +64,27 @@ This page provides an audit trail where you can see all the requests that have b
 
 Control what data to include or exclude when developers request content from your website through TollBit.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-page.png" alt="Content Controls Page" />
+![Content Controls Page](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-page.png)
 
 ### Element Filters
 
 Element filters help exclude certain types of content from the HTML of your website, such as removing all images, links or embedded content from being returned to agentic consumers. Note that in order for this feature to work properly, the content to be excluded needs to be written in well formatted HTML. For example, we won't be able to exclude a hyperlink if it's not within an `<a>` tag.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-element-filter-example.png" alt="Content Controls Element Filter Example" />
+![Content Controls Element Filter Example](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-element-filter-example.png)
 
 For more advanced use cases you can exclude all elements that are styled with a specific CSS class.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-element-filter-example-class.png" alt="Content Controls Element Filter Example Class" />
+![Content Controls Element Filter Example Class](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-element-filter-example-class.png)
 
 ### Article Filters
 
 Article filters allow you to programmatically exclude entire HTML pages from AI access. An article filter can be configured to match a specific HTML tag with specific attributes and attribute values. Any page that contains the tag that matches will be excluded from agentic access. This feature is intended to be used to exclude content like syndicated articles.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-article-filter-create.png" alt="Content Controls Article Filter Create" />
+![Content Controls Article Filter Create](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-article-filter-create.png)
 
 If you already have a `<meta name='robots' content='noindex,nofollow'>` tag (or similar) to exclude pages from traditional web crawling, configuring an article filter to match that tag will also exclude pages containing that tag from AI access.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-article-filter-example-meta.png" alt="Content Controls Article Filter Example Meta" />
+![Content Controls Article Filter Example Meta](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/content-controls-article-filter-example-meta.png)
 
 ## Content Formatting
 
@@ -122,4 +121,3 @@ As you can see, none of the original content is affected in any way. Just some t
 ### Why is this format good for AI?
 
 This formatting maintains crucial context for the LLM like titles, paragraphs, links, etc. At the same time, this format strips away the excessive HTML tags, scripts and other clutter that comes back from scraping typical websites. This format should optimize the value in the content, while being efficient to how many tokens you pass to the LLM.
-
