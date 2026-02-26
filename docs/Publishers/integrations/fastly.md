@@ -12,23 +12,23 @@ Go to your Fastly Dashboard and pick the domain associated with your property.
 
 Right under your service name, you’ll see an alphanumeric string. It should be the same alphanumeric string that completes the URL string for the page. See the highlight below for reference.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service.png" alt="Integrations Fastly Service" />
+![Integrations Fastly Service](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service.png)
 
 Next, hover over Account on the main navigation bar on the left and choose API tokens > personal tokens.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-2.png" alt="Integrations Fastly Service 2" />
+![Integrations Fastly Service 2](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-2.png)
 
 **Setup Integration in TollBit**
 
 Go to your TollBit dashboard and pick the Integrations tab in the main navigation menu. Input your Fastly API key and service ID in the form and click Save.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-3.png" alt="Integrations Fastly Service 3" />
+![Integrations Fastly Service 3](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-3.png)
 
 **Enable Analytics**
 
 Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, click on “Enable” next to the Analytics section.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-4.png" alt="Integrations Fastly Service 4" />
+![Integrations Fastly Service 4](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-4.png)
 
 **Enable Bot Paywall**
 
@@ -36,9 +36,9 @@ Ensure that you have saved your Fastly API key and service ID in the integration
 
 Scrolling further down on the page allows you to “Block” all bots, which would redirect all listed bots on the page to forward to your TollBit subdomain.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-5.png" alt="Integrations Fastly Service 5" />
+![Integrations Fastly Service 5](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-5.png)
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   If you have used our legacy integration of Fastly (using VCL scripts), you should automatically see the updates transition into the new UI.
 </Callout>
 
@@ -48,18 +48,18 @@ This is the documentation for the legacy Fastly integration that involves implem
 
 ### Create a new Logging Configuration
 
-Go to your [Fastly Dashboard](https://manage.fastly.com/configure) and pick the
+Go to your <Anchor label="Fastly Dashboard" target="_blank" href="https://manage.fastly.com/configure">Fastly Dashboard</Anchor> and pick the
 correct domain. Click “Edit Configuration”, and clone your current
 configuration. This saves a new configuration version as a draft, and allows you
 to rollback if necessary. This should bring you to a new screen. On the sidebar,
 scroll down until you see Logging and click on that. Then, click “Create
 Endpoint”.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-sidebar.png" alt="Fastly Sidebar" />
+![Fastly Sidebar](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-sidebar.png)
 
 ### Configure your logs to be sent to our logging endpoint
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png" alt="Fastly Http Config" />
+![Fastly Http Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png)
 
 Find the HTTP logging endpoint and click “Create endpoint”. You can set the name
 to anything descriptive (e.g. tollbit-prod). Keep the placement option as the
@@ -72,17 +72,17 @@ extra trailing spaces or newlines:
 
 Finally, set the URL to [https://log.tollbit.com/log](https://log.tollbit.com/log).
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-log-config.png" alt="Fastly Log Config" />
+![Fastly Log Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-log-config.png)
 
 ### Ensure that your Requests are Authenticated
 
 Go into Advanced Options and set the “Custom header name” field to “TollbitKey”.
 You must set the customer header value to your secret key. Log into your
-[TollBit portal](https://app.tollbit.com) and go into the API key tab and copy
+<Anchor label="TollBit portal" target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor> and go into the API key tab and copy
 your secret key. Paste it into the “Custom header value” field with no trailing
 spaces. Keep all the other settings as default, scroll to the bottom, and save.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png" alt="Fastly Activate" />
+![Fastly Activate](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png)
 
 Once you are ready to publish these changes, click the “Activate” button. Keep
 in mind that if you have other unpublished changes in Fastly, this may also
@@ -92,7 +92,7 @@ publish those as well.
 
 Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your tollbit subdomain.
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="📘">
   The code shown here is for a clean Fastly environment. If you have any
   existing VCL scripts that intercept requests, you will need to integrate these
   scripts into your existing workflow.
@@ -100,15 +100,15 @@ Fastly allows you to set up redirectly using VCL snippets. In this document, we 
 
 Go to the Deliver tab and select the domain you wish to add bot forwarding to. On the right side of the screen, click the Edit configuration button and choose to clone your current active version.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-edit-configuration.png" alt="Fastly Edit Configuration" />
+![Fastly Edit Configuration](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-edit-configuration.png)
 
 On the left hand sidebar, click "VCL Snippets".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-vcl-snippet.png" alt="Fastly Vcl Snippet" />
+![Fastly Vcl Snippet](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-vcl-snippet.png)
 
 Create a snippet and name it something like `tollbit-bot-forwarding-recv`. This is the VCL code that will detect if a bot is using one of our known bad user agents, and will forward it to your subdomain. Put the following logic into the snippet. Make sure that the placement of the snippet is within the recv subroutine.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-recv.png" alt="Fastly Recv" />
+![Fastly Recv](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-recv.png)
 
 Copy and paste the following code block into the VCL input field and save. Don't worry, this VCL script will not actually apply until you activate the current Fastly version that you are editing.
 
@@ -125,7 +125,7 @@ if (req.http.user-agent ~ "(?i)chatgpt-user|perplexitybot|gptbot|anthropic-ai|cc
 
 Next, create another VCL snippet. This time, call it something like `tollbit-bot-forwarding-error`. This time, make sure that the placement is within the error subroutine.
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-error.png" alt="Fastly Error" />
+![Fastly Error](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-error.png)
 
 Paste the following code in this snippet. This will set the correct headers and status code for the redirection done in the previous snippet.
 
@@ -139,7 +139,7 @@ if (obj.status == 600) {
 }
 ```
 
-<Callout icon="ℹ️" theme="info">
+<Callout icon="🚧">
   The VCL scripts you just added **will intercept** and potentially **redirect**
   traffic to your main site. Please ensure that you have tested this in a test
   environment or for a small subset of pages before activating this across your
@@ -148,4 +148,4 @@ if (obj.status == 600) {
 
 This should now be all you need to forward known bot traffic to your `tollbit` subdomain! You can activate these changes by clicking "Apply".
 
-<Image src="https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png" alt="Fastly Activate" />
+![Fastly Activate](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png)
