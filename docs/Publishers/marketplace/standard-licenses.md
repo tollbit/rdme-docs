@@ -1,5 +1,5 @@
 ---
-title: Standard Licenses
+title: Licenses
 deprecated: false
 hidden: false
 metadata:
