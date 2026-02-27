@@ -1,5 +1,5 @@
 ---
-title: Setting Rates
+title: Rates
 deprecated: false
 hidden: false
 metadata:
