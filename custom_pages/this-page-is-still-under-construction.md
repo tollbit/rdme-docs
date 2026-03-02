@@ -1,5 +1,5 @@
 ---
-title: This page is still under construction
+title: This Page is Still Under Construction
 fullscreen: false
 hidden: false
 ---
