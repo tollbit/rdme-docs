@@ -21,4 +21,4 @@ In summary, a redrected bot can fall in 2 categories:
 * Whitelisted → Check cache → Serve from cache or fetch once and cache
 * Not whitelisted → Require payment token or block
 
-Note that Content Cache is not a permanent archive. Pages are stored depending on whether they are requested by bots. The TTL is set to 5 minutes by default, after which the cached content is automatically evicted.
+Note that Content Cache is not a permanent archive. Pages are stored depending on whether they are requested by bots. The TTL is set to 5 minutes for non article pages (home page, hub pages, etc), and longer for articles, after which the cached content is automatically evicted.
