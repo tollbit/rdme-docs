@@ -10,7 +10,7 @@ metadata:
 ---
 Content Cache is a routing mode that serves cached HTML to whitelisted bots without charging them. It creates a sanctioned, cost-neutral access path for AI agents while protecting publishers from overwhelming bot traffic.
 
-This feature requires no changes to how bots currently access content. AI bots would continue hitting your site, but TollBit intelligently routes the request based on specified preferences. Simply whitelist agents and their crawling automatically becomes sanctioned through the cache.
+To use this feature to its fullest extent, start by redirecting bots from your main site to your agent site (tollbit subdomain); you can view how to do this in your CDN via our <Anchor label="integrations" target="_blank" href="/docs/integrations">integrations</Anchor> page. AI bots would continue to be able to fetch your content, but it would be doing so through your agent site instead of your human site. TollBit intelligently routes the request based on specified preferences. Simply whitelist agents and their crawling automatically becomes sanctioned through the cache.
 
 Select a TollBit property, and under Web Content select Content cache on the top of the page. You may either select all AI bots to use content cache or select specific bots by selecting them in the table or searching/adding a string.
 
