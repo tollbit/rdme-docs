@@ -1,6 +1,6 @@
 ---
 title: General Log Ingestion
-excerpt: Learn how to integrate TollBit with Other Integration Methods.
+excerpt: Learn how to integrate TollBit Analytics with Other Log Ingestion Methods.
 ---
 # Other Integration Methods
 
