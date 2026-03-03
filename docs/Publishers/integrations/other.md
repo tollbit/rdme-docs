@@ -1,5 +1,5 @@
 ---
-title: Other Integration Methods
+title: General Log Ingestion
 excerpt: Learn how to integrate TollBit with Other Integration Methods.
 ---
 # Other Integration Methods
