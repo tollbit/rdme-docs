@@ -2,11 +2,13 @@
 title: Akamai
 excerpt: Learn how to integrate TollBit with Akamai.
 ---
-# Akamai
+<br />
 
 We provide a way for all Akamai customers to stream logs to our platform.
 
-### Create a Stream with DataStream 2
+### Set up Logging with Akamai
+
+** Create a Stream with DataStream 2
 
 You will need to first create a stream by going to your
 <Anchor label="Akamai Control Center" target="_blank" href="https://control.akamai.com/apps/data-stream-ui/#/streams/group/all">Akamai Control Center</Anchor>.
@@ -14,7 +16,7 @@ Follow
 <Anchor label="these instructions" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">these instructions</Anchor>
 on how to create your stream.
 
-### Choose Data Parameters
+*** Choose Data Parameters
 
 When choosing
 <Anchor label="data parameters" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>,
@@ -65,7 +67,7 @@ JSON. Also, please ensure that your log format is JSON.
 }
 ```
 
-### Stream to Endpoint
+** Stream to Endpoint
 
 To forward your logs to us, follow the steps outlined
 <Anchor label="here" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">here</Anchor>. The
@@ -83,7 +85,14 @@ your stream!
 
 ### Akamai Bot Paywall
 
-Akamai allows you to set up redirection rules at the edge using Cloudlets. Specifically, they provide <Anchor label="Edge Redirector" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-edge-redirector">Edge Redirector</Anchor> Cloudlets that help you manage redirection using certain matching rules.
+Akamai allows you to set up redirection rules at the edge using either Cloudlets or Content Protector. 
+
+* For Cloudlets, please see the steps outlined below. 
+* For Content Protector, please reach out to your Akamai account team and loop in team@tollbit.com as well.
+
+** Cloudlets set up
+
+Specifically, they provide <Anchor label="Edge Redirector" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-edge-redirector">Edge Redirector</Anchor> Cloudlets that help you manage redirection using certain matching rules.
 
 We want to first start by creating an Edge Redirector policy. Follow the documentation <Anchor label="here" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-edge-redirector-policy">here</Anchor> to do so in accordance with how your Akamai instance is set up.
 
