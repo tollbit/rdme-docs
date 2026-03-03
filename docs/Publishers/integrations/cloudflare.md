@@ -2,14 +2,14 @@
 title: CloudFlare
 excerpt: Learn how to integrate TollBit with CloudFlare.
 ---
-# CloudFlare
-
 We provide a way for all CloudFlare customers, regardless of plan, to forward
 HTTP logs to our platform for analytics. We recommend this method over others
 like LogPush as CloudFlare Enterprise is not required to create workers, and you
 have much more control over how logs are sent.
 
-### CloudFlare Enterprise
+### Enable Analytics with Cloudflare
+
+** Enterprise Plan Customers **
 
 If you are on the Enterprise plan, you should have access to CloudFlare's
 <Anchor label="Logpush" target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature. You may
@@ -55,9 +55,11 @@ for your site.
 
 If you are not on Enterprise, read on to set up a worker to forward logs.
 
-### Create new Worker
+** Free or Pro Plan Customers **
 
-<Callout icon="📘">
+** Create new Worker **
+
+<Callout icon="📘" theme="info">
   You must be proxying traffic through CloudFlare in order have the worker
   seconds your logs over to us. Most websites are already doing this, but if you
   are not certain, you can check by going into your site's DNS page and ensuring
@@ -95,7 +97,7 @@ shortly.
 
 ![Worker Creation](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/worker-creation.png)
 
-### Updating the Worker Code
+** Updating the Worker Code **
 
 Once your worker has finished deploying, click "Edit code".
 
@@ -247,7 +249,7 @@ Hit "Deploy" on the upper righthand corner once you are finished, and then
 navigate out of the editor with the little back arrow on the upper left side of
 the page, next to the name of the worker.
 
-### Link worker to CloudFlare HTTP Logs
+** Link worker to CloudFlare HTTP Logs **
 
 Click on "Account Home" on the left pane and select the website that you would
 like to forward logs for, and click into it. On the left panel, click into
@@ -259,7 +261,7 @@ certain URL patterns. Under workers, choose the worker that you just created.
 
 Once you are ready, click "Save", and you are all set!
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   If your main site does not use the `www` subdomain and all traffic to `www` gets
   redirected to your main site (`www.example.com` gets redirected to `example.com`),
   you will need to set your worker route to just `<your_site.com>/*`.
@@ -292,7 +294,7 @@ wish to filter out.
 There are several levels of bot detection and forwarding that you can configure for CloudFlare, depending on whether
 or not you are on their Enterprise plan.
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   The code snippets here are for a clean CloudFlare environment. If you have
   existing workers that are processing requests from your domain, you will need
   to integrate these scripts into your existing worker.
@@ -304,7 +306,7 @@ Follow the steps described above (within the Cloudflare Analytics section) up un
 new worker. Name this working something to help you keep track of it's function (such as `bot-forwarding-worker`).
 Once you've created this worker, click into edit code and do the following to set up your forwarding worker.
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   If you have already created a CloudFlare worker for log forwarding, **DO NOT**
   create a new worker. Use your existing worker when following these
   instructions. This is because you cannot have two CloudFlare workers on the
@@ -573,7 +575,7 @@ const checkIfBotRequest = (request) => {
 };
 ```
 
-<Callout icon="🚧">
+<Callout icon="🚧" theme="warn">
   This worker **will intercept** and potentially **forward** traffic from your
   site. It is crucial to make sure that you incrementally deploy this to a
   subset of your pages first and QA it thoroughly to ensure that it is not
