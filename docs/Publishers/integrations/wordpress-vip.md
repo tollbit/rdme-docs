@@ -14,13 +14,17 @@ Follow these steps to set up an integration into our platform if you use WordPre
 
 TollBit can ingest http traffic logs from Wordpress VIP using [WP Log Shopping](https://docs.wpvip.com/logs/log-shipping/enable/).
 
-Log in to the WordPress VIP Dashboard and select environment from the environment dropdown located at the upper left of the VIP Dashboard. Select "Log Shipping" under the "Logs" navigation bar on the left.  
+Log in to the WordPress VIP Dashboard and select environment from the environment dropdown located at the upper left of the VIP Dashboard. Select "Log Shipping" under the "Logs" navigation bar on the left.
 
-Now you can configure the Cloud Configuration. Note you'll need a storage bucket (S3, GCS, or Azure) with the correct IAM permissions (see tab for General Log Ingestion) to export the logs from the Log Shipping tool. 
+Now you can configure the Cloud Configuration. Note you'll need a storage bucket (S3, GCS, or Azure) with the correct IAM permissions (see tab for General Log Ingestion) to export the logs from the Log Shipping tool.
+
+<br />
+
+PREFER S3 UPDATE
 
 ![](https://files.readme.io/6ecc0147e56563dee287f99f546c9826961fc8e7f6de45d165763f75e948723c-image.png)
 
-Please reach out to team@tollbit.com when the storage bucket is provisioned with the log file data and the IAM policy.
+Please reach out to [team@tollbit.com](mailto:team@tollbit.com) when the storage bucket is provisioned with the log file data and the IAM policy.
 
 <br />
 
