@@ -1,6 +1,7 @@
 - fastly
 - cloudflare
 - akamai
+- aws
 - index.md
 - fastly.md
 - wordpress-vip
