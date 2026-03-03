@@ -4,9 +4,59 @@ excerpt: Learn how to integrate TollBit with Other Integration Methods.
 ---
 # Other Integration Methods
 
-
 We support other methods of log ingestion besides the integrations that we
 listed above.
+
+<br />
+
+### Ingesting from file storage
+
+We are currently able to support log ingestion from S3, R2 and GCS. Please
+ensure that your log files are prefixed by date and time, and that the logs
+within the files are in JSON format (ideally as similar to the above as
+possible), and each log is a single line and all logs are newline separated.
+
+If you are already forwarding logs to an S3 bucket, you can get a headstart on
+the setup by creating the following IAM policy for your bucket: If your logs are
+already being sent to an S3 bucket, add the following IAM policy to your bucket
+to enable TollBit to process your logs:
+
+```json
+{
+  "Version": "2025-05-07",
+  "Statement": [
+    {
+      "Sid": "AllowTollbitAccountsAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::339712821696:root",
+          "arn:aws:iam::654654318267:root"
+        ]
+      },
+      "Action": ["s3:GetObject*", "s3:ListBucket*"],
+      "Resource": [
+        "arn:aws:s3:::YOUR-BUCKET-NAME",
+        "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+      ]
+    }
+  ]
+}
+```
+
+In case your AWS bucket has any Access Control Lists (ACLs) added, we recommend either disabling those lists altogether and/or using our canonical IDs.
+
+TollBit Canonical IDs:
+
+```json
+f208f3b6492f906045d6e2fd71dbc6dc64247211c059ba3ae2eb712b949b8cdd
+bbfe4f5f203ffb85e03d5d5325ab889271d6429b91a3766563bd0d08df2126ab
+```
+
+Please contact us at [team@tollbit.com](mailto:team@tollbit.com)  to complete the set up for you so you can
+get access to TollBit Analytics
+
+<br />
 
 ### Log Sink Forwarding
 
@@ -46,40 +96,4 @@ When streaming the logs to the endpoint, please ensure that you are batching
 logs as much as possible. Each log be a single line, and should be newline
 separated from the other logs.
 
-### Ingesting from file storage
-
-We are currently able to support log ingestion from S3, R2 and GCS. Please
-ensure that your log files are prefixed by date and time, and that the logs
-within the files are in JSON format (ideally as similar to the above as
-possible), and each log is a single line and all logs are newline separated.
-
-If you are already forwarding logs to an S3 bucket, you can get a headstart on
-the setup by creating the following IAM policy for your bucket: If your logs are
-already being sent to an S3 bucket, add the following IAM policy to your bucket
-to enable TollBit to process your logs:
-
-```json
-{
-  "Version": "2025-05-07",
-  "Statement": [
-    {
-      "Sid": "AllowTollbitAccountsAccess",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "arn:aws:iam::339712821696:root",
-          "arn:aws:iam::654654318267:root"
-        ]
-      },
-      "Action": ["s3:GetObject*", "s3:ListBucket*"],
-      "Resource": [
-        "arn:aws:s3:::YOUR-BUCKET-NAME",
-        "arn:aws:s3:::YOUR-BUCKET-NAME/*"
-      ]
-    }
-  ]
-}
-```
-
-Please contact us at team@tollbit.com to complete the set up for you so you can
-get access to TollBit Analytics
+<br />
