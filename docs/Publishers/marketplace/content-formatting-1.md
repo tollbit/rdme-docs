@@ -1,5 +1,6 @@
 ---
 title: Content Formatting
+excerpt: 'Agent sites are formatted and optimized to deliver content to LLMs. '
 deprecated: false
 hidden: false
 metadata:
