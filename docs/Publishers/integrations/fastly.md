@@ -2,7 +2,7 @@
 title: Fastly
 excerpt: Learn how to integrate TollBit with Fastly.
 ---
-# Fastly
+# Fastly (Standard)
 
 Follow these steps to set up an integration into our platform if you use Fastly.
 
@@ -38,11 +38,11 @@ Scrolling further down on the page allows you to “Block” all bots, which wou
 
 ![Integrations Fastly Service 5](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-5.png)
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   If you have used our legacy integration of Fastly (using VCL scripts), you should automatically see the updates transition into the new UI.
 </Callout>
 
-## Fastly (legacy)
+## Fastly (Custom)
 
 This is the documentation for the legacy Fastly integration that involves implementing VCL scripts to enable TollBit analytics and bot paywall. VCL scripts can allow for additional customizations for implementing analytics and bot forwarding. Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you'd like to discuss this implementation route considering your use case.
 
@@ -92,7 +92,7 @@ publish those as well.
 
 Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your tollbit subdomain.
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   The code shown here is for a clean Fastly environment. If you have any
   existing VCL scripts that intercept requests, you will need to integrate these
   scripts into your existing workflow.
@@ -139,7 +139,7 @@ if (obj.status == 600) {
 }
 ```
 
-<Callout icon="🚧">
+<Callout icon="🚧" theme="warn">
   The VCL scripts you just added **will intercept** and potentially **redirect**
   traffic to your main site. Please ensure that you have tested this in a test
   environment or for a small subset of pages before activating this across your
