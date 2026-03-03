@@ -2,6 +2,11 @@
 title: Fastly
 excerpt: Learn how to integrate TollBit with Fastly.
 ---
+There are two integration options to connect Fastly with TollBit. 
+
+* The Standard method uses API tokens to give TollBit access to read http traffic logs and implement bot paywall directly through the TollBit interface.
+* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and paywall as well.
+
 # Fastly (Standard)
 
 Follow these steps to set up an integration into our platform if you use Fastly.
@@ -46,7 +51,9 @@ Scrolling further down on the page allows you to “Block” all bots, which wou
 
 This is the documentation for the legacy Fastly integration that involves implementing VCL scripts to enable TollBit analytics and bot paywall. VCL scripts can allow for additional customizations for implementing analytics and bot forwarding. Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you'd like to discuss this implementation route considering your use case.
 
-### Create a new Logging Configuration
+### Implement Analytics with Fastly
+
+**Create a new Logging Configuration**
 
 Go to your <Anchor label="Fastly Dashboard" target="_blank" href="https://manage.fastly.com/configure">Fastly Dashboard</Anchor> and pick the
 correct domain. Click “Edit Configuration”, and clone your current
@@ -57,7 +64,7 @@ Endpoint”.
 
 ![Fastly Sidebar](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-sidebar.png)
 
-### Configure your logs to be sent to our logging endpoint
+** Configure your logs to be sent to our logging endpoint **
 
 ![Fastly Http Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png)
 
@@ -74,7 +81,7 @@ Finally, set the URL to [https://log.tollbit.com/log](https://log.tollbit.com/lo
 
 ![Fastly Log Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-log-config.png)
 
-### Ensure that your Requests are Authenticated
+** Ensure that your Requests are Authenticated **
 
 Go into Advanced Options and set the “Custom header name” field to “TollbitKey”.
 You must set the customer header value to your secret key. Log into your
