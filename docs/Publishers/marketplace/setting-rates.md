@@ -8,6 +8,8 @@ metadata:
 ---
 <br />
 
+## Introduction
+
 This is the core of the TollBit product, and where you can set prices on your content. At the moment there are a few ways to set rates. You can set global rates which apply to all your content across all subdirectories and pages. There are two types of licenses, rates should be established for both:
 
 1. **Summarization License** - Allows AI customers to access your content to create a summary, grounding, or citation with a single use license. Simply, set your rate per 1000 pages accessed and click activate and allow AI customers interested to view rates and pay for your content, you can consider your current RPM as a benchmark when determining what value to set as your Summarization Rate
@@ -18,6 +20,8 @@ Within both types of licenses you can also set custom rates according to the fol
 TollBit doesn't take a percentage of your rates or revenue share. We simply charge AI customers a small transaction fee on top of the rates you set. Your payments reflect your rates completely; if you set a rate of $0.001 per page, AI customers will pay that and you will receive that amount completely.
 
 <br />
+
+## Other Types of Rates
 
 ### Bot Rates
 
