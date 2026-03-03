@@ -225,7 +225,97 @@
         ]
       }
     },
-    "/dev/v2/rates/{contentUrl}": {
+    "/dev/v2/rate/batch": {
+      "post": {
+        "operationId": "ContentService_batchGetRates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BatchRateResponseV2"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The server could not understand the request due to invalid syntax.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access is unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The server cannot find the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tollbit Content",
+          "Get Tollbit Rates"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchGetRateRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/dev/v2/rate/{contentUrl}": {
       "get": {
         "operationId": "ContentService_getRates",
         "parameters": [
@@ -307,93 +397,6 @@
           "Tollbit Content",
           "Get Tollbit Rates"
         ],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/dev/v2/reporting/usage": {
-      "post": {
-        "operationId": "ReportingService_reportContentUsage",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SelfReportContentUsageResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The server could not understand the request due to invalid syntax.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemJSON"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Access is unauthorized.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemJSON"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access is forbidden.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemJSON"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "The server cannot find the requested resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemJSON"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemJSON"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Reporting",
-          "Report Content Usage"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SelfReportContentUsageRequest"
-              }
-            }
-          }
-        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -519,7 +522,7 @@
         ]
       }
     },
-    "/tollbit/dev/v2/tokens/aos": {
+    "/dev/v2/tokens/aos": {
       "post": {
         "operationId": "TokensService_createAOSAccessToken",
         "parameters": [],
@@ -605,7 +608,7 @@
         ]
       }
     },
-    "/tollbit/dev/v2/tokens/content": {
+    "/dev/v2/tokens/content": {
       "post": {
         "operationId": "TokensService_createContentAccessToken",
         "parameters": [],
@@ -691,7 +694,7 @@
         ]
       }
     },
-    "/tollbit/dev/v2/tokens/crawl": {
+    "/dev/v2/tokens/crawl": {
       "post": {
         "operationId": "TokensService_createCrawlAccessToken",
         "parameters": [],
@@ -776,6 +779,93 @@
           }
         ]
       }
+    },
+    "/dev/v2/transactions/selfReport": {
+      "post": {
+        "operationId": "ReportingService_reportContentUsage",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SelfReportContentUsageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The server could not understand the request due to invalid syntax.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access is unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The server cannot find the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemJSON"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Reporting",
+          "Report Content Usage"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SelfReportContentUsageRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -792,6 +882,87 @@
           },
           "readyToLicense": {
             "type": "boolean"
+          }
+        }
+      },
+      "BatchDeveloperRateResponse": {
+        "type": "object",
+        "required": [
+          "price",
+          "license",
+          "error"
+        ],
+        "properties": {
+          "price": {
+            "$ref": "#/components/schemas/RatePriceResponse"
+          },
+          "license": {
+            "$ref": "#/components/schemas/BatchRateLicenseResponse"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "BatchGetRateRequest": {
+        "type": "object",
+        "required": [
+          "urls"
+        ],
+        "properties": {
+          "urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BatchRateLicenseResponse": {
+        "type": "object",
+        "required": [
+          "cuid",
+          "licenseType",
+          "licensePath",
+          "permissions",
+          "validUntil"
+        ],
+        "properties": {
+          "cuid": {
+            "type": "string"
+          },
+          "licenseType": {
+            "type": "string"
+          },
+          "licensePath": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateLicensePermission"
+            }
+          },
+          "validUntil": {
+            "type": "string"
+          }
+        }
+      },
+      "BatchRateResponseV2": {
+        "type": "object",
+        "required": [
+          "url",
+          "rates"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "rates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchDeveloperRateResponse"
+            }
           }
         }
       },
@@ -1132,6 +1303,22 @@
         }
       },
       "RatePrice": {
+        "type": "object",
+        "required": [
+          "priceMicros",
+          "currency"
+        ],
+        "properties": {
+          "priceMicros": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currency": {
+            "type": "string"
+          }
+        }
+      },
+      "RatePriceResponse": {
         "type": "object",
         "required": [
           "priceMicros",

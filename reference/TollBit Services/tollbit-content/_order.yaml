@@ -1,3 +1,4 @@
 - contentservice_getcontent
 - contentservice_getcatalog
 - contentservice_getrates
+- contentservice_batchgetrates
