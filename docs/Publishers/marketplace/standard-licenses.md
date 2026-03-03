@@ -1,5 +1,6 @@
 ---
 title: Licenses
+excerpt: Standard vs Custom Licenses and how to view Transactions
 deprecated: false
 hidden: false
 metadata:
@@ -26,4 +27,4 @@ For any partners that you have struck deal with, you can upload a custom license
 
 This page provides an audit trail where you can see all the requests that have been made to your website through TollBit. For each request, you are able to see the user agent that made the request, the page they hit, and the price they paid for that page.
 
-##
+<br />
