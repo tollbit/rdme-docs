@@ -11,6 +11,8 @@ There are two integration options to connect Fastly with TollBit.
 
 Follow these steps to set up an integration into our platform if you use Fastly.
 
+### Initial Setup for Analytics & Paywall
+
 **Get Service ID and API Key from Fastly**
 
 Go to your Fastly Dashboard and pick the domain associated with your property.
