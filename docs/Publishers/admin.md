@@ -4,7 +4,7 @@ excerpt: Manage your organization, invite members, and configure payment setting
 ---
 # Manage your Organization
 
-If you are an admin for your organization, you will be able to invite other members to the TollBit dashboard. To get started, navigate to the <Anchor label="Settings" target="_blank" href="https://app.tollbit.com/settings">Settings</Anchor> page.
+If you are an admin for your organization, you will be able to invite other members to the TollBit dashboard. To get started, navigate to the <Anchor label="Settings" target="_blank" href="https://app.tollbit.com/settings/org">Settings</Anchor> page.
 
 ## Invite Members
 
@@ -22,7 +22,7 @@ You can manage your existing members, change their roles, or remove them from yo
 
 In order to receive payment for the access to your content, you must add your payment information to your account. We partner with <Anchor label="Stripe" target="_blank" href="https://stripe.com">Stripe</Anchor> to process payments. You will be able to add either your bank account or a debit card where we will deposit payments to. Payouts will occur in the first couple days of the month, and will be for all transactions that took place in the previous month. More specifically, this will be from `00:00:00.000 UTC` of the first day of the previous month, to `23:59:59.999 UTC` of the last day of the previous month.
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   Only admins in your organization will be able to view and modify payment information. Read the [Organization](/docs/publishers/admin) section to see how to manage your org.
 </Callout>
 
