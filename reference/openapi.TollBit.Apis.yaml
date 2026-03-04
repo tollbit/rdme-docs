@@ -128,7 +128,7 @@ paths:
         - Get Catalog of Pages for Property
       security:
         - ApiKeyAuth: []
-  /dev/v2/rate/batch:
+  /dev/v2/rates/batch:
     post:
       operationId: ContentService_batchGetRates
       parameters: []
@@ -182,7 +182,7 @@ paths:
               $ref: '#/components/schemas/BatchGetRateRequest'
       security:
         - ApiKeyAuth: []
-  /dev/v2/rate/{contentUrl}:
+  /dev/v2/rates/{contentUrl}:
     get:
       operationId: ContentService_getRates
       parameters:
