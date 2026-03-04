@@ -7,7 +7,7 @@ HTTP logs to our platform for analytics. We recommend this method over others
 like LogPush as CloudFlare Enterprise is not required to create workers, and you
 have much more control over how logs are sent.
 
-### Enable Analytics with Cloudflare
+### Enable Analytics with CloudFlare
 
 #### Enterprise Plan Customers
 
@@ -300,9 +300,86 @@ or not you are on their Enterprise plan.
   to integrate these scripts into your existing worker.
 </Callout>
 
-### Bot Paywall on any Plan (Including Free)
+### CloudFlare Snippets
 
-Follow the steps described above (within the Cloudflare Analytics section) up until you have created a
+For customers on the Pro, Business or Enterprise plans that want to set up a simple redirect without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a redirect following simple rules.
+
+First, in the left nav when you're within the view for one of your websites, find the Rules tab and click the dropdown, and then click into the Snippets section.
+
+<Image align="center" src="https://files.readme.io/77f26a783e280037b14b03c5bd4ce0477048afb8d8df98f7844c518d1a6ad7c3-Screenshot_2026-03-04_at_10.20.06_AM.png" />
+
+Once you're on the snippets page, click the Create Snippet button. This will take you to an editor similar to the Workers editor. Name this file something along the lines of `redirect_to_tollbit`. You can paste in the following code, making modifications to the bot list as you find appropriate for your goals.
+
+```javascript
+const botList = [
+  'ChatGPT-User',
+  'PerplexityBot',
+  'GPTBot',
+  'anthropic-ai',
+  'CCBot',
+  'Claude-Web',
+  'ClaudeBot',
+  'cohere-ai',
+  'YouBot',
+  'Diffbot',
+  'OAI-SearchBot',
+  'meta-externalagent',
+  'Timpibot',
+  'Amazonbot',
+  'Bytespider',
+  'Perplexity-User',
+]
+
+export default {
+  async fetch(request) {
+    const isBotRequest = checkIfBotRequest(request)
+
+    // if bot request, immediately forward to subdomain
+    if (isBotRequest) {
+      const path = request.url.replace(
+        'https://' + request.headers.get('host'),
+        '',
+      )
+      let host = request.headers.get('host') || ''
+      if (host.startsWith('www.')) {
+        // remove www
+        host = host.slice(4)
+      }
+      return Response.redirect('https://tollbit.' + host + path, 302)
+    } else {
+      // otherwise return the regular content
+      const response = await fetch(request)
+      return response
+    }
+  },
+};
+
+const checkIfBotRequest = (request) => {
+  const userAgent = request.headers.get('User-Agent') || ''
+
+  for (var i = 0; i < botList.length; i++) {
+    if (userAgent.toLowerCase().includes(botList[i].toLowerCase())) {
+      return true
+    }
+  }
+  return false
+}
+```
+
+Before saving and deploying this Snippet, click on the "Snippet rule" button on the upper right and select "All incoming requests".
+
+<Image align="center" src="https://files.readme.io/3aa20f5a697cdf913c2b93e0b6af029e89c7d1a7b61b2d2e8ce9912f436a0454-Screenshot_2026-03-04_at_10.39.05_AM.png" />
+
+Now, you should be able to click Deploy, and this Snippet will immediately begin forwarding requests with these user agents to your tollbit subdomain.
+
+<Callout icon="🚧" theme="warn">
+  This Snippet **will intercept** and **forward** traffic from your
+  site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+</Callout>
+
+### CloudFlare Workers
+
+This section is for customers who have advanced functionality with their current request interception flow, or for customers who do not have access to Snippets. Follow the steps described above (within the Cloudflare Analytics section) up until you have created a
 new worker. Name this working something to help you keep track of it's function (such as `bot-forwarding-worker`).
 Once you've created this worker, click into edit code and do the following to set up your forwarding worker.
 
@@ -576,11 +653,7 @@ const checkIfBotRequest = (request) => {
 ```
 
 <Callout icon="🚧" theme="warn">
-  This worker **will intercept** and potentially **forward** traffic from your
-  site. It is crucial to make sure that you incrementally deploy this to a
-  subset of your pages first and QA it thoroughly to ensure that it is not
-  blocking human traffic or good bot traffic (Google, etc) before elevating it
-  across your entire website.
+  This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
 
 ### Enterprise
