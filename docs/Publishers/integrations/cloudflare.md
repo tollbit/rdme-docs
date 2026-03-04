@@ -55,7 +55,7 @@ for your site.
 
 If you are not on Enterprise, read on to set up a worker to forward logs.
 
-** Free or Pro Plan Customers **
+** Free Plan Customers **
 
 ** Create new Worker **
 
