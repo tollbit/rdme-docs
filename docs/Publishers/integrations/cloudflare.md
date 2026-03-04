@@ -9,7 +9,7 @@ have much more control over how logs are sent.
 
 ### Enable Analytics with Cloudflare
 
-** Enterprise Plan Customers **
+#### Enterprise Plan Customers
 
 If you are on the Enterprise plan, you should have access to CloudFlare's
 <Anchor label="Logpush" target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature. You may
@@ -55,7 +55,7 @@ for your site.
 
 If you are not on Enterprise, read on to set up a worker to forward logs.
 
-** Free Plan Customers **
+#### Free, Pro or Business Plan Customers
 
 ** Create new Worker **
 
