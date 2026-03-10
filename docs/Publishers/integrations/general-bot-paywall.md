@@ -54,19 +54,23 @@ User-Agent contains "ChatGPT-User" | User-Agent contains "GPTBot" | User-Agent c
 
 Preserve the original request path when redirecting, so TollBit can serve the correct content:
 
-**https://your-tollbit-subdomain$request_uri**
+**[https://your-tollbit-subdomain$request_uri](https://your-tollbit-subdomain$request_uri)**
 
 ** Step 3 - Set the redirect type **
 
 Use a 302 (temporary) redirect so that changes to your bot list or TollBit configuration take effect without caching issues.
 
-** Step 4 - Test your configuration **
+<br />
+
+### Test your Configuration
 
 Use a tool like curl to simulate a bot request and confirm the redirect is working:
 
 **curl -A "GPTBot" -I [https://yoursite.com/sample-article](https://yoursite.com/sample-article)**
 
 You should see a 302 response redirecting to your TollBit subdomain.
+
+You can also use TollBit's in-product Test Bot Requests tab to further test each request and see the exact content that will be shown through the subdomain.
 
 <br />
 
