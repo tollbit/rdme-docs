@@ -18,7 +18,6 @@ TollBit's bot paywall works by intercepting requests from AI crawlers and redire
 
 ### Prerequisites
 
-
 Before configuring your tool, make sure you have:
 
 * Your TollBit subdomain (e.g., tollbit.yoursite.com or ai.yoursite.com) — found in your TollBit dashboard
@@ -29,9 +28,9 @@ Before configuring your tool, make sure you have:
 
 ### General Setup Steps
 
-Please see the following 4 steps below to integrate bot redirect at your edge layer to pass traffic to TollBit for monetization. 
+Please see the following 4 steps below to integrate bot redirect at your edge layer to pass traffic to TollBit for monetization.
 
-If you're unsure whether your platform supports bot redirect capabilities, or need help translating these steps to your specific tool, contact team@tollbit.com or book a technical office hours session with our team.
+If you're unsure whether your platform supports bot redirect capabilities, or need help translating these steps to your specific tool, contact [team@tollbit.com](mailto:team@tollbit.com) or book a technical office hours session with our team.
 
 ** Step 1 - Identify your redirect configuration **
 Log into your CDN or cybersecurity platform and locate where you can define custom rules based on request headers. This is typically found under:
@@ -45,11 +44,17 @@ Log into your CDN or cybersecurity platform and locate where you can define cust
 
 Create a new rule that triggers when the incoming User-Agent header matches any of the bots in your TollBit bot list. For example:
 
-[INSERT RULE JSON]
+**Recommend AI user agent list: **
+
+chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user
+
+Sample rule format:
+
+User-Agent contains "ChatGPT-User" | User-Agent contains "GPTBot" | User-Agent contains "PerplexityBot" | User-Agent contains "anthropic-ai" | User-Agent contains "CCBot" | User-Agent contains "Claude-Web" | User-Agent contains "ClaudeBot" | User-Agent contains "cohere-ai" | User-Agent contains "YouBot" | User-Agent contains "Diffbot" | User-Agent contains "OAI-SearchBot" | User-Agent contains "meta-externalagent" | User-Agent contains "Timpibot" | User-Agent contains "Amazonbot" | User-Agent contains "Bytespider" | User-Agent contains "Perplexity-Use"
 
 Preserve the original request path when redirecting, so TollBit can serve the correct content:
 
-[put in json Redirect to: https://your-tollbit-subdomain$request_uri]]
+**https://your-tollbit-subdomain$request_uri**
 
 ** Step 3 - Set the redirect type **
 
@@ -59,7 +64,7 @@ Use a 302 (temporary) redirect so that changes to your bot list or TollBit confi
 
 Use a tool like curl to simulate a bot request and confirm the redirect is working:
 
-[INSERT SAMPLE JSON CURL] curl -A "GPTBot" -I [https://yoursite.com/sample-article](https://yoursite.com/sample-article)
+**curl -A "GPTBot" -I [https://yoursite.com/sample-article](https://yoursite.com/sample-article)**
 
 You should see a 302 response redirecting to your TollBit subdomain.
 
