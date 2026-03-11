@@ -7,6 +7,20 @@ excerpt: Retrieve content by URL, self-report usage, list content catalog, and i
 
 Content represents the actual payload and data that you are looking for as a developer. You get content by making a request to a specific webpage. Every webpage has its own [rate](rates).
 
+## Content Intent
+
+Content Intent represents your use case for the content you are requesting. Tollbit currently supports two different intents: Content Retrieval and Indexing.
+
+### Indexing
+
+Indexing content (sometimes called crawling) is used when bots retrieve content to build indexes or analyze content at scale. If you are scanning pages to prebuild search indexes or running NLP to understand content, you are using indexing intent.
+
+If you plan to display the content to end users or use it as model training data, use content retrieval intent instead.
+
+### Content Retrieval
+
+Content Retrieval allows bots to fetch content to directly show or summarize for end users (subject to the license). For example, if you are pulling the latest news for a user or researching trips, you are using content retrieval.
+
 ---
 
 ## Get Content
