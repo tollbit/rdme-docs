@@ -7,11 +7,11 @@ metadata:
 ---
 Your Agent Site, which is automatically set up after you onboard to TollBit, is how you control how the agentic internet sees your content. We want to provide a high level walkthrough of how agents access your content and the different layers of controls you can provide.
 
-## Whitelisting Bots
+# Whitelisting Bots
 
 By default, your agent site blocks all bot access. However, there are many circumstances in which you wish to allow certain bots to be able to access your content. The TollBit Agent Site allows you to whitelist specific bots to be able to retrieve your content in Markdown.
 
-## Monetization
+# Monetization
 
 Monetization is an additional layer of access controls you can provision over your Agent Site. This enforces that all agents that wish you access your content go through the follow workflow.
 
