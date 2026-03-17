@@ -1,7 +1,10 @@
 ---
 title: Search to Content Workflow
-excerpt: Complete workflow guide for searching content, checking rates, and retrieving content using the Tollbit API with cURL or Python SDK.
+excerpt: >-
+  Complete workflow guide for searching content, checking rates, and retrieving
+  content using the Tollbit API with cURL or Python SDK.
 ---
+# A VERY OBVIOUS TYPO FOR DEMO PURPOSES
 
 # Search to Content Workflow
 
@@ -22,7 +25,7 @@ Before you begin, make sure you have:
 
     3. **Set your user agent**: This identifies your application. The user agent should be added to the dev dashboard in the `My Agents` tab
   </Tab>
-  
+
   <Tab title="Python">
     1. **Installed the SDK**:
        ```bash
@@ -51,7 +54,7 @@ The typical workflow consists of three main steps:
 
 Let's walk through each step with examples.
 
----
+***
 
 ## Step 1: Make a Search
 
@@ -66,7 +69,7 @@ Start by searching for content across the TollBit platform.
     --header 'TollBitKey: <key>'
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     from tollbit import search
@@ -102,9 +105,9 @@ Start by searching for content across the TollBit platform.
 
 You can customize your search with additional query parameters:
 
-- `size`: Number of results to return (maximum 20)
-- `next-token`: Token for pagination to get the next page
-- `properties`: Comma-separated list of domains (max 20) to filter results to only those properties
+* `size`: Number of results to return (maximum 20)
+* `next-token`: Token for pagination to get the next page
+* `properties`: Comma-separated list of domains (max 20) to filter results to only those properties
 
 <Tabs>
   <Tab title="cURL">
@@ -122,7 +125,7 @@ You can customize your search with additional query parameters:
     --header 'TollBitKey: <key>'
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     # Search with size limit
@@ -171,8 +174,9 @@ The search response is a JSON object with the following structure:
 ```
 
 **Understanding Search Result Flags**:
-- `discoverable`: Indicates the content is available in Tollbit
-- `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
+
+* `discoverable`: Indicates the content is available in Tollbit
+* `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
 
 ### Example: Parsing Search Results
 
@@ -189,7 +193,7 @@ The search response is a JSON object with the following structure:
     cat search_results.json | jq '.items[0].title'  # Get first result title
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     # Results are already parsed into objects
@@ -201,7 +205,7 @@ The search response is a JSON object with the following structure:
   </Tab>
 </Tabs>
 
----
+***
 
 ## Step 2: Get Rates for a Result
 
@@ -215,10 +219,10 @@ Once you've found a result you're interested in, check the available rates and l
     curl --location 'https://gateway.tollbit.com/tollbit/dev/v2/rate/https://www.forbes.com/sites/jefffromm/2018/03/27/marketing-to-millennial-new-home-buyers-lowes-innovative-diy-training-program/' \
     --header 'TollbitKey: <key>'
     ```
-    
+
     **Note**: The URL path in the rate endpoint should be the full URL of the content (including protocol), URL-encoded if necessary.
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     from tollbit import use_content
@@ -278,6 +282,7 @@ The rates response is a JSON array of rate objects:
 If you receive a `400 Bad Request` error with a message like `"access to this page is not allowed"`, it means the property exists in Tollbit but is not enabled for your organization. In this case, you should reach out to your Tollbit contact to request access to that property.
 
 Example error response:
+
 ```json
 {
     "detail": "access to this page is not allowed",
@@ -292,7 +297,7 @@ Example error response:
   <Tab title="cURL">
     Check the HTTP status code in your response. A 400 status indicates access restrictions.
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     from tollbit._apis.errors import BadRequestError
@@ -324,7 +329,7 @@ Example error response:
     cat rates.json | jq '.[0].license.licenseType'  # Get first rate license type
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     # Rates are already parsed into objects
@@ -337,11 +342,12 @@ Example error response:
   </Tab>
 </Tabs>
 
----
+***
 
 ## Step 3: Get the Content
 
 To retrieve content, you need to:
+
 1. Obtain an access token
 2. Use that token to retrieve the content
 
@@ -352,11 +358,12 @@ To retrieve content, you need to:
 <Tabs>
   <Tab title="cURL">
     First, obtain an access token by specifying:
-    - The URL of the content
-    - Maximum price you're willing to pay (in micros)
-    - Currency
-    - License type
-    - User agent
+
+    * The URL of the content
+    * Maximum price you're willing to pay (in micros)
+    * Currency
+    * License type
+    * User agent
 
     ```bash
     curl --location 'https://gateway.tollbit.com/dev/v2/tokens/content' \
@@ -385,7 +392,7 @@ To retrieve content, you need to:
 
     Save this token value - you'll need it in the next step.
   </Tab>
-  
+
   <Tab title="Python">
     The Python SDK handles token acquisition automatically when you call `get_sanctioned_content`. You don't need to manually obtain a token.
   </Tab>
@@ -423,13 +430,14 @@ To retrieve content, you need to:
     --header 'Accept: text/html'
     ```
   </Tab>
-  
+
   <Tab title="Python">
     Retrieve the actual content using `get_sanctioned_content`. This method automatically handles token acquisition and content retrieval in a single call. You need to specify:
-    - The URL of the content
-    - Maximum price you're willing to pay (in micros)
-    - Currency
-    - License type
+
+    * The URL of the content
+    * Maximum price you're willing to pay (in micros)
+    * Currency
+    * License type
 
     ```python
     from tollbit import use_content
@@ -533,16 +541,16 @@ The content response is a JSON object:
 
 ### Available License Types
 
-- `ON_DEMAND_LICENSE`: Standard on-demand license
-- `ON_DEMAND_FULL_USE_LICENSE`: Full-use on-demand license
-- `CUSTOM_LICENSE`: Custom license (requires `licenseCuid` parameter in token request for cURL, or `license_id` for Python SDK)
+* `ON_DEMAND_LICENSE`: Standard on-demand license
+* `ON_DEMAND_FULL_USE_LICENSE`: Full-use on-demand license
+* `CUSTOM_LICENSE`: Custom license (requires `licenseCuid` parameter in token request for cURL, or `license_id` for Python SDK)
 
 ### Available Content Formats
 
-- **Markdown** (default): `text/markdown` for cURL, `content_formats.MARKDOWN` for Python
-- **HTML**: `text/html` for cURL, `content_formats.HTML` for Python
+* **Markdown** (default): `text/markdown` for cURL, `content_formats.MARKDOWN` for Python
+* **HTML**: `text/html` for cURL, `content_formats.HTML` for Python
 
----
+***
 
 ## Complete Example: End-to-End Workflow
 
@@ -635,7 +643,7 @@ Here's a complete example that ties all the steps together:
     echo "$BODY_PREVIEW..."
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     from tollbit import search
@@ -700,16 +708,16 @@ Here's a complete example that ties all the steps together:
   </Tab>
 </Tabs>
 
----
+***
 
 ## Error Handling
 
 The API returns standard HTTP status codes:
 
-- **200 OK**: Request successful
-- **400 Bad Request**: Invalid request (e.g., access not allowed, invalid parameters)
-- **401 Unauthorized**: Invalid or missing API key
-- **500-599 Server Error**: Server-side errors
+* **200 OK**: Request successful
+* **400 Bad Request**: Invalid request (e.g., access not allowed, invalid parameters)
+* **401 Unauthorized**: Invalid or missing API key
+* **500-599 Server Error**: Server-side errors
 
 ### Example Error Response
 
@@ -737,7 +745,7 @@ The API returns standard HTTP status codes:
     fi
     ```
   </Tab>
-  
+
   <Tab title="Python">
     ```python
     from tollbit._apis.errors import (
@@ -761,13 +769,13 @@ The API returns standard HTTP status codes:
   </Tab>
 </Tabs>
 
----
+***
 
 ## Additional Resources
 
-- **API Documentation**: Visit [docs.tollbit.com](https://docs.tollbit.com)
+* **API Documentation**: Visit [docs.tollbit.com](https://docs.tollbit.com)
 
----
+***
 
 ## Summary
 
