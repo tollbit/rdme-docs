@@ -4,8 +4,6 @@ excerpt: >-
   Complete workflow guide for searching content, checking rates, and retrieving
   content using the Tollbit API with cURL or Python SDK.
 ---
-# A VERY OBVIOUS TYPO FOR DEMO PURPOSES
-
 # Search to Content Workflow
 
 This guide walks you through the complete workflow of using the Tollbit API to search for content, check rates, and retrieve content. You can use either cURL commands or the Python SDK.
