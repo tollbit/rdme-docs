@@ -20,6 +20,7 @@ TollBit's bot paywall works by intercepting requests from AI crawlers and redire
 
 Before configuring your tool, make sure you have:
 
+<!-- markdownlint-disable-next-line MD044 -->
 * Your TollBit subdomain (e.g., tollbit.yoursite.com or ai.yoursite.com) — found in your TollBit dashboard
 * The list of bot user agents you want to monetize — available in your TollBit dashboard under Bot Management
 * Access to your CDN or security tool's bot rules, firewall rules, or redirect configuration

@@ -447,7 +447,7 @@ function handler(event) {
 
 Earlier, our WAF rule had set a header called `bot` onto the request if it matched the rule. Amazon automatically appends `x-amzn-waf-` to the header,
 so the actual header to look for is now called `x-amzn-waf-bot`. If this header exists, it means that our WAF rule detected that this request
-is a bot request, so we now want to forward it to our tollbit subdomain. Once you are ready, save the changes and publish this code.
+is a bot request, so we now want to forward it to our `tollbit` subdomain. Once you are ready, save the changes and publish this code.
 On the publish tab, you will then need to associate this function to your existing CloudFront distribution.
 
 <Callout icon="🚧" theme="warn">

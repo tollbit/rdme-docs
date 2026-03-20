@@ -9,7 +9,7 @@ Content represents the actual payload and data that you are looking for as a dev
 
 ## Content Intent
 
-Content Intent represents your use case for the content you are requesting. Tollbit currently supports two different intents: Content Retrieval and Indexing.
+Content Intent represents your use case for the content you are requesting. TollBit currently supports two different intents: Content Retrieval and Indexing.
 
 ### Indexing
 

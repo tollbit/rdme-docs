@@ -71,7 +71,7 @@ Endpoint”.
 ![Fastly Http Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png)
 
 Find the HTTP logging endpoint and click “Create endpoint”. You can set the name
-to anything descriptive (e.g. tollbit-prod). Keep the placement option as the
+to anything descriptive (e.g. `tollbit-prod`). Keep the placement option as the
 default selection. Make sure your log format is exactly as follows, without
 extra trailing spaces or newlines:
 

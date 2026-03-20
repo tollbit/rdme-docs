@@ -7,7 +7,7 @@ excerpt: Questions about subdomains, CDNs, analytics, and how TollBit works.
 
 ## Why do I need to verify my property / set up a subdomain? What is the purpose of TXT and NS records?
 
-Setting up a Tollbit subdomain (e.g., tollbit.yourcompany.com) is a critical step in establishing a trusted, monitored gateway for AI agents to access your content and services.
+Setting up a TollBit subdomain (e.g., `tollbit.yourcompany.com`) is a critical step in establishing a trusted, monitored gateway for AI agents to access your content and services.
 
 The Tollbit subdomain serves as the unified gateway where AI agents can access website content, headless browsing capabilities, protocol interactions like MCP and NLWeb, and all future services and integrations. In addition, it provides enhanced security and control, unified access point for AI agent requests, and trust and authenticity.
 
@@ -62,4 +62,3 @@ You can also create custom test user-agents and API tokens to simulate the full 
 ## Can I use another AI marketplace like TollBit in parallel?
 
 Yes, this is dependent on how you set up your log exports and bot redirect policies within your edge servers. In addition, if you do have existing deals with other AI companies, we can work with them to manage the content access through TollBit.
-
