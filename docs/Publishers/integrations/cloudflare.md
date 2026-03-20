@@ -370,7 +370,7 @@ Before saving and deploying this Snippet, click on the "Snippet rule" button on 
 
 <Image align="center" src="https://files.readme.io/3aa20f5a697cdf913c2b93e0b6af029e89c7d1a7b61b2d2e8ce9912f436a0454-Screenshot_2026-03-04_at_10.39.05_AM.png" />
 
-Now, you should be able to click Deploy, and this Snippet will immediately begin forwarding requests with these user agents to your tollbit subdomain.
+Now, you should be able to click Deploy, and this Snippet will immediately begin forwarding requests with these user agents to your `tollbit` subdomain.
 
 <Callout icon="🚧" theme="warn">
   This Snippet **will intercept** and **forward** traffic from your

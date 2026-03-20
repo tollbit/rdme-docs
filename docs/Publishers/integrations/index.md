@@ -5,7 +5,7 @@ excerpt: Learn how to integrate TollBit with various CDN and cloud platforms for
 
 # Integrations
 
-We provide integrations with a variety of different platforms to enable analytics and bot forwarding to your TollBit subdomain.
+We provide integrations with a variety of different platforms to enable analytics and bot forwarding to your `tollbit` subdomain.
 
 ## Integrating Analytics with TollBit
 
@@ -52,4 +52,3 @@ Choose your platform below to view detailed integration instructions. Each integ
 ### Other Methods
 
 - **[Other Methods](other)** - Log sink API endpoint and file storage (S3, R2, GCS) options
-

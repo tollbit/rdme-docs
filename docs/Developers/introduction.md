@@ -20,8 +20,7 @@ TollBit is aiming to power this application layer of AI. We provide scalable and
 <!-- markdownlint-disable-next-line MD044 -->
 The _tollbit.example.com_ paradigm.
 
-<!-- markdownlint-disable-next-line MD044 -->
-When using TollBit, you have the Internet's data at your fingertips to build amazing AI applications. The key paradigm shift, is that all participating content providers will create a tollbit.example.com subdomain. Instead of scraping the human facing site, you can directly request tollbit.\<anywebsite>.com/\<content-path>, similarly as you have before. Except now, the response of that request is perfectly formatted for RAG and licensed for one time use because you went straight to the source, instead of through a shady scraping third party.
+When using TollBit, you have the Internet's data at your fingertips to build amazing AI applications. The key paradigm shift, is that all participating content providers will create a `tollbit.example.com` subdomain. Instead of scraping the human facing site, you can directly request `tollbit.<anywebsite>.com/<content-path>`, similarly as you have before. Except now, the response of that request is perfectly formatted for RAG and licensed for one time use because you went straight to the source, instead of through a shady scraping third party.
 
 ## Getting started
 
