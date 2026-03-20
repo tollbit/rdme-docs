@@ -15,7 +15,7 @@ For instance, publishers can set pricing by categories (e.g., sports, politics),
 
 Once the bot presents a valid TollBit token, we authorize the request and fetch the content from your site securely. Today, this happens via our internal reverse proxy:
 
-- The request is sent to api.tollbit.com/GetContent
+- The request is sent to `api.tollbit.com/GetContent`
 - We scrape the page (on your behalf) and return the content in clean Markdown, not raw HTML
 - This allows agents to consume structured, legible content without ads, scripts, or layout junk
 
@@ -26,4 +26,3 @@ Currently, most publishers don't provide specialized or stripped-down versions o
 ## How can I bring all my licenses under the TollBit "hood"? I already have direct deals with AI players (1:1 licenses), but I also want to offer some content under a general license. How does this all fit together?
 
 This is one of the core reasons publishers use TollBit in the first place. You can think of us as the rules engine sitting between your content and the AI ecosystem. We make it easy to enforce, meter, and report on any mix of licensing terms, whether it's bespoke or standard.
-

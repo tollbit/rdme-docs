@@ -39,9 +39,9 @@ Ensure that you have saved your Fastly API key and service ID in the integration
 
 ### Enable Bot Paywall
 
-Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, toggle on “Block” for each agent you would like to forward to your TollBit subdomain.
+Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, toggle on “Block” for each agent you would like to forward to your `tollbit` subdomain.
 
-Scrolling further down on the page allows you to “Block” all bots, which would redirect all listed bots on the page to forward to your TollBit subdomain.
+Scrolling further down on the page allows you to “Block” all bots, which would redirect all listed bots on the page to forward to your `tollbit` subdomain.
 
 ![Integrations Fastly Service 5](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-5.png)
 
@@ -71,7 +71,7 @@ Endpoint”.
 ![Fastly Http Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png)
 
 Find the HTTP logging endpoint and click “Create endpoint”. You can set the name
-to anything descriptive (e.g. tollbit-prod). Keep the placement option as the
+to anything descriptive (e.g. `tollbit-prod`). Keep the placement option as the
 default selection. Make sure your log format is exactly as follows, without
 extra trailing spaces or newlines:
 
@@ -99,7 +99,7 @@ publish those as well.
 
 ### Enable Bot Paywall
 
-Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your tollbit subdomain.
+Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
 
 <Callout icon="📘" theme="info">
   The code shown here is for a clean Fastly environment. If you have any

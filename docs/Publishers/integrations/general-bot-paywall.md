@@ -20,7 +20,8 @@ TollBit's bot paywall works by intercepting requests from AI crawlers and redire
 
 Before configuring your tool, make sure you have:
 
-* Your TollBit subdomain (e.g., tollbit.yoursite.com or ai.yoursite.com) — found in your TollBit dashboard
+<!-- markdownlint-disable-next-line MD044 -->
+* Your `tollbit` subdomain (e.g., `tollbit.yoursite.com` or `ai.yoursite.com`) — found in your TollBit dashboard
 * The list of bot user agents you want to monetize — available in your TollBit dashboard under Bot Management
 * Access to your CDN or security tool's bot rules, firewall rules, or redirect configuration
 
@@ -70,7 +71,7 @@ Use a tool like curl to simulate a bot request and confirm the redirect is worki
 
 **curl -A "GPTBot" -I [https://yoursite.com/sample-article](https://yoursite.com/sample-article)**
 
-You should see a 302 response redirecting to your TollBit subdomain.
+You should see a 302 response redirecting to your `tollbit` subdomain.
 
 You can also use TollBit's in-product Test Bot Requests tab to further test each request and see the exact content that will be shown through the subdomain.
 

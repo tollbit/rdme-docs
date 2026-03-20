@@ -7,7 +7,7 @@ excerpt: Search for content across the web and discover licensable content throu
 
 ## Overview
 
-The Licensed Search API allows you to search for content across the web. Results include information about the content's availability for licensing through Tollbit, helping you discover and identify licensable content.
+The Licensed Search API allows you to search for content across the web. Results include information about the content's availability for licensing through TollBit, helping you discover and identify licensable content.
 
 ## Endpoint
 
@@ -149,7 +149,7 @@ curl --location 'https://gateway.tollbit.com/dev/v2/search?q=technology&properti
   --header 'TollBitKey: <KEY>'
 ```
 
-This will filter the search results to only show results from `example.com` and `www.techsite.com`. Only verified properties in the Tollbit system will be used.
+This will filter the search results to only show results from `example.com` and `www.techsite.com`. Only verified properties in the TollBit system will be used.
 
 ### Pagination
 
@@ -186,6 +186,6 @@ Error responses follow the standard `ErrorResponse` format.
 ## Notes
 
 - **Maximum Pages**: The API supports up to 10 pages (pages 0-9). After page 9, `nextToken` will be empty.
-- **Property Filtering**: Only properties in the Tollbit network are used when filtering by `properties`. Invalid or unverified domains are silently ignored.
+- **Property Filtering**: Only properties in the TollBit network are used when filtering by `properties`. Invalid or unverified domains are silently ignored.
 - **License Checking**: The `readyToLicense` field indicates whether a publisher has set rates and is ready to transact.
 - **Domain Matching**: The system handles both `www` and non-`www` variants of domains automatically.

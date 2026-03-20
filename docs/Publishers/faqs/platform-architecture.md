@@ -7,9 +7,9 @@ excerpt: Questions about subdomains, CDNs, analytics, and how TollBit works.
 
 ## Why do I need to verify my property / set up a subdomain? What is the purpose of TXT and NS records?
 
-Setting up a Tollbit subdomain (e.g., tollbit.yourcompany.com) is a critical step in establishing a trusted, monitored gateway for AI agents to access your content and services.
+Setting up a `tollbit` subdomain (e.g., `tollbit.yourcompany.com`) is a critical step in establishing a trusted, monitored gateway for AI agents to access your content and services.
 
-The Tollbit subdomain serves as the unified gateway where AI agents can access website content, headless browsing capabilities, protocol interactions like MCP and NLWeb, and all future services and integrations. In addition, it provides enhanced security and control, unified access point for AI agent requests, and trust and authenticity.
+The `tollbit` subdomain serves as the unified gateway where AI agents can access website content, headless browsing capabilities, protocol interactions like MCP and NLWeb, and all future services and integrations. In addition, it provides enhanced security and control, unified access point for AI agent requests, and trust and authenticity.
 
 ## Do I need a CDN to get started with TollBit?
 
@@ -35,7 +35,7 @@ By using server logs, we get full visibility into every request including bots b
 
 For verification, real-time streaming allows for instantaneous verification of log setup. In contrast, S3-based log ingestion currently involves a manual process and takes up to 24 hours for verification, as we perform nightly jobs to process the logs. We plan to support self-service onboarding for S3 in the future to enable more immediate verification.
 
-## Is the TollBit subdomain required for the paywall?
+## Is the `tollbit` subdomain required for the paywall?
 
 Yes, the subdomain is a technical requirement for the paywall to function properly. This is because:
 
@@ -47,7 +47,7 @@ Setting up this subdomain is usually a quick DNS config.
 
 ## How does the bot redirect mechanism work?
 
-It's straightforward. At your CDN edge (for example, Cloudflare or Akamai), you set up a small worker script or edge logic. That logic checks each request against a simple list of known bot user agents. If the incoming request matches one of those user agents, the CDN immediately redirects it to a TollBit-managed subdomain.
+It's straightforward. At your CDN edge (for example, Cloudflare or Akamai), you set up a small worker script or edge logic. That logic checks each request against a simple list of known bot user agents. If the incoming request matches one of those user agents, the CDN immediately redirects it to a `tollbit` subdomain managed by TollBit.
 
 TollBit then checks if the bot has a valid authentication token. If not, we show the bot a paywall page, instructing them to get a valid token. If the bot does have a token, we fetch the requested content securely from the publisher and deliver it, ensuring publishers get paid accordingly.
 
@@ -62,4 +62,3 @@ You can also create custom test user-agents and API tokens to simulate the full 
 ## Can I use another AI marketplace like TollBit in parallel?
 
 Yes, this is dependent on how you set up your log exports and bot redirect policies within your edge servers. In addition, if you do have existing deals with other AI companies, we can work with them to manage the content access through TollBit.
-

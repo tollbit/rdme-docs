@@ -39,7 +39,7 @@ Google's Cloud Armor allows you to set up some simple redirection rules for user
 
 Note that to implement the full solution, where we want to preserve the path of the content, you
 will need to set up a separate backend service that handles redirection that preserves path. However,
-you can simply just redirect to the root tollbit subdomain as well to get most of the functionaltiy.
+you can simply just redirect to the root `tollbit` subdomain as well to get most of the functionaltiy.
 
 First, navigate
 to Cloud Armor policies and create a new one (or add this to your existing policy). Set the default rule to

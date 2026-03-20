@@ -1,0 +1,8 @@
+{
+  "globs": [
+    "docs/**/*.md",
+    "recipes/**/*.md",
+    "custom_pages/**/*.md",
+    "reference/**/*.md"
+  ]
+}

@@ -6,7 +6,7 @@ excerpt: >-
 ---
 # Search to Content Workflow
 
-This guide walks you through the complete workflow of using the Tollbit API to search for content, check rates, and retrieve content. You can use either cURL commands or the Python SDK.
+This guide walks you through the complete workflow of using the TollBit API to search for content, check rates, and retrieve content. You can use either cURL commands or the Python SDK.
 
 ## Prerequisites
 
@@ -173,7 +173,7 @@ The search response is a JSON object with the following structure:
 
 **Understanding Search Result Flags**:
 
-* `discoverable`: Indicates the content is available in Tollbit
+* `discoverable`: Indicates the content is available in TollBit
 * `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
 
 ### Example: Parsing Search Results
@@ -277,7 +277,7 @@ The rates response is a JSON array of rate objects:
 
 ### Handling Access Restrictions
 
-If you receive a `400 Bad Request` error with a message like `"access to this page is not allowed"`, it means the property exists in Tollbit but is not enabled for your organization. In this case, you should reach out to your Tollbit contact to request access to that property.
+If you receive a `400 Bad Request` error with a message like `"access to this page is not allowed"`, it means the property exists in TollBit but is not enabled for your organization. In this case, you should reach out to your TollBit contact to request access to that property.
 
 Example error response:
 
@@ -771,6 +771,7 @@ The API returns standard HTTP status codes:
 
 ## Additional Resources
 
+<!-- markdownlint-disable-next-line MD044 -->
 * **API Documentation**: Visit [docs.tollbit.com](https://docs.tollbit.com)
 
 ***
