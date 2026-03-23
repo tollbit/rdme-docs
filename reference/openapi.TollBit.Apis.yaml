@@ -674,7 +674,6 @@ components:
         - maxPriceMicros
         - currency
         - licenseType
-        - licenseCuid
       properties:
         url:
           type: string
