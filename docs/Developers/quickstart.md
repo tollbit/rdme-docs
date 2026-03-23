@@ -9,7 +9,7 @@ excerpt: >-
 
 This guide will get you all set up and ready to use the TollBit API. We'll cover how to get your account ready and get started using one of our API clients and how to make your first API request.
 
-<Callout icon="📘">
+<Callout icon="📘" theme="info">
   Before getting started, please create a Developer Account through the <Anchor label="Developer Dashboard" target="_blank" href="https://hack.tollbit.com">Developer Dashboard</Anchor>
 </Callout>
 
@@ -63,4 +63,6 @@ Great, you're now set up with an API client and have made your first request to 
 
 * <Anchor label="Checkout the TollBit Developer Dashboard" target="_blank" href="https://hack.tollbit.com">Checkout the TollBit Developer Dashboard</Anchor>
 * [Go over the dashboard overview](dev-overview)
-* [Look at our Python SDK](https://github.com/tollbit/tollbit-python-sdk
+* [Look at our Python SDK](https://github.com/tollbit/tollbit-python-sdk) 
+
+<br />
