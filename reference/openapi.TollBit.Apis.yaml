@@ -266,8 +266,7 @@ paths:
           in: query
           required: false
           description: >-
-            Comma-separated list of domains (max 20) to boost in search results.
-            When provided, generates a custom goggle string.
+            Comma-separated list of domains (max 20) to include in search results.
           schema:
             type: string
           explode: false
