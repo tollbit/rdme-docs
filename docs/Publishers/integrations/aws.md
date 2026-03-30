@@ -42,6 +42,10 @@ To finalize your setup, we will need access to the directory in your S3 bucket
 where your logs are stored, along with the pattern for how the logs are stored
 for instance `/service/logs/2024/12/04/log-file`
 
+<Callout icon="📘" theme="info">
+  If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
+</Callout>
+
 ### Forwarding Logs with Cloudfront
 
 To forward logs from Cloudfront follow these steps:
