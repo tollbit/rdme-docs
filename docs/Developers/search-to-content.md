@@ -19,7 +19,7 @@ Before you begin, make sure you have:
        curl --version
        ```
 
-    2. **Obtained your API key**: You'll need a Tollbit organization API key. Replace `<key>` in the examples below with your actual API key.
+    2. **Obtained your API key**: You'll need a Tollbit organization API key. Replace {'`<key>`'} in the examples below with your actual API key.
 
     3. **Set your user agent**: This identifies your application. The user agent should be added to the dev dashboard in the `My Agents` tab
   </Tab>
@@ -771,7 +771,7 @@ The API returns standard HTTP status codes:
 
 ## Additional Resources
 
-<!-- markdownlint-disable-next-line MD044 -->
+{/* markdownlint-disable-next-line MD044 */}
 * **API Documentation**: Visit [docs.tollbit.com](https://docs.tollbit.com)
 
 ***
