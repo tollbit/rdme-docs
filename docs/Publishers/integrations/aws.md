@@ -92,6 +92,10 @@ access to the directory in your S3 bucket where your logs are stored, along with
 the pattern for how the logs are stored for instance
 `/service/logs/2024/12/04/log-file`
 
+<Callout icon="📘" theme="info">
+  If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
+</Callout>
+
 ### AWS WAF + CloudFront Bot Paywall
 
 You can use a combination of AWS Web ACLs and CloudFront to detect and redirect bots. This example will use a Web ACL with
@@ -457,4 +461,8 @@ On the publish tab, you will then need to associate this function to your existi
 <Callout icon="🚧" theme="warn">
   This code snippet will run for every request to your distribution. Please
   ensure you've tested this function before completing this step.
+</Callout>
+
+<Callout icon="📘" theme="info">
+  If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
 </Callout>
