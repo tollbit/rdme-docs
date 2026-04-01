@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-# Arc XP 
+# Arc XP
 
 This integration supports TollBit's AI bot monitoring, management and monetization capabilities as well as seamless connections with MCP and NLWeb.
 
@@ -14,8 +14,7 @@ Follow these steps to set up an integration into our platform if you use Arc XP.
 
 ## Setup Analytics with Arc XP
 
-
-Submit an ACS ticket to the ARC XP team to request the log ingestion for EACH SITE where you would like to enable for TollBit analytics. 
+Submit an ACS ticket to the ARC XP team to request the log ingestion for each site where you would like to enable for TollBit analytics.
 
 **ACS Ticket Example:**
 
