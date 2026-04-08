@@ -4,14 +4,14 @@ excerpt: Learn how to integrate TollBit with Fastly.
 ---
 There are two integration options to connect Fastly with TollBit.
 
-* The Standard method uses API tokens to give TollBit access to read http traffic logs and implement bot paywall directly through the TollBit interface.
-* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and paywall as well.
+* The Standard method uses API tokens to give TollBit access to read http traffic logs and implement agent site routing directly through the TollBit interface.
+* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and agent site routing as well.
 
 ## Fastly (Standard)
 
 Follow these steps to set up an integration into our platform if you use Fastly.
 
-### Initial Setup for Analytics & Paywall
+### Initial Setup for Analytics & Agent Site Routing
 
 **Get Service ID and API Key from Fastly**
 
@@ -37,7 +37,7 @@ Ensure that you have saved your Fastly API key and service ID in the integration
 
 ![Integrations Fastly Service 4](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-4.png)
 
-### Enable Bot Paywall
+### Route to your Agent Site
 
 Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, toggle on “Block” for each agent you would like to forward to your `tollbit` subdomain.
 
@@ -51,7 +51,7 @@ Scrolling further down on the page allows you to “Block” all bots, which wou
 
 ## Fastly (Custom)
 
-This is the documentation for the legacy Fastly integration that involves implementing VCL scripts to enable TollBit analytics and bot paywall. VCL scripts can allow for additional customizations for implementing analytics and bot forwarding. Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you'd like to discuss this implementation route considering your use case.
+This is the documentation for the legacy Fastly integration that involves implementing VCL scripts to enable TollBit analytics and agent site. VCL scripts can allow for additional customizations for implementing analytics and bot forwarding. Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you'd like to discuss this implementation route considering your use case.
 
 ### Enable Analytics
 
@@ -97,7 +97,7 @@ Once you are ready to publish these changes, click the “Activate” button. Ke
 in mind that if you have other unpublished changes in Fastly, this may also
 publish those as well.
 
-### Enable Bot Paywall
+### Route to Agent Site
 
 Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
 
