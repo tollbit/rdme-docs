@@ -1,18 +1,18 @@
 ---
-title: General Bot Paywall
-excerpt: Learn how to integrate TollBit Bot Paywall with other bot redirection methods.
+title: General Agent Site Routing
+excerpt: Learn how to integrate TollBit Agent Site with other bot redirection methods.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
-## Setting Up the Bot Paywall with an Unlisted CDN or Cybersecurity Tool
+## Setting Up the Agent Site with an Unlisted CDN or Cybersecurity Tool
 
-If your CDN or cybersecurity tool is not listed on our Integrations page, you can still set up the TollBit bot paywall as long as your platform supports bot redirect capabilities — the ability to detect bot user agents and redirect them to a custom URL.
+If your CDN or cybersecurity tool is not listed on our Integrations page, you can still route to the TollBit Agent Site as long as your platform supports bot redirect capabilities — the ability to detect bot user agents and redirect them to a custom URL.
 
 ### How It Works
 
-TollBit's bot paywall works by intercepting requests from AI crawlers and redirecting them to a TollBit-hosted URL, where access and monetization logic is handled. Any tool that can inspect the User-Agent header and conditionally redirect traffic can support this setup.
+TollBit's Agent Site works by intercepting requests from AI crawlers and redirecting them to a TollBit-hosted URL, where access and monetization logic is handled. Any tool that can inspect the User-Agent header and conditionally redirect traffic can support this setup.
 
 <br />
 
@@ -21,6 +21,7 @@ TollBit's bot paywall works by intercepting requests from AI crawlers and redire
 Before configuring your tool, make sure you have:
 
 {/* markdownlint-disable-next-line MD044 */}
+
 * Your `tollbit` subdomain (e.g., `tollbit.yoursite.com` or `ai.yoursite.com`) — found in your TollBit dashboard
 * The list of bot user agents you want to monetize — available in your TollBit dashboard under Bot Management
 * Access to your CDN or security tool's bot rules, firewall rules, or redirect configuration
@@ -34,7 +35,6 @@ Please see the following 4 steps below to integrate bot redirect at your edge la
 If you're unsure whether your platform supports bot redirect capabilities, or need help translating these steps to your specific tool, contact [team@tollbit.com](mailto:team@tollbit.com) or book a technical office hours session with our team.
 
 #### Step 1 - Identify your redirect configuration
-
 
 Log into your CDN or cybersecurity platform and locate where you can define custom rules based on request headers. This is typically found under:
 
