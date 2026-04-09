@@ -20,7 +20,7 @@ be able to click the `Verify` button and add your log drain.
 
 ![Log Drain 2](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/log-drain-2.png)
 
-### Vercel Bot Paywall
+### Route to Agent Site
 
 To redirect bots to your `tollbit` subdomain you can use <Anchor label="Vercel's Custom WAF rules" target="_blank" href="https://vercel.com/docs/security/vercel-waf/custom-rules">Vercel's Custom WAF rules</Anchor>.
 
