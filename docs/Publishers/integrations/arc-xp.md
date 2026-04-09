@@ -40,7 +40,7 @@ You can configure the edge integration within the Arc Delivery UI. Please follow
 
 <Image align="center" src="https://files.readme.io/b7686e9fe841ecc27558366572c8d22b90c0773b65755e9e3922ad270ef72b11-Screenshot_2026-04-01_at_12.48.54_PM.png" />
 
-3. Scroll down to the TollBit integration and enable the toggle on the righthand side. Enabling the toggle (without adding any user agent string in the text bar) will allow all your AI bots to be sent to the TollBit Agent Site. This will allow you to manage the bot paywall or whitelists directly within TollBit UI.
+3. Scroll down to the TollBit integration and enable the toggle on the righthand side. Enabling the toggle (without adding any user agent string in the text bar) will allow all your AI bots to be sent to the TollBit Agent Site. This will allow you to manage the Agent Site or whitelists directly within TollBit UI.
 
 <Image align="center" src="https://files.readme.io/4a73b6b37de2b649234b20bdb388b270cd3bb32fe8b971cc113cd994fa5dee54-Screenshot_2026-04-01_at_12.50.13_PM.png" />
 
