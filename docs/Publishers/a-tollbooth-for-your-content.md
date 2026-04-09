@@ -8,8 +8,7 @@ metadata:
 ---
 # A Tollbooth for your Content
 
-TollBit allows you to quickly set up a paid API in front of your website in as little as 15 minutes with no coding.
-This effectively puts your data behind a paywall, and allows you to immediately start charging bots for on demand access.
+TollBit allows you to quickly set up an Agent Site, separate from your existing website, in as little as 15 minutes with no coding. This effectively puts your data behind an API and/or Markdown, and allows you to immediately start charging bots for on demand access.
 
 ## Overview
 
