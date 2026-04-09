@@ -70,7 +70,7 @@ If you are not on Enterprise, read on to set up a worker to forward logs.
 
 If you already have an existing worker that is intercepting requests for your
 site, or you already set up a worker in the
-Bot Paywall section below, you will need to
+Agent Site section below, you will need to
 integrate this logging code with that worker. If you just have a bot deterrence
 worker set up, see that section to get a code snippet that also pushes logs.
 
@@ -289,7 +289,7 @@ If you aren't sure which route to disable, consider running the worker on your f
 and then using the top pages chart in our analytics platform to understand any routes you
 wish to filter out.
 
-### CloudFlare Bot Paywall
+### Route to Agent Site
 
 There are several levels of bot detection and forwarding that you can configure for CloudFlare, depending on whether
 or not you are on their Enterprise plan.
