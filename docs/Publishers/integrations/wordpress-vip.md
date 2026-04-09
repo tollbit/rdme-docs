@@ -28,7 +28,7 @@ Please reach out to [team@tollbit.com](mailto:team@tollbit.com) when the storage
 
 <br />
 
-### Setup Bot Paywall in WordPress VIP
+### Route to Agent Site in WordPress VIP
 
 Log in to the WordPress VIP Dashboard and select the banner navigation menu item labeled “Integrations Center” at the top of the VIP Dashboard.
 
