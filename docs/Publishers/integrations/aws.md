@@ -96,7 +96,7 @@ the pattern for how the logs are stored for instance
   If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
 </Callout>
 
-### AWS WAF + CloudFront Bot Paywall
+### AWS WAF + CloudFront Route To Agent Site
 
 You can use a combination of AWS Web ACLs and CloudFront to detect and redirect bots. This example will use a Web ACL with
 a WAF rule to detect bots, and then have CloudFront redirect bot traffic.
