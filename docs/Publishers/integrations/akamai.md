@@ -83,7 +83,7 @@ Finally, you can
 <Anchor label="review and activate" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor>
 your stream!
 
-### Akamai Bot Paywall
+### Route to Agent Site
 
 Akamai allows you to set up redirection rules at the edge using either Cloudlets or Content Protector.
 
