@@ -120,289 +120,176 @@ rules and rule groups, and use the JSON editor. Copy and paste the following rul
         {
           "ByteMatchStatement": {
             "SearchString": "chatgpt-user",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "perplexitybot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "NONE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "NONE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "gptbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "anthropic-ai",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "ccbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "amazonbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "claude-web",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "cohere-ai",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "omgilibot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "omgili",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "youbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "bytespider",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "diffbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "oai-searchbot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "meta-externalagent",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "timpibot",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         },
         {
           "ByteMatchStatement": {
             "SearchString": "perplexity-user",
-            "FieldToMatch": {
-              "SingleHeader": {
-                "Name": "user-agent"
-              }
-            },
-            "TextTransformations": [
-              {
-                "Priority": 0,
-                "Type": "LOWERCASE"
-              }
-            ],
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "claudebot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "google-notebooklm",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "claude-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "duckassistbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "mistralai-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
             "PositionalConstraint": "CONTAINS"
           }
         }
