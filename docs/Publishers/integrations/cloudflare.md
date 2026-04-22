@@ -329,8 +329,8 @@ const botList = [
   'Bytespider',
   'Perplexity-User',
   'Claude-SearchBot',
-  'Meta-Webindexer',
-	'Amzn-SearchBot'
+	'Meta-Webindexer',
+'Amzn-SearchBot'
 ]
 
 export default {
