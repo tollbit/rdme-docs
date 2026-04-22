@@ -415,6 +415,9 @@ const botList = [
   'Amazonbot',
   'Bytespider',
   'Perplexity-User',
+  'Claude-SearchBot',
+'Meta-Webindexer',
+'Amzn-SearchBot'
 ]
 
 const CF_APP_VERSION = '1.0.0'
