@@ -330,7 +330,7 @@ const botList = [
   'Perplexity-User',
   'Claude-SearchBot',
   'Meta-Webindexer',
-'Amzn-SearchBot'
+	'Amzn-SearchBot'
 ]
 
 export default {
