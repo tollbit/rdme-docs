@@ -329,7 +329,7 @@ const botList = [
   'Bytespider',
   'Perplexity-User',
   'Claude-SearchBot',
-	'Meta-Webindexer',
+'Meta-Webindexer',
 'Amzn-SearchBot'
 ]
 
