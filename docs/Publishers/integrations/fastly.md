@@ -5,7 +5,8 @@ excerpt: Learn how to integrate TollBit with Fastly.
 There are two integration options to connect Fastly with TollBit.
 
 * The Standard method uses API tokens to give TollBit access to read http traffic logs and implement agent site routing directly through the TollBit interface.
-* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and agent site routing as well.
+* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and agent site routing as well. 
+  * This is the recommended route for teams with multiple Fastly services and/or advanced Infrastructure as code workflows.
 
 ## Fastly (Standard)
 
