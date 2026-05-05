@@ -1,6 +1,6 @@
 ---
 title: Introduction
-excerpt: Learn how to set up TollBit to monitize your data.
+excerpt: Learn how to set up TollBit to monetize your data.
 deprecated: false
 hidden: false
 metadata:
