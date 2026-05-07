@@ -53,7 +53,7 @@ chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claud
 
 **Sample rule format:**
 
-User-Agent contains "ChatGPT-User" | User-Agent contains "GPTBot" | User-Agent contains "PerplexityBot" | User-Agent contains "anthropic-ai" | User-Agent contains "CCBot" | User-Agent contains "Claude-Web" | User-Agent contains "ClaudeBot" | User-Agent contains "cohere-ai" | User-Agent contains "YouBot" | User-Agent contains "Diffbot" | User-Agent contains "OAI-SearchBot" | User-Agent contains "meta-externalagent" | User-Agent contains "Timpibot" | User-Agent contains "Amazonbot" | User-Agent contains "Bytespider" | User-Agent contains "Perplexity-Use"
+User-Agent contains "ChatGPT-User" | User-Agent contains "GPTBot" | User-Agent contains "PerplexityBot" | User-Agent contains "anthropic-ai" | User-Agent contains "CCBot" | User-Agent contains "Claude-Web" | User-Agent contains "ClaudeBot" | User-Agent contains "cohere-ai" | User-Agent contains "YouBot" | User-Agent contains "Diffbot" | User-Agent contains "OAI-SearchBot" | User-Agent contains "meta-externalagent" | User-Agent contains "Timpibot" | User-Agent contains "Amazonbot" | User-Agent contains "Bytespider" | User-Agent contains "Perplexity-User"
 
 Preserve the original request path when redirecting, so TollBit can serve the correct content:
 
