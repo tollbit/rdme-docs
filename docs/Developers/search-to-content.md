@@ -105,6 +105,7 @@ You can customize your search with additional query parameters:
 
 * `size`: Number of results to return (maximum 20)
 * `next-token`: Token for pagination to get the next page
+* `allowedOnly`: Reduce search to only the properties that your account is authorized to license
 * `properties`: Comma-separated list of domains (max 20) to filter results to only those properties
 
 <Tabs>
@@ -175,6 +176,7 @@ The search response is a JSON object with the following structure:
 
 * `discoverable`: Indicates the content is available in TollBit
 * `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
+  * NOTE: You might need to reach out to TollBit to request authorization  for a specific property, use the `readyToLicense` query param to ensure you only get results for properties that your account is authorized to license
 
 ### Example: Parsing Search Results
 
@@ -772,6 +774,7 @@ The API returns standard HTTP status codes:
 ## Additional Resources
 
 {/* markdownlint-disable-next-line MD044 */}
+
 * **API Documentation**: Visit [docs.tollbit.com](https://docs.tollbit.com)
 
 ***
