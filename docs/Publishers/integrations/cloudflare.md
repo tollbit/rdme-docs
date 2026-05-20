@@ -302,7 +302,7 @@ or not you are on their Enterprise plan.
 
 ### CloudFlare Snippets
 
-For customers on the Pro, Business or Enterprise plans that want to set up a simple redirect without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a redirect following simple rules.
+For customers on the Pro, Business or Enterprise plans that want to set up a simple internal rewrite without the overhead of setting up workers, Snippets are a quick and cost effective way to route bot traffic directly to your `tollbit` subdomain. Because many AI scrapers ignore 3xx redirects, this approach has Cloudflare fetch the content from Tollbit on the bot's behalf and serve it directly—without the bot ever seeing a redirect.
 
 First, in the left nav when you're within the view for one of your websites, find the Rules tab and click the dropdown, and then click into the Snippets section.
 
@@ -337,18 +337,17 @@ export default {
   async fetch(request) {
     const isBotRequest = checkIfBotRequest(request)
 
-    // if bot request, immediately forward to subdomain
+    // if bot request, internally rewrite and fetch from tollbit subdomain
     if (isBotRequest) {
-      const path = request.url.replace(
-        'https://' + request.headers.get('host'),
-        '',
-      )
-      let host = request.headers.get('host') || ''
-      if (host.startsWith('www.')) {
-        // remove www
-        host = host.slice(4)
+      const url = new URL(request.url)
+      if (url.hostname.startsWith('www.')) {
+        url.hostname = url.hostname.replace('www.', 'tollbit.')
+      } else {
+        url.hostname = 'tollbit.' + url.hostname
       }
-      return Response.redirect('https://tollbit.' + host + path, 302)
+      return fetch(new Request(url.toString(), request), {
+        cf: { cacheTtl: 0, cacheEverything: false }
+      })
     } else {
       // otherwise return the regular content
       const response = await fetch(request)
@@ -376,8 +375,7 @@ Before saving and deploying this Snippet, click on the "Snippet rule" button on 
 Now, you should be able to click Deploy, and this Snippet will immediately begin forwarding requests with these user agents to your `tollbit` subdomain.
 
 <Callout icon="🚧" theme="warn">
-  This Snippet **will intercept** and **forward** traffic from your
-  site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+  This Snippet **will intercept** and **internally rewrite** requests from your site, proxying bot traffic to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
 
 ### CloudFlare Workers
@@ -495,18 +493,17 @@ async function handleRequest(event) {
   const { request } = event
   const isBotRequest = checkIfBotRequest(request)
 
-  // if bot request, immediately forward to subdomain
+  // if bot request, internally rewrite and fetch from tollbit subdomain
   if (isBotRequest) {
-    const path = request.url.replace(
-      'https://' + request.headers.get('host'),
-      '',
-    )
-    let host = request.headers.get('host') || ''
-    if (host.startsWith('www.')) {
-      // remove www
-      host = host.slice(4)
+    const url = new URL(request.url)
+    if (url.hostname.startsWith('www.')) {
+      url.hostname = url.hostname.replace('www.', 'tollbit.')
+    } else {
+      url.hostname = 'tollbit.' + url.hostname
     }
-    return Response.redirect('https://tollbit.' + host + path, 302)
+    return fetch(new Request(url.toString(), request), {
+      cf: { cacheTtl: 0, cacheEverything: false }
+    })
   } else {
     const response = await fetch(request)
     // otherwise add to log batch and return response
@@ -607,20 +604,19 @@ const botList = [
 ]
 
 export default {
-  fetch(request) {
+  async fetch(request) {
     const userAgent = request.headers.get('User-Agent') || ''
-    const path = request.url.replace(
-      'https://' + request.headers.get('host'),
-      '',
-    )
-    let host = request.headers.get('host') || ''
-    if (host.startsWith('www.')) {
-      // remove www
-      host = host.slice(4)
-    }
     for (var i = 0; i < botList.length; i++) {
       if (userAgent.toLowerCase().includes(botList[i].toLowerCase())) {
-        return Response.redirect('https://tollbit.' + host + path, 302)
+        const url = new URL(request.url)
+        if (url.hostname.startsWith('www.')) {
+          url.hostname = url.hostname.replace('www.', 'tollbit.')
+        } else {
+          url.hostname = 'tollbit.' + url.hostname
+        }
+        return fetch(new Request(url.toString(), request), {
+          cf: { cacheTtl: 0, cacheEverything: false }
+        })
       }
     }
 
@@ -659,7 +655,7 @@ const checkIfBotRequest = (request) => {
 ```
 
 <Callout icon="🚧" theme="warn">
-  This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+  This Worker **will intercept** and potentially **rewrite** traffic from your site, proxying bot requests to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
 
 ### Enterprise
