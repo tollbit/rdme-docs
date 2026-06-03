@@ -109,11 +109,6 @@ Copy and paste the following code block into the VCL input field and save. Don't
 ```
 if (req.http.user-agent ~ "(?i)chatgpt-user|perplexitybot|gptbot|anthropic-ai|ccbot|claude-web|claudebot|cohere-ai|youbot|diffbot|oai-searchbot|meta-externalagent|timpibot|amazonbot|bytespider|perplexity-user") {
 	set req.http.X-Tollbit-Redirect = "1";
-  if (std.prefixof(req.http.host, "www.")) {
-    set req.http.host = std.replace_prefix(req.http.host, "www.", "tollbit.");
-  } else {
-    set req.http.host = "tollbit." + req.http.host;
-  }
   error 600;
 }
 ```
@@ -128,53 +123,13 @@ Paste the following code in this snippet. This will set the correct headers and 
 if (obj.status == 600) {
   set obj.status = 307;
   set obj.response = "Temporary Redirect";
-  set obj.http.Location = req.protocol + "://" req.http.host + req.url;
+  if (std.prefixof(req.http.host, "www.")) {
+      set obj.http.Location = req.protocol + "://" + std.replace_prefix(req.http.host, "www.", "tollbit.") + req.url;
+  } else {
+      set obj.http.Location = req.protocol + "://tollbit." + req.http.host + req.url;
+  }
   set obj.http.cache-control = "max-age=0";
   return (deliver);
-}
-```
-
-Finally, create one more VCL snippet called something like `tollbit-redirect-log`. Create the placement in the log subroutine.
-
-<Image align="center" width="70% " src="https://files.readme.io/87e2bdd939af53d195d1873eb52789298d651ad6bb5012e6900028bedbb03831-Screenshot_2026-06-03_at_5.34.14_PM.png" />
-
-Paste the following code in the snippet. Make sure that the `tollbit-prod` on line 2 matches the name of the analytics endpoint you created on <Anchor label="this step" target="_blank" href="https://docs.tollbit.com/docs/fastly#enable-analytics-1">this step</Anchor>. If you've been following along this document and using the suggested names, you should be fine to use the following snippet as is.
-
-```
-if (req.http.X-Tollbit-Redirect == "1") {
-    log "syslog " + req.service_id + " tollbit-prod :: " + 
-        "{" + 
-        "%22timestamp%22: %22" + strftime({"%Y-%m-%dT%H:%M:%S%z"}, time.start) + "%22, " +
-        "%22ip_address%22: %22" + req.http.Fastly-Client-IP + "%22, " +
-        "%22geo_country%22: %22" + client.geo.country_name + "%22, " +
-        "%22geo_city%22: %22" + client.geo.city + "%22, " +
-        "%22geo_postal_code%22: %22" + client.geo.postal_code + "%22, " +
-        "%22geo_latitude%22: %22" + client.geo.latitude + "%22, " +
-        "%22geo_longitude%22: %22" + client.geo.longitude + "%22, " +
-        "%22host%22: %22" + json.escape(
-            if(tls.client.servername, 
-               tls.client.servername, 
-               if(std.prefixof(req.http.host, "tollbit."), 
-                  std.replace_prefix(req.http.host, "tollbit.", ""), 
-                  req.http.host)
-            )
-        ) + "%22, " + 
-        "%22url%22: %22" + json.escape(req.url) + "%22, " +
-        "%22request_method%22: %22" + json.escape(req.method) + "%22, " +
-        "%22request_protocol%22: %22" + json.escape(req.proto) + "%22, " +
-        "%22request_referer%22: %22" + json.escape(req.http.referer) + "%22, " +
-        "%22request_user_agent%22: %22" + json.escape(req.http.User-Agent) + "%22, " +
-        "%22request_latency%22: %22" + time.elapsed.usec + "%22, " +
-        "%22response_state%22: %22" + json.escape(fastly_info.state) + "%22, " +
-        "%22response_status%22: 307, " + 
-        "%22response_reason%22: %22Temporary Redirect%22, " + 
-        "%22response_body_size%22: 0, " + 
-        "%22fastly_server%22: %22" + json.escape(server.identity) + "%22, " +
-        "%22fastly_is_edge%22: " + if(fastly.ff.visits_this_service == 0, "true", "false") + ", " +
-        "%22signature%22: %22" + json.escape(req.http.signature) + "%22, " +
-        "%22signature_agent%22: %22" + json.escape(req.http.signature-agent) + "%22, " +
-        "%22signature_input%22: %22" + json.escape(req.http.signature-input) + "%22" + 
-        "}";
 }
 ```
 
