@@ -108,7 +108,6 @@ Copy and paste the following code block into the VCL input field and save. Don't
 
 ```
 if (req.http.user-agent ~ "(?i)chatgpt-user|perplexitybot|gptbot|anthropic-ai|ccbot|claude-web|claudebot|cohere-ai|youbot|diffbot|oai-searchbot|meta-externalagent|timpibot|amazonbot|bytespider|perplexity-user") {
-	set req.http.X-Tollbit-Redirect = "1";
   error 600;
 }
 ```
