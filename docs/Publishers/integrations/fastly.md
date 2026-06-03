@@ -127,7 +127,7 @@ if (obj.status == 600) {
   } else {
       set obj.http.Location = req.protocol + "://tollbit." + req.http.host + req.url;
   }
-  set obj.http.cache-control = "max-age=0";
+  set obj.http.cache-control = "no-store";
   return (deliver);
 }
 ```
