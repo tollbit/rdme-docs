@@ -138,7 +138,7 @@ Finally, create one more VCL snippet called something like `tollbit-redirect-log
 
 <Image align="center" width="70% " src="https://files.readme.io/87e2bdd939af53d195d1873eb52789298d651ad6bb5012e6900028bedbb03831-Screenshot_2026-06-03_at_5.34.14_PM.png" />
 
-Paste the following code in the snippet. Make sure that the `tollbit-prod` on line 2 matches the name of the analytics endpoint you created on <Anchor label="this step" target="_blank" href="https://docs.tollbit.com/docs/fastly#enable-analytics">this step</Anchor>. If you've been following along this document and using the suggested names, you should be fine to use the following snippet as is.
+Paste the following code in the snippet. Make sure that the `tollbit-prod` on line 2 matches the name of the analytics endpoint you created on <Anchor label="this step" target="_blank" href="https://docs.tollbit.com/docs/fastly#enable-analytics-1">this step</Anchor>. If you've been following along this document and using the suggested names, you should be fine to use the following snippet as is.
 
 ```
 if (req.http.X-Tollbit-Redirect == "1") {
