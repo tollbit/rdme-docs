@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
 ### How do I send IP addresses in my request logs? IP address logging is supported across all major CDN integrations. 
 
 Follow the instructions for your setup below. 
