@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-### How do I send IP addresses in my request logs? IP address logging is supported across all major CDN integrations. 
+## How do I send IP addresses in my request logs? IP address logging is supported across all major CDN integrations. 
 
 Follow the instructions for your setup below. 
 
@@ -30,6 +30,6 @@ Ensure Standard Logging is enabled on your CloudFront distribution. See AWS docu
 
 <br />
 
-### I just enabled log ingestion. Why are my charts not loading?
+## I just enabled log ingestion. Why are my charts not loading?
 
 It may take up to 24 hours for the data to populate. All charts are updated at 5am ET daily.
