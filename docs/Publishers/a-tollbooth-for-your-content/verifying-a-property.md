@@ -68,7 +68,7 @@ ns4.edge.tollbit.com
 
 ## Whitelist TollBot user agent
 
-<br />
+##
 
 We run periodic review on the main pages of TollBit publisher sites to understand site structure and content changes over time. The fetched site map can then be seen in the TollBit dashboard (under Summarization License Options > Directory).
 
