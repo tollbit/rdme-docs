@@ -3,7 +3,7 @@ title: Integrations
 excerpt: >-
   Learn how to integrate TollBit with various CDN and cloud platforms for
   analytics and bot paywall.
-icon: 🔧
+icon: far fa-wrench
 ---
 
 # Integrations
