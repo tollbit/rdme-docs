@@ -31,14 +31,14 @@ To get started, go to <Anchor target="_blank" href="https://app.tollbit.com">our
 When first creating an account on the platform, you will be prompted to create your organization. This should represent your top level company. If you were a publisher
 ACME Inc., and you had websites example1.com, example2.com, your organization should be called "ACME". The websites example1.com and example2.com will be added as properties afterwards.
 
-Note that each org can only have one payout method linked. This is fine for most orgs, but if your company prefer to keep accounting separate for a subset of your
-properties, you can create additional orgs after your first org and add properties to those, and then add payment separately for each org.
+Note that each org can only have one payout method linked. This is fine for most orgs, but if your company prefer to keep accounting separate for a subset of your properties, you can create additional orgs after your first org and add properties to those, and then add payment separately for each org.
 
 <br />
 
-Follow these steps to set up your property:
+Once the org has been created, you can start creating your properties. Each property requires to be verified (step 1) before Analytics and Agent Site can be set up.
 
-1. [Verify a Property](verifying-a-property) - Verify ownership through DNS configuration
-2. Whitelist TollBot user agent&#x20;
+1. [Verify a Property](verifying-a-property) - Verify ownership through DNS configuration. Ensure 'tollbot' is whitelisted.
+2. Enable Analytics - Ingest logs via CDN, CMS, cybersecurity tool, or any cloud storage bucket.
+3. Configure Agent Site - After reviewing your initial data, configure Agent Site according to your business needs.&#x20;
 
-Once you've completed these steps, you'll be ready to configure integrations and start monetizing your content.
+Once all 3 steps are complete, you can continue to monitor your analytics and make adjustments to your agent site to monetize your content.&#x20;
