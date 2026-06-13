@@ -27,4 +27,31 @@ TollBit analytics runs on server-side logs from your CDN or edge layer — not c
 
 <br />For setup instructions specific to your infrastructure, see the full integration guide
 
+## Available Integrations
+
+Choose your platform below to view detailed integration instructions. Each integration guide includes step-by-step instructions for setting up both analytics and bot paywall features.
+
+### CDN & Edge Platforms
+
+- **[Fastly](fastly)** - CDN integration with UI-based setup and VCL script options
+- **[CloudFlare](cloudflare)** - Worker-based integration available for all plans (Free, Pro, Business, Enterprise)
+- **[Akamai](akamai)** - DataStream 2 for analytics and Cloudlets for bot paywall
+- **[Vercel](vercel)** - Log drains for analytics and WAF rules for bot paywall
+
+### Cloud Providers
+
+- **[Amazon (AWS)](aws)** - ALB, CloudFront, and WAF integration options
+- **[Google (GCP)](google)** - Cloud Load Balancer for analytics and Cloud Armor for bot paywall
+- **[Microsoft (Azure)](azure)** - Front Door integration for both analytics and bot paywall
+
+### Security & Platform Integrations
+
+- **[Datadome](datadome)** - Bot paywall integration (analytics via other methods)
+- **[WordPress VIP](wordpress-vip)** - Platform integration for bot paywall
+- **[Imperva](imperva)** - Log forwarding and bot paywall configuration
+
+### Other Methods
+
+- **[Other Methods](other)** - Log sink API endpoint and file storage (S3, R2, GCS) options
+
 <br />If you run into any issues during setup, reach out to [team@tollbit.com](mailto:team@tollbit.com) and the TollBit team can help get your logs connected.
