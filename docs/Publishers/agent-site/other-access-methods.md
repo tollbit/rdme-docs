@@ -1,5 +1,5 @@
 ---
-title: Other Access Methods
+title: Access Methods
 excerpt: Learn how to enable NLWeb, MCP, and Agent2Agent protocols for your website.
 ---
 # Other Access Methods
