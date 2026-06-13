@@ -62,6 +62,8 @@ ns4.edge.tollbit.com
 >
 > Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
 
-## Next Steps
+## Whitelist TollBot user agent
 
-Once your property is verified, you can proceed to set up [integrations](integrations) and configure your [marketplace settings](marketplace).
+## TBD
+
+<br />
