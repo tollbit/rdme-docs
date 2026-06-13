@@ -1,5 +1,5 @@
 ---
-title: Whitelisting
+title: 'Step 4: Whitelist Domain'
 excerpt: Instructions to whitelist TollBot user agent for context indexing & retrieval
 deprecated: false
 hidden: false
