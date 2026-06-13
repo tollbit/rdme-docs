@@ -1,6 +1,8 @@
 ---
 title: Bot Management
-excerpt: Questions about bot detection, identification, and management.
+excerpt: >-
+  Questions about bot detection, identification, and management with TollBit
+  Agent Site
 ---
 
 # Bot Management
@@ -20,4 +22,3 @@ Today, we generally update our bot lists every quarter, and we communicate new c
 We're primarily a monetization and enforcement solution rather than purely a cybersecurity play. We're not competing with products like DataDome or Human Security. Our recommendation to publishers is typically to use those types of advanced bot detection tools alongside TollBit. So, TollBit handles monetization, billing, and stronger enforcement of content usage terms, while a cybersecurity tool would handle protection from malicious, anonymous bots.
 
 We have partnerships with both Datadome and Human Security, and integrate with their tooling seamlessly. For those interested in advanced bot detection, please reach out to your TollBit account manager.
-
