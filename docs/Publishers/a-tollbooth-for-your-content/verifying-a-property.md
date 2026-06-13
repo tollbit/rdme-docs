@@ -2,8 +2,6 @@
 title: 'Step 1: Verify Property'
 excerpt: Learn how to verify your property ownership through DNS configuration.
 ---
-# Properties
-
 To get all the benefits of TollBit, including our analytics and agent site set up, the first and most important step is to add and set up your properties.
 
 # Adding a Property
