@@ -1,5 +1,5 @@
 ---
-title: Amazon (AWS)
+title: AWS - S3, CloudFront, ALB
 excerpt: Learn how to integrate TollBit with Amazon.
 ---
 ### Forwarding Logs with ALB
