@@ -1,3 +1,4 @@
+- other
 - aws
 - fastly
 - cloudflare
@@ -10,7 +11,6 @@
 - google
 - datadome
 - imperva
-- other
 - fastly.md
 - cloudflare.md
 - general-bot-paywall
