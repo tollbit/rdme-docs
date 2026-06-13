@@ -14,7 +14,7 @@ TollBit allows you to quickly set up an Agent Site, separate from your existing 
 
 To onboard onto TollBit, you will go through the following steps.
 
-1. Create an account on our platform. Go to <Anchor label="our dashboard" target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account for your organization.
+1. Create an account on our platform. Go to <Anchor target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account for your organization.
 2. [Invite other users](admin#invite-members)  to your newly created org. You will likely need to invite
    IT, legal and finance users to your org to complete onboarding, review terms, and set up your payout method.
 3. [Add and verify your properties](adding-a-property). Invite your IT team to do some lightweight configuration in
@@ -26,10 +26,19 @@ To onboard onto TollBit, you will go through the following steps.
 
 ## Getting Started
 
-To get started, go to <Anchor label="our dashboard" target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account.
+To get started, go to <Anchor target="_blank" href="https://app.tollbit.com">our dashboard</Anchor> to set up an account.
 
 When first creating an account on the platform, you will be prompted to create your organization. This should represent your top level company. If you were a publisher
 ACME Inc., and you had websites example1.com, example2.com, your organization should be called "ACME". The websites example1.com and example2.com will be added as properties afterwards.
 
 Note that each org can only have one payout method linked. This is fine for most orgs, but if your company prefer to keep accounting separate for a subset of your
 properties, you can create additional orgs after your first org and add properties to those, and then add payment separately for each org.
+
+<br />
+
+Follow these steps to set up your property:
+
+1. [Verify a Property](verifying-a-property) - Verify ownership through DNS configuration
+2. Whitelist TollBot user agent&#x20;
+
+Once you've completed these steps, you'll be ready to configure integrations and start monetizing your content.
