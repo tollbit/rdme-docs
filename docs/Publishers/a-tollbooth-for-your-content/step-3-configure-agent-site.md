@@ -8,9 +8,33 @@ hidden: false
 metadata:
   robots: index
 ---
-Coming soon.&#x20;
+With analytics running, the final step is setting up your Agent Site — a dedicated subdomain optimized for AI agents, separate from your human-facing website.
+
+# What is an Agent Site?
+
+<br />Your Agent Site lives at **tollbit.yourdomain.com**. Rather than letting AI crawlers scrape your main site, this subdomain serves as a purpose-built endpoint for agent traffic — returning content in formats like Markdown that are optimized for how AI systems actually consume it.
+
+
+This gives you a clean separation between your human experience and your agent experience, while putting you in control of what bots see, how they access it, and what they pay for it.
+
+# What you can configure
+
+- Access controls — define which agents are allowed in, which are blocked, and which are subject to your paywall
+- Content tailoring — serve different content to different agents based on their user agent string
+- Paywall enforcement — optionally gate access so bots must have a valid TollBit token to retrieve content
+- Bot redirection — route AI crawlers off your main site and to your Agent Site automatically
+
+# How it works
+
+<br />TollBit provisions the tollbit.yourdomain.com subdomain and handles authentication, licensing, and content delivery from there. When an agent requests a page, Agent Site returns content formatted for that agent — no changes needed to your main site.
+
+<br />TollBit also supports additional agentic protocols including MCP, NLWeb, and Agent2Agent (A2A), which can be enabled from the same setup.
 
 <br />
+
+# Next Steps
+
+For full setup instructions, see the technical integration guide →
 
 ## Available Integrations
 
