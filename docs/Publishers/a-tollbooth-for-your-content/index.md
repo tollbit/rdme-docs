@@ -37,7 +37,7 @@ Note that each org can only have one payout method linked. This is fine for most
 
 Once the org has been created, you can start creating your properties. Each property requires to be verified (step 1) before Analytics and Agent Site can be set up.
 
-1. [Verify a Property](verifying-a-property) - Verify ownership through DNS configuration. Ensure 'tollbot' is whitelisted.
+1. [Verify a Property](verifying-a-property) - Required. Verify ownership through DNS configuration. Ensure 'tollbot' is whitelisted.
 2. <Anchor target="_blank" href="https://docs.tollbit.com/update/docs/step-2-enable-analytics">Enable Analytics&#x20;</Anchor>- Ingest logs via CDN, CMS, cybersecurity tool, or any cloud storage bucket.
 3. <Anchor target="_blank" href="https://docs.tollbit.com/update/docs/step-3-configure-agent-site">Configure Agent Site&#x20;</Anchor>- After reviewing your initial data, configure Agent Site according to your business needs.&#x20;
 
