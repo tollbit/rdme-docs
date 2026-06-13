@@ -1,5 +1,5 @@
 ---
-title: Verification
+title: Property Verification
 excerpt: Learn how to verify your property ownership through DNS configuration.
 ---
 # Verifying a Property
