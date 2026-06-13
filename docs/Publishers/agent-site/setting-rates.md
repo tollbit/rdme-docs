@@ -1,5 +1,5 @@
 ---
-title: Monetization Configurations
+title: Monetization & Licenses
 excerpt: Introduction to rate types and how to activate them on TollBit
 deprecated: false
 hidden: false
