@@ -1,5 +1,5 @@
 ---
-title: Bot Management
+title: Agent Site
 excerpt: >-
   Questions about bot detection, identification, and management with TollBit
   Agent Site
