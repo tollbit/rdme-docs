@@ -1,5 +1,6 @@
 ---
-title: TollBot Agent
+title: Whitelisting
+excerpt: Instructions to whitelist TollBot user agent for context indexing & retrieval
 deprecated: false
 hidden: false
 metadata:
