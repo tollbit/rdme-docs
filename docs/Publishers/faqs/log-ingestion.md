@@ -1,6 +1,6 @@
 ---
-title: Log Ingestion
-excerpt: Frequently Asked Questions about Log Ingestion
+title: Analytics
+excerpt: Frequently Asked Questions about Log Ingestion & Analytics
 deprecated: false
 hidden: false
 metadata:
