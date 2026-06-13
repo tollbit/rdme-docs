@@ -1,5 +1,5 @@
 ---
-title: Content Paywall
+title: Monetization Configurations
 excerpt: Introduction to rate types and how to activate them on TollBit
 deprecated: false
 hidden: false
