@@ -1,5 +1,5 @@
 ---
-title: General Log Ingestion
+title: General
 excerpt: Learn how to integrate TollBit Analytics with Other Log Ingestion Methods.
 ---
 # Other Integration Methods
