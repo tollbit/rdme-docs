@@ -32,6 +32,8 @@ Once you create a property, we need to verify your ownership of the domain befor
 
 ## DNS Configuration
 
+<br />
+
 ### Step 1: Create TXT Record
 
 In your domain's DNS settings, create a TXT record for your top level domain (`example.com`, **not** `tollbit.example.com`. This might be a field called "name" or "host" when creating this record). Copy the TXT record value from the TollBit dashboard (it will look like `tollbit-domain-verification=...`) and paste it into the TXT you created. If you are unable to put the TXT record on your top level domain (if you already have a CNAME), you can put the TXT record on the `_tollbit-validation` subdomain. Looking at the full host, this would be `_tollbit-validation.example.com`.
@@ -62,8 +64,16 @@ ns4.edge.tollbit.com
 >
 > Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
 
+<br />
+
 ## Whitelist TollBot user agent
 
-## TBD
+<br />
+
+We run periodic review on the main pages of TollBit publisher sites to understand site structure and content changes over time. The fetched site map can then be seen in the TollBit dashboard (under Summarization License Options > Directory).
+
+Note that the syncs are setup initially once a site is onboarded, and then nightly afterwards to ensure we have an up to date structural understanding of the site. There may also be periodic requests to a small number of main pages or feeds to understand what changed.
+
+Our user agent will be called "tollbot", stylized as "tollbot/1.0". Please whitelist this user agent. You can also find our IPs here: [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt).
 
 <br />
