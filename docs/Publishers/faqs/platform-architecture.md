@@ -1,5 +1,5 @@
 ---
-title: Platform Architecture
+title: Architecture
 excerpt: Questions about subdomains, CDNs, analytics, and how TollBit works.
 ---
 
