@@ -1,5 +1,5 @@
 ---
-title: Content Controls
+title: Content Controls & Governance
 excerpt: >-
   Control what data to include or exclude when developers request content from
   your website through TollBit.
