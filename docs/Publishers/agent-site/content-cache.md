@@ -1,8 +1,8 @@
 ---
-title: Content Access
+title: Free vs. Paid Access
 excerpt: >-
-  Control your CDN costs through Content Cache. You allow all bots to use the
-  cache, or explicitly allow or block bots individually.
+  Choose whether or not you'd like to provide free or paywalled access to your
+  content.
 deprecated: false
 hidden: false
 metadata:
