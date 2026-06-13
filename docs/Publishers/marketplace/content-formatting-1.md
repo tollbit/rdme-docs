@@ -1,5 +1,5 @@
 ---
-title: Content Formatting
+title: Default Settings
 excerpt: 'Agent sites are formatted and optimized to deliver content to LLMs. '
 deprecated: false
 hidden: false
