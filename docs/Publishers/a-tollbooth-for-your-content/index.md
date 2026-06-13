@@ -39,6 +39,6 @@ Once the org has been created, you can start creating your properties. Each prop
 
 1. [Verify a Property](verifying-a-property) - Verify ownership through DNS configuration. Ensure 'tollbot' is whitelisted.
 2. <Anchor target="_blank" href="https://docs.tollbit.com/update/docs/step-2-enable-analytics">Enable Analytics&#x20;</Anchor>- Ingest logs via CDN, CMS, cybersecurity tool, or any cloud storage bucket.
-3. Configure Agent Site - After reviewing your initial data, configure Agent Site according to your business needs.&#x20;
+3. <Anchor target="_blank" href="https://docs.tollbit.com/update/docs/step-3-configure-agent-site">Configure Agent Site&#x20;</Anchor>- After reviewing your initial data, configure Agent Site according to your business needs.&#x20;
 
 Once all 3 steps are complete, you can continue to monitor your analytics and make adjustments to your agent site to monetize your content.&#x20;
