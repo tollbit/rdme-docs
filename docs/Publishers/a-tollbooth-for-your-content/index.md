@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-excerpt: Learn how to set up TollBit to analyze, manage, and monetize your data.
+excerpt: Learn how to set up TollBit to analyze, manage, and monetize your content.
 deprecated: false
 hidden: false
 metadata:
@@ -8,7 +8,7 @@ metadata:
 ---
 # A Tollbooth for your Content
 
-TollBit allows you to quickly set up an Agent Site, separate from your existing website, in as little as 15 minutes with no coding. This effectively puts your data behind an API and/or Markdown, and allows you to immediately start charging bots for on demand access.
+TollBit allows you to quickly set up an Agent Site, separate from your existing website, in as little as 15 minutes with no coding. This effectively puts your data behind an API and/or Markdown, and allows you to immediately start charging bots or allowing them optimized content for on demand access.
 
 ## Overview
 
@@ -22,7 +22,7 @@ To onboard onto TollBit, you will go through the following steps.
 4. [Set up your integration](integrations). We support the most popular CDNs and can quickly get you valuable
    insight into your bot traffic and setting up your paywall for monetization.
 5. View analytics (docs coming soon). Review your bot analytics insights including referral metrics, traffic status, and bot activity by user agent.
-6. [Onboard to the marketplace](marketplace). Set a price on your content, along with any license agreements and content filtering.
+6. [Onboard to the marketplace](marketplace). Set a price on your content, along with any license agreements and content filtering. Mark any content for free access, with content optimized for AI readability.&#x20;
 
 ## Getting Started
 
