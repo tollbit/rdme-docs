@@ -8,18 +8,18 @@ We provide a way for all Akamai customers to stream logs to our platform.
 
 ### Set up Logging with Akamai
 
-** Create a Stream with DataStream 2
+\*\* Create a Stream with DataStream 2
 
 You will need to first create a stream by going to your
-<Anchor label="Akamai Control Center" target="_blank" href="https://control.akamai.com/apps/data-stream-ui/#/streams/group/all">Akamai Control Center</Anchor>.
+<Anchor target="_blank" href="https://control.akamai.com/apps/data-stream-ui/#/streams/group/all">Akamai Control Center</Anchor>.
 Follow
-<Anchor label="these instructions" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">these instructions</Anchor>
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">these instructions</Anchor>
 on how to create your stream.
 
-*** Choose Data Parameters
+\*\*\* Choose Data Parameters
 
 When choosing
-<Anchor label="data parameters" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>,
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>,
 make sure to parameters that cover at least everything in following sample log
 JSON. Also, please ensure that your log format is JSON.
 
@@ -67,58 +67,58 @@ JSON. Also, please ensure that your log format is JSON.
 }
 ```
 
-** Stream to Endpoint
+\*\* Stream to Endpoint
 
 To forward your logs to us, follow the steps outlined
-<Anchor label="here" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">here</Anchor>. The
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">here</Anchor>. The
 endpoint url that you should be streaming to is
 `https://log.tollbit.com/log/akamai`.
 
 Select none for authentication for now, as we will be setting up custom
 authentication. To do so, go to "Custom header". For the content type, you can
 select `application/json`. Add a new header value with the key `TollbitKey` and
-the value as your secret key from your <Anchor label="dashboard" target="_blank" href="https://app.tollbit.com">dashboard</Anchor>.
+the value as your secret key from your <Anchor target="_blank" href="https://app.tollbit.com">dashboard</Anchor>.
 
 Finally, you can
-<Anchor label="review and activate" target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor>
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor>
 your stream!
 
 ### Route to Agent Site
 
 Akamai allows you to set up redirection rules at the edge using either Cloudlets or Content Protector.
 
-* For Cloudlets, please see the steps outlined below.
-* For Content Protector, please reach out to your Akamai account team and loop in [team@tollbit.com](mailto:team@tollbit.com) as well.
+- For Cloudlets, please see the steps outlined below.
+- For Content Protector, please reach out to your Akamai account team and loop in [team@tollbit.com](mailto:team@tollbit.com) as well.
 
 **Cloudlets set up**
 
-Akamai provides <Anchor label="Edge Redirector" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-edge-redirector">Edge Redirector</Anchor> Cloudlets that help you manage redirection using certain matching rules.
+Akamai provides <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-edge-redirector">Edge Redirector</Anchor> Cloudlets that help you manage redirection using certain matching rules.
 
-We want to first start by creating an Edge Redirector policy. Follow the documentation <Anchor label="here" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-edge-redirector-policy">here</Anchor> to do so in accordance with how your Akamai instance is set up.
+We want to first start by creating an Edge Redirector policy. Follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-edge-redirector-policy">here</Anchor> to do so in accordance with how your Akamai instance is set up.
 
-Once you have set up your policy, follow the documentation <Anchor label="here" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-edge-redirector-rules">here</Anchor> to set up rules for your Edge Redirector. Because we want to be redirecting based on the `User-Agent` header, we will need to create a redirector with advance matching rules. You will want to create a match type based on the <Anchor label="request header" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/req-header">request header</Anchor>. The name of the header should be `User-Agent`, and the value should be a tab separated list of bad user agents. You can use the following list:
+Once you have set up your policy, follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-edge-redirector-rules">here</Anchor> to set up rules for your Edge Redirector. Because we want to be redirecting based on the `User-Agent` header, we will need to create a redirector with advance matching rules. You will want to create a match type based on the <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/req-header">request header</Anchor>. The name of the header should be `User-Agent`, and the value should be a tab separated list of bad user agents. You can use the following list:
 
 ```
 ChatGPT-User PerplexityBot GPTBot anthropic-ai CCBot Claude-Web ClaudeBot cohere-ai YouBot Diffbot OAI-SearchBot meta-externalagent Timpibot Amazonbot Bytespider Perplexity-User
 ```
 
 For the operator value, use `is one of` without case sensitivity. These settings should let you match our known bad users agents. In the redirection rule, you can set the redirect url to your `tollbit` subdomain.
-Ensure that the path is preserved in the redirect. Akamai has an example of this in their <Anchor label="docs" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/review-available-match-types-edge-redirector#edge-redirector-regular-expression-example">docs</Anchor>
+Ensure that the path is preserved in the redirect. Akamai has an example of this in their <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/review-available-match-types-edge-redirector#edge-redirector-regular-expression-example">docs</Anchor>
 and we should be able to follow it by setting the redirect url to `https://tollbit.<your_site>/\2`. The `\2` should preserve the path.
 
-<Callout icon="📘" theme="info">
-  Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
-  first rule that matches. If you have other Cloudlets with rules that also
-  intercept requests, they may match before the rule you just added.
-</Callout>
+> 📘 Pro Tip
+>
+> Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
+> first rule that matches. If you have other Cloudlets with rules that also
+> intercept requests, they may match before the rule you just added.
 
-Click save rule to save your changes, and you should be ready to activate! Follow the steps <Anchor label="here" target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/activate-cloudlets-beh-prop-manager">here</Anchor> to do so.
+Click save rule to save your changes, and you should be ready to activate! Follow the steps <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/activate-cloudlets-beh-prop-manager">here</Anchor> to do so.
 
-<Callout icon="🚧" theme="warn">
-  The rule you just added **will intercept** and potentially **redirect**
-  traffic to your main site. Please ensure that you have tested this in a test
-  environment or for a small subset of pages before activating this across your
-  entire site.
-</Callout>
+> 🚧 Note
+>
+> The rule you just added **will intercept** and potentially **redirect**
+> traffic to your main site. Please ensure that you have tested this in a test
+> environment or for a small subset of pages before activating this across your
+> entire site.
 
 <br />
