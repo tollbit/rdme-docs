@@ -1,25 +1,14 @@
 ---
 title: General
-excerpt: Learn how to integrate TollBit Analytics with Other Log Ingestion Methods.
+excerpt: >-
+  Learn how to integrate TollBit Analytics and Agent Site without a listed
+  integration.
 ---
-# Other Integration Methods
+### Analytics - Ingesting from file storage
 
-We support other methods of log ingestion besides the integrations that we
-listed above.
+We are currently able to support log ingestion from S3, R2 and GCS. Please ensure that your log files are prefixed by date and time, and that the logs within the files are in JSON format (ideally as similar to the above as possible), and each log is a single line and all logs are newline separated.
 
-<br />
-
-### Ingesting from file storage
-
-We are currently able to support log ingestion from S3, R2 and GCS. Please
-ensure that your log files are prefixed by date and time, and that the logs
-within the files are in JSON format (ideally as similar to the above as
-possible), and each log is a single line and all logs are newline separated.
-
-If you are already forwarding logs to an S3 bucket, you can get a headstart on
-the setup by creating the following IAM policy for your bucket: If your logs are
-already being sent to an S3 bucket, add the following IAM policy to your bucket
-to enable TollBit to process your logs:
+If you are already forwarding logs to an S3 bucket, you can get a head start on the setup by creating the following IAM policy for your bucket: If your logs are already being sent to an S3 bucket, add the following IAM policy to your bucket to enable TollBit to process your logs:
 
 ```json
 {
@@ -68,13 +57,9 @@ get access to TollBit Analytics
 
 <br />
 
-### Log Sink Forwarding
+### Analytics - Log Sink API
 
-You can forward your logs to our log sink endpoint at
-`https://log.tollbit.com/log` as long as you include the header `TollbitKey` and
-set the value to your secret key in your dashboard. The logs must conform to the
-following JSON format. Not all fields are required, but we need at least the
-`timestamp`, `host`, `url`, `request_user_agent`, `response_status`, `request_referer` and `request_method`.
+You can forward your logs to our log sink endpoint at `https://log.tollbit.com/log` as long as you include the header `TollbitKey` and set the value to your secret key in your dashboard. The logs must conform to the following JSON format. Not all fields are required, but we need at least the<br />`timestamp`, `host`, `url`, `request_user_agent`, `response_status`, `request_referer` and `request_method`.
 
 ```json
 {
@@ -102,13 +87,11 @@ following JSON format. Not all fields are required, but we need at least the
 }
 ```
 
-When streaming the logs to the endpoint, please ensure that you are batching
-logs as much as possible. Each log be a single line, and should be newline
-separated from the other logs.
+When streaming the logs to the endpoint, please ensure that you are batching logs as much as possible. Each log be a single line, and should be newline separated from the other logs.
 
 <br />
 
-## Setting Up the Agent Site with an Unlisted CDN or Cybersecurity Tool
+## Agent Site - Unlisted CDN or Cybersecurity Tool
 
 If your CDN or cybersecurity tool is not listed on our Integrations page, you can still route to the TollBit Agent Site as long as your platform supports bot redirect capabilities — the ability to detect bot user agents and redirect them to a custom URL.
 
