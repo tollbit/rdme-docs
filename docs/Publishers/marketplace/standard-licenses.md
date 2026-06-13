@@ -1,5 +1,5 @@
 ---
-title: Licenses
+title: Paywall - Licenses
 excerpt: Standard vs Custom Licenses and how to view Transactions
 deprecated: false
 hidden: false
