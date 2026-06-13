@@ -120,8 +120,8 @@ Paste the following code in this snippet. This will set the correct headers and 
 
 ```
 if (obj.status == 600) {
-  set obj.status = 307;
-  set obj.response = "Temporary Redirect";
+  set obj.status = 302;
+  set obj.response = "Found";
   if (std.prefixof(req.http.host, "www.")) {
       set obj.http.Location = req.protocol + "://" + std.replace_prefix(req.http.host, "www.", "tollbit.") + req.url;
   } else {
