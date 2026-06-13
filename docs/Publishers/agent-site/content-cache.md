@@ -1,5 +1,5 @@
 ---
-title: Content Cache
+title: Content Access
 excerpt: >-
   Control your CDN costs through Content Cache. You allow all bots to use the
   cache, or explicitly allow or block bots individually.
