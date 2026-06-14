@@ -1,5 +1,5 @@
 ---
-title: CloudFlare (Pro, Business, Enterprise)
+title: CloudFlare (Pro & Enterprise)
 excerpt: Learn how to integrate TollBit with CloudFlare.
 ---
 We provide a way for all CloudFlare customers, regardless of plan, to forward HTTP logs to our platform for analytics. We recommend this method over others like LogPush as CloudFlare Enterprise is not required to create workers, and you have much more control over how logs are sent.
