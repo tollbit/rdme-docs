@@ -2,6 +2,7 @@
 - aws
 - fastly
 - akamai
+- cloudflare-free
 - cloudflare
 - wordpress-vip
 - index.md
@@ -22,4 +23,3 @@
 - wordpress-vip.md
 - imperva.md
 - other.md
-- cloudflare-free
