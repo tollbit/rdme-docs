@@ -2,8 +2,6 @@
 title: Datadome
 excerpt: Learn how to integrate TollBit with Datadome.
 ---
-<br />
-
 Follow these steps to set up an integration into our platform if you use Datadome. Note that enabling this integration will only allow you to forward specified bots/user agents to your `tollbit` subdomain. To enable analytics, please choose another integration (via another partner, API endpoint, or cloud storage bucket)
 
 # Steps for Analytics
