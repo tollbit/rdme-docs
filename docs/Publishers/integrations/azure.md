@@ -58,5 +58,4 @@ Choose the route to the relevant Front Door instance and go through the flow of 
 
 ### Premium
 
-If you have a Premium tier Front Door instance, contact our team at [team@tollbit.com](mailto:team@tollbit.com) and we can
-connect with you and evalulate the best path forward.
+If you have a Premium tier Front Door instance, contact our team at [team@tollbit.com](mailto:team@tollbit.com) and we can<br />connect with you and evaluate the best path forward.
