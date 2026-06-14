@@ -1,5 +1,5 @@
 ---
-title: Free vs. Paid Access
+title: Enabling Free Access
 excerpt: >-
   Choose whether or not you'd like to provide free or paywalled access to your
   content.
