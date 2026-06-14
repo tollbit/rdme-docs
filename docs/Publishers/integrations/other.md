@@ -98,7 +98,7 @@ When streaming the logs to the endpoint, please ensure that you are batching log
 
 <br />
 
-## Agent Site
+# Agent Site
 
 If your CDN or cybersecurity tool is not listed on our Integrations page, you can still route to the TollBit Agent Site as long as your platform supports bot redirect capabilities — the ability to detect bot user agents and redirect them to a custom URL.
 
