@@ -4,7 +4,11 @@ excerpt: >-
   Learn how to integrate TollBit Analytics and Agent Site without a listed
   integration.
 ---
-### Analytics - Ingesting from file storage
+## Analytics - Cloud Storage vs. API
+
+You can enable TollBit analytics as long as you have HTTP traffic logs being proxied on your site. We allow customers to send these traffic logs either via a cloud storage bucket option (S3, GCS, Azure, R2) or via the cloud sink API.
+
+### Ingesting from file storage
 
 We are currently able to support log ingestion from S3, R2 and GCS. Please ensure that your log files are prefixed by date and time, and that the logs within the files are in JSON format (ideally as similar to the above as possible), and each log is a single line and all logs are newline separated.
 
@@ -33,7 +37,7 @@ If you are already forwarding logs to an S3 bucket, you can get a head start on 
 }
 ```
 
-#### Buckets with ACLs (Access Control Lists)
+#### S3 Buckets with ACLs (Access Control Lists)
 
 The AWS recommendation is to disable ACLs and instead fully rely on IAM policies to control bucket access. However, there may be some legacy workflows that still requires ACLs, or at least some investigation into whether they can be safely disabled.
 
@@ -46,20 +50,23 @@ f208f3b6492f906045d6e2fd71dbc6dc64247211c059ba3ae2eb712b949b8cdd
 bbfe4f5f203ffb85e03d5d5325ab889271d6429b91a3766563bd0d08df2126ab
 ```
 
-and then update the object ownership permissions to "Bucket Owner Enforced". This should make your bucket the owner of objects written to it, which would allow us to read new objects written going forward, as they should respect your bucket's IAM policy.
+Please also update the object ownership permissions to "Bucket Owner Enforced". This should make your bucket the owner of objects written to it, which would allow us to read new objects written going forward, as they should respect your bucket's IAM policy.
 
 
 <Image src="https://files.readme.io/f2801981eda231d5b01ca3c2b819f3ec727bc1d95cc848ceddf3da962b23a0c1-Screenshot_2026-03-30_at_10.40.00_AM.png" align="center" />
 
 
-Please contact us at [team@tollbit.com](mailto:team@tollbit.com)  to complete the set up for you so you can
-get access to TollBit Analytics
+<br />
+
+Please contact [team@tollbit.com](mailto:team@tollbit.com)  to complete the set up for you so you can<br />get access to TollBit Analytics.
 
 <br />
 
-### Analytics - Log Sink API
+### Log Sink API
 
-You can forward your logs to our log sink endpoint at `https://log.tollbit.com/log` as long as you include the header `TollbitKey` and set the value to your secret key in your dashboard. The logs must conform to the following JSON format. Not all fields are required, but we need at least the<br />`timestamp`, `host`, `url`, `request_user_agent`, `response_status`, `request_referer` and `request_method`.
+You can forward your logs to our log sink endpoint at `https://log.tollbit.com/log` as long as you include the header `TollbitKey` and set the value to your secret key in your dashboard. The logs must conform to the following JSON format.&#x20;
+
+Not all fields are required, but we need at least the<br />`timestamp`, `host`, `url`, `request_user_agent`, `response_status`, `request_referer` and `request_method`.
 
 ```json
 {
@@ -91,7 +98,7 @@ When streaming the logs to the endpoint, please ensure that you are batching log
 
 <br />
 
-## Agent Site - Unlisted CDN or Cybersecurity Tool
+## Agent Site
 
 If your CDN or cybersecurity tool is not listed on our Integrations page, you can still route to the TollBit Agent Site as long as your platform supports bot redirect capabilities — the ability to detect bot user agents and redirect them to a custom URL.
 
