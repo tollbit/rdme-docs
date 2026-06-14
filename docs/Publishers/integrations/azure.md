@@ -1,5 +1,5 @@
 ---
-title: Microsoft (Azure)
+title: Microsoft (Azure, Front Door)
 excerpt: Learn how to integrate TollBit with Microsoft.
 ---
 ### Setting up Logging with Azure Front Door
