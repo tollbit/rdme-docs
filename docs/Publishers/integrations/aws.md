@@ -1,5 +1,5 @@
 ---
-title: AWS - S3, CloudFront, ALB
+title: AWS (S3, CloudFront, ALB)
 excerpt: Learn how to implementate TollBit with Amazon S3, ALB, and/or CloudFront.
 ---
 # Steps for Analytics
