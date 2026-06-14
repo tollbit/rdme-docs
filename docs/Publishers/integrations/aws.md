@@ -2,7 +2,7 @@
 title: AWS - S3, CloudFront, ALB
 excerpt: Learn how to integrate TollBit with Amazon.
 ---
-# Analytics Integration
+# Steps for Analytics
 
 ### Forwarding Logs with ALB
 
@@ -80,7 +80,7 @@ Once you have started forwarding your logs to an S3 bucket, and granted TollBit 
 >
 > If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
 
-# Agent Site
+# Steps for Agent Site
 
 ### AWS WAF + CloudFront Route To Agent Site
 
