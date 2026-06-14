@@ -4,7 +4,7 @@ excerpt: >-
   Learn how to integrate TollBit Analytics and Agent Site without a listed
   integration.
 ---
-# Analytics - Cloud Storage vs. API
+# Analytics
 
 You can enable TollBit analytics as long as you have HTTP traffic logs being proxied on your site. We allow customers to send these traffic logs either via a cloud storage bucket option (S3, GCS, Azure, R2) or via the cloud sink API.
 
@@ -62,7 +62,7 @@ Please contact [team@tollbit.com](mailto:team@tollbit.com)  to complete the set 
 
 <br />
 
-### Log Sink API
+### Ingesting from Log Sink API
 
 You can forward your logs to our log sink endpoint at `https://log.tollbit.com/log` as long as you include the header `TollbitKey` and set the value to your secret key in your dashboard. The logs must conform to the following JSON format.&#x20;
 
