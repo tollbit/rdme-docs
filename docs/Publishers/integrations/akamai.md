@@ -2,9 +2,7 @@
 title: Akamai
 excerpt: Learn how to integrate TollBit with Akamai.
 ---
-<br />
-
-We provide a way for all Akamai customers to stream logs to our platform.
+We provide a way for all Akamai customers to stream logs to our platform, as well as configure agent site.
 
 # Steps for Analytics
 
@@ -70,7 +68,7 @@ Select none for authentication for now, as we will be setting up custom authenti
 
 Finally, you can <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor> your stream!
 
-### Steps for Agent Site
+# Steps for Agent Site
 
 Akamai allows you to set up redirection rules at the edge using either Cloudlets or Content Protector.
 
