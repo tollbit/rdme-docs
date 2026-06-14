@@ -12,7 +12,7 @@ There are two integration options to connect Fastly with TollBit.
 
 Follow these steps to set up an integration into our platform if you use Fastly.
 
-### Initial Setup for Analytics & Agent Site Routing
+### Initial Setup
 
 **Get Service ID and API Key from Fastly**
 
@@ -32,13 +32,13 @@ Go to your TollBit dashboard and pick the Integrations tab in the main navigatio
 
 ![Integrations Fastly Service 3](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-3.png)
 
-### Enable Analytics
+### Steps for Analytics
 
 Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, click on “Enable” next to the Analytics section.
 
 ![Integrations Fastly Service 4](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-4.png)
 
-### Route to your Agent Site
+### Steps for Agent Site
 
 Ensure that you have saved your Fastly API key and service ID in the integration settings. Once that is saved, within the same page, toggle on “Block” for each agent you would like to forward to your `tollbit` subdomain.
 
@@ -54,7 +54,7 @@ Scrolling further down on the page allows you to “Block” all bots, which wou
 
 This is the documentation for the legacy Fastly integration that involves implementing VCL scripts to enable TollBit analytics and agent site. VCL scripts can allow for additional customizations for implementing analytics and bot forwarding. Please reach out to [team@tollbit.com](mailto:team@tollbit.com) if you'd like to discuss this implementation route considering your use case.
 
-### Enable Analytics
+### Steps for Analytics
 
 **Create a new Logging Configuration**
 
@@ -84,7 +84,7 @@ Go into Advanced Options and set the “Custom header name” field to “Tollbi
 
 Once you are ready to publish these changes, click the “Activate” button. Keep in mind that if you have other unpublished changes in Fastly, this may also publish those as well.
 
-### Route to Agent Site
+### Steps for Agent Site
 
 Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
 
