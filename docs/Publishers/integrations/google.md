@@ -1,5 +1,5 @@
 ---
-title: Google (GCP)
+title: Google (GCP, CDN)
 excerpt: Learn how to integrate TollBit with Google.
 ---
 ### Setting up Logging with CDN/Cloud Load Balancer
