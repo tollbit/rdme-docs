@@ -1,5 +1,5 @@
 ---
-title: General
+title: General Integration
 excerpt: >-
   Learn how to integrate TollBit Analytics and Agent Site without a listed
   integration.
