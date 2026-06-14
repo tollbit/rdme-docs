@@ -6,7 +6,11 @@ excerpt: Learn how to integrate TollBit with Datadome.
 
 Follow these steps to set up an integration into our platform if you use Datadome. Note that enabling this integration will only allow you to forward specified bots/user agents to your `tollbit` subdomain. To enable analytics, please choose another integration (via another partner, API endpoint, or cloud storage bucket)
 
-### Setup integration in Datadome
+# Steps for Analytics
+
+Please see the 'General Route' tab to enable site-wide analytics.
+
+# Steps for Agent Site
 
 On your Datadome dashboard, open the Management tab in the bottom left of the navigation bar. Choose Monetize. Under TollBit, choose “Enable”.
 
