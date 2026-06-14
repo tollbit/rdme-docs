@@ -2,10 +2,11 @@
 title: Google (GCP, CDN)
 excerpt: Learn how to integrate TollBit with Google.
 ---
-### Setting up Logging with CDN/Cloud Load Balancer
+# Steps for Analytics
 
-To set up logging for your Google Cloud Load Balancer instance (if you are using Google CDN, it should be backed
-by a Cloud Load Balancer), you can forward logs to a GCP Storage Bucket.
+### CDN/Cloud Load Balancer
+
+To set up logging for your Google Cloud Load Balancer instance (if you are using Google CDN, it should be backed by a Cloud Load Balancer), you can forward logs to a GCP Storage Bucket.
 
 First, create a bucket you would like to use to hold the logs.
 
@@ -32,7 +33,7 @@ Once this sink is created, you may need to wait up to an hour for logs to start 
 Once you've verified that this is set up correctly, please contact us at [team@tollbit.com](mailto:team@tollbit.com)
 to share your bucket with us.
 
-### Google Cloud Armor Route to Agent Site
+# Steps for Agent Site
 
 Google's Cloud Armor allows you to set up some simple redirection rules for user agents.
 
@@ -40,9 +41,7 @@ Note that to implement the full solution, where we want to preserve the path of 
 will need to set up a separate backend service that handles redirection that preserves path. However,
 you can simply just redirect to the root `tollbit` subdomain as well to get most of the functionaltiy.
 
-First, navigate
-to Cloud Armor policies and create a new one (or add this to your existing policy). Set the default rule to
-allow.
+First, navigate to Cloud Armor policies and create a new one (or add this to your existing policy). Set the default rule to allow.
 
 ![Google Cloud Armor Create Policy](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/google-cloud-armor-create-policy.png)
 
