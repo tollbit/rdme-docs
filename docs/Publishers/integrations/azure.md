@@ -2,7 +2,7 @@
 title: Microsoft (Azure, Front Door)
 excerpt: Learn how to integrate TollBit with Microsoft.
 ---
-### Setting up Logging with Azure Front Door
+# Steps for Analytics
 
 To set up logging for your Azure front door, first navigate to your specific Front Door instance.
 On the left sidebar, open the dropdown for "Monitoring" and select the "Diagnostics settings" tab.
@@ -20,13 +20,9 @@ for these logs, please create one.
 ![Azure Front Door Log Settings](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/azure-front-door-log-settings.png)
 
 Once you've confirmed that logs are setting stored in your chosen bucket, please reach out to
-[team@tollbit.com](mailto:team@tollbit.com) to coordinate with our engineering team on the rest of the TollBit
-Analytics setup. To finalize your setup, we will need
-access to the directory in your Storage bucket where your logs are stored, along with
-the pattern for how the logs are stored for instance
-`/service/logs/2024/12/04/log-file`.
+[team@tollbit.com](mailto:team@tollbit.com) to coordinate with our engineering team on the rest of the TollBit<br />Analytics setup. To finalize your setup, we will need access to the directory in your Storage bucket where your logs are stored, along with the pattern for how the logs are stored for instance `/service/logs/2024/12/04/log-file`.
 
-### Route to Agent Site
+# Steps for Agent Site
 
 Azure's CDN lets you easily set up redirection rules for different bots. We'll explore how to do this
 in the standard tier Front Door as well as the premium tier.
