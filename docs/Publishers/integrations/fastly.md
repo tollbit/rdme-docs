@@ -4,9 +4,9 @@ excerpt: Learn how to integrate TollBit with Fastly.
 ---
 There are two integration options to connect Fastly with TollBit.
 
-* The Standard method uses API tokens to give TollBit access to read http traffic logs and implement agent site routing directly through the TollBit interface.
-* The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and agent site routing as well.
-  * This is the recommended route for teams with multiple Fastly services and/or advanced Infrastructure as code workflows.
+- The Standard method uses API tokens to give TollBit access to read http traffic logs and implement agent site routing directly through the TollBit interface.
+- The Custom method uses Fastly's HTTPS endpoint and VCL scripts (directly within the Fastly navigation) to implement both logging and agent site routing as well.
+  - _This is the recommended route for teams with multiple Fastly services and/or advanced Infrastructure as code workflows._
 
 ## Fastly (Standard)
 
@@ -46,9 +46,9 @@ Scrolling further down on the page allows you to “Block” all bots, which wou
 
 ![Integrations Fastly Service 5](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-5.png)
 
-<Callout icon="📘" theme="info">
-  If you have used our legacy integration of Fastly (using VCL scripts), you should automatically see the updates transition into the new UI.
-</Callout>
+> 📘 Pro Tip
+>
+> If you have used our legacy integration of Fastly (using VCL scripts), you should automatically see the updates transition into the new UI.
 
 ## Fastly (Custom)
 
@@ -58,11 +58,11 @@ This is the documentation for the legacy Fastly integration that involves implem
 
 **Create a new Logging Configuration**
 
-Go to your <Anchor label="Fastly Dashboard" target="_blank" href="https://manage.fastly.com/configure">Fastly Dashboard</Anchor> and pick the correct domain. Click “Edit Configuration”, and clone your current configuration. This saves a new configuration version as a draft, and allows you to rollback if necessary. This should bring you to a new screen. On the sidebar, scroll down until you see Logging and click on that. Then, click “Create Endpoint”.
+Go to your <Anchor target="_blank" href="https://manage.fastly.com/configure">Fastly Dashboard</Anchor> and pick the correct domain. Click “Edit Configuration”, and clone your current configuration. This saves a new configuration version as a draft, and allows you to rollback if necessary. This should bring you to a new screen. On the sidebar, scroll down until you see Logging and click on that. Then, click “Create Endpoint”.
 
 ![Fastly Sidebar](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-sidebar.png)
 
-** Configure your logs to be sent to our logging endpoint **
+**Configure your logs to be sent to our logging endpoint**
 
 ![Fastly Http Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-http-config.png)
 
@@ -76,9 +76,9 @@ Finally, set the URL to [https://log.tollbit.com/log](https://log.tollbit.com/lo
 
 ![Fastly Log Config](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-log-config.png)
 
-** Ensure that your Requests are Authenticated **
+**Ensure that your Requests are Authenticated**
 
-Go into Advanced Options and set the “Custom header name” field to “TollbitKey”. You must set the customer header value to your secret key. Log into your <Anchor label="TollBit portal" target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor> and go into the API key tab and copy your secret key. Paste it into the “Custom header value” field with no trailing spaces. Keep all the other settings as default, scroll to the bottom, and save.
+Go into Advanced Options and set the “Custom header name” field to “TollbitKey”. You must set the customer header value to your secret key. Log into your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor> and go into the API key tab and copy your secret key. Paste it into the “Custom header value” field with no trailing spaces. Keep all the other settings as default, scroll to the bottom, and save.
 
 ![Fastly Activate](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png)
 
@@ -88,9 +88,9 @@ Once you are ready to publish these changes, click the “Activate” button. Ke
 
 Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
 
-<Callout icon="📘" theme="info">
-  The code shown here is for a clean Fastly environment. If you have any existing VCL scripts that intercept requests, you will need to integrate these scripts into your existing workflow.
-</Callout>
+> 📘 Pro Tip
+>
+> The code shown here is for a clean Fastly environment. If you have any existing VCL scripts that intercept requests, you will need to integrate these scripts into your existing workflow.
 
 Go to the Deliver tab and select the domain you wish to add bot forwarding to. On the right side of the screen, click the Edit configuration button and choose to clone your current active version.
 
@@ -132,10 +132,12 @@ if (obj.status == 600) {
 }
 ```
 
-<Callout icon="🚧" theme="warn">
-  The VCL scripts you just added **will intercept** and potentially **redirect** traffic to your main site. Please ensure that you have tested this in a test environment or for a small subset of pages before activating this across your entire site.
-</Callout>
+> 🚧 Note
+>
+> The VCL scripts you just added **will intercept** and potentially **redirect** traffic to your main site. Please ensure that you have tested this in a test environment or for a small subset of pages before activating this across your entire site.
 
 This should now be all you need to forward known bot traffic to your `tollbit` subdomain! You can activate these changes by clicking "Apply".
 
 ![Fastly Activate](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png)
+
+<br />
