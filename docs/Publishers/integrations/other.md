@@ -1,5 +1,5 @@
 ---
-title: General Integration Paths
+title: General Route
 excerpt: >-
   Learn how to integrate TollBit Analytics and Agent Site without a listed
   integration.
