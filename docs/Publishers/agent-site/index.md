@@ -12,15 +12,11 @@ You will need to ensure your `tollbit` subdomain is provisioned and that AI bot 
 
 # Introduction
 
-
 Agent Site gives you a dedicated subdomain — **tollbit.yourdomain.com** — built specifically for AI visitors. Rather than letting bots scrape your human-facing site, Agent Site serves a machine-optimized version of your content: semantically clean, efficiently structured, and designed for how agents actually read and act on the web.
-
 
 This separation matters for a few reasons. Human websites are full of layout code, scripts, and UI elements that are meaningless to agents — they waste tokens parsing noise instead of retrieving content. As agents move beyond simple retrieval into completing workflows, that same bloat causes brittle, unpredictable behavior. Agent Site removes that friction.
 
-
 At the same time, you stay in control. You decide which agents can access your site, what they can see, and what they pay for it. Agent traffic is routed away from your main site, keeping your CDN costs predictable and your human experience unaffected.
-
 
 The sections below cover everything you need to configure Agent Site for your use case:
 
@@ -29,5 +25,21 @@ The sections below cover everything you need to configure Agent Site for your us
 - Content controls — tailoring what different agents can see and how requests are handled
 - Monetization — setting rates, license types, and connecting to the TollBit Marketplace
 - Access methods — enabling MCP, NLWeb, and Agent2Agent protocols on your Agent Site
+
+# Default Configurations
+
+We format content to most effectively integrate within AI applications and into LLM contexts. This feature comes out of the box when using TollBit. All sites onboarded with TollBit will work with this functionality.
+
+What does the formatted content look like?
+This formatting process makes no changes to the original content. We simply clean the content for you to be perfectly ready for your data pipeline. Specifically, the data comes back as a markdown representation of the original web page. The main field of the content response will likely contain the actual content of the article without any clutter of navigational components or social media links. Should you want to use those fields, you may get them from the header and footer fields if we were able to parse them out.
+
+Finally, the metadata field may contain additional information that isn't part of the original content, but can provide additional context around the content. This could include raw data, follow up link, or additional topics for the end user to explore.
+
+<br />
+
+## Why is this format good for AI?
+
+
+This formatting maintains crucial context for the LLM like titles, paragraphs, links, etc. At the same time, this format strips away the excessive HTML tags, scripts and other clutter that comes back from scraping typical websites. This format should optimize the value in the content, while being efficient to how many tokens you pass to the LLM.
 
 <br />
