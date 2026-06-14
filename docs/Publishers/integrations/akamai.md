@@ -6,22 +6,17 @@ excerpt: Learn how to integrate TollBit with Akamai.
 
 We provide a way for all Akamai customers to stream logs to our platform.
 
-### Set up Logging with Akamai
+# Steps for Analytics
 
-\*\* Create a Stream with DataStream 2
+###
 
-You will need to first create a stream by going to your
-<Anchor target="_blank" href="https://control.akamai.com/apps/data-stream-ui/#/streams/group/all">Akamai Control Center</Anchor>.
-Follow
-<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">these instructions</Anchor>
-on how to create your stream.
+### Create a Stream with DataStream 2
 
-\*\*\* Choose Data Parameters
+You will need to first create a stream by going to your <Anchor target="_blank" href="https://control.akamai.com/apps/data-stream-ui/#/streams/group/all">Akamai Control Center</Anchor>. Follow <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">these instructions</Anchor> on how to create your stream.
 
-When choosing
-<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>,
-make sure to parameters that cover at least everything in following sample log
-JSON. Also, please ensure that your log format is JSON.
+**Choose Data Parameters**
+
+When choosing <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>, make sure to parameters that cover at least everything in following sample log JSON. Also, please ensure that your log format is JSON.
 
 ```json
 {
@@ -67,23 +62,15 @@ JSON. Also, please ensure that your log format is JSON.
 }
 ```
 
-\*\* Stream to Endpoint
+**Stream to Endpoint**
 
-To forward your logs to us, follow the steps outlined
-<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">here</Anchor>. The
-endpoint url that you should be streaming to is
-`https://log.tollbit.com/log/akamai`.
+To forward your logs to us, follow the steps outlined <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">here</Anchor>. The endpoint url that you should be streaming to is `https://log.tollbit.com/log/akamai`.
 
-Select none for authentication for now, as we will be setting up custom
-authentication. To do so, go to "Custom header". For the content type, you can
-select `application/json`. Add a new header value with the key `TollbitKey` and
-the value as your secret key from your <Anchor target="_blank" href="https://app.tollbit.com">dashboard</Anchor>.
+Select none for authentication for now, as we will be setting up custom authentication. To do so, go to "Custom header". For the content type, you can select `application/json`. Add a new header value with the key `TollbitKey` and the value as your secret key from your <Anchor target="_blank" href="https://app.tollbit.com">dashboard</Anchor>.
 
-Finally, you can
-<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor>
-your stream!
+Finally, you can <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">review and activate</Anchor> your stream!
 
-### Route to Agent Site
+### Steps for Agent Site
 
 Akamai allows you to set up redirection rules at the edge using either Cloudlets or Content Protector.
 
