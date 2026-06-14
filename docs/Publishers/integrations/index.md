@@ -1,5 +1,5 @@
 ---
-title: Integration References
+title: Integrations
 excerpt: >-
   Technical documents on how to configure Analytics and Agent Site by
   integration type.
