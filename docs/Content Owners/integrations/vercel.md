@@ -21,7 +21,7 @@ To redirect bots to your `tollbit` subdomain you can use <Anchor target="_blank"
 Create a new rule. Set the rule to look at the User Agent and selected `Matches expression`. Copy the following regex as the expression to match. Feel free to modify to remove or block different bots.
 
 ```
-(ChatGPT-User|PerplexityBot|GPTBot|anthropic-ai|CCBot|Claude-Web|ClaudeBot|cohere-ai|YouBot|Diffbot|OAI-SearchBot|meta-externalagent|Timpibot|Amazonbot|Bytespider|Perplexity-User)
+(ChatGPT-User|PerplexityBot|GPTBot|anthropic-ai|CCBot|Claude-Web|ClaudeBot|Claude-User|Claude-SearchBot|cohere-ai|YouBot|Diffbot|OAI-SearchBot|meta-externalagent|Timpibot|Amazonbot|Bytespider|Perplexity-User)
 ```
 
 Set the rule to redirect to your `tollbit` subdomain by changing the `Then` option to `Redirect` and copy in your `tollbit` subdomain. The rule should look like this when you're finished

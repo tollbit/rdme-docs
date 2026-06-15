@@ -268,6 +268,7 @@ const botList = [
   'CCBot',
   'Claude-Web',
   'ClaudeBot',
+  'Claude-User',
   'cohere-ai',
   'YouBot',
   'Diffbot',
@@ -349,6 +350,7 @@ const botList = [
   'CCBot',
   'Claude-Web',
   'ClaudeBot',
+  'Claude-User',
   'cohere-ai',
   'YouBot',
   'Diffbot',
@@ -550,6 +552,7 @@ const botList = [
   'CCBot',
   'Claude-Web',
   'ClaudeBot',
+  'Claude-User',
   'cohere-ai',
   'YouBot',
   'Diffbot',
@@ -559,6 +562,7 @@ const botList = [
   'Amazonbot',
   'Bytespider',
   'Perplexity-User',
+  'Claude-SearchBot',
 ]
 
 export default {

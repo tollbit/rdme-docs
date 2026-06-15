@@ -84,7 +84,7 @@ We want to first start by creating an Edge Redirector policy. Follow the documen
 Once you have set up your policy, follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-edge-redirector-rules">here</Anchor> to set up rules for your Edge Redirector. Because we want to be redirecting based on the `User-Agent` header, we will need to create a redirector with advance matching rules. You will want to create a match type based on the <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/req-header">request header</Anchor>. The name of the header should be `User-Agent`, and the value should be a tab separated list of bad user agents. You can use the following list:
 
 ```
-ChatGPT-User PerplexityBot GPTBot anthropic-ai CCBot Claude-Web ClaudeBot cohere-ai YouBot Diffbot OAI-SearchBot meta-externalagent Timpibot Amazonbot Bytespider Perplexity-User
+ChatGPT-User PerplexityBot GPTBot anthropic-ai CCBot Claude-Web ClaudeBot Claude-User Claude-SearchBot cohere-ai YouBot Diffbot OAI-SearchBot meta-externalagent Timpibot Amazonbot Bytespider Perplexity-User
 ```
 
 For the operator value, use `is one of` without case sensitivity. These settings should let you match our known bad users agents. In the redirection rule, you can set the redirect url to your `tollbit` subdomain.
