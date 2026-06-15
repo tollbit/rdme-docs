@@ -64,7 +64,7 @@ Start by searching for content across the TollBit platform.
   <Tab title="cURL">
     ```bash
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=DIY%20projects%20for%20Millenials' \
-    --header 'TollBitKey: <key>'
+    --header 'TollbitKey: <key>'
     ```
   </Tab>
 
@@ -113,15 +113,15 @@ You can customize your search with additional query parameters:
     ```bash
     # Search with size limit
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=python%20tutorial&size=5' \
-    --header 'TollBitKey: <key>'
+    --header 'TollbitKey: <key>'
 
     # Search on specific properties (filter to only these domains)
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=tutorial&size=10&properties=example.com,tutorial.com' \
-    --header 'TollBitKey: <key>'
+    --header 'TollbitKey: <key>'
 
     # Pagination - get next page
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=DIY%20projects&next-token=<next_token_from_previous_response>' \
-    --header 'TollBitKey: <key>'
+    --header 'TollbitKey: <key>'
     ```
   </Tab>
 
@@ -176,7 +176,7 @@ The search response is a JSON object with the following structure:
 
 * `discoverable`: Indicates the content is available in TollBit
 * `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
-  * NOTE: You might need to reach out to TollBit to request authorization  for a specific property, use the `readyToLicense` query param to ensure you only get results for properties that your account is authorized to license
+  * NOTE: You might need to reach out to TollBit to request authorization for a specific property, use the `allowedOnly` query param to ensure you only get results for properties that your account is authorized to license
 
 ### Example: Parsing Search Results
 
@@ -185,7 +185,7 @@ The search response is a JSON object with the following structure:
     ```bash
     # Save the response to a file for easier parsing
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=DIY%20projects%20for%20Millenials' \
-    --header 'TollBitKey: <key>' \
+    --header 'TollbitKey: <key>' \
     --output search_results.json
 
     # Using jq to parse (if installed)
@@ -216,7 +216,7 @@ Once you've found a result you're interested in, check the available rates and l
 <Tabs>
   <Tab title="cURL">
     ```bash
-    curl --location 'https://gateway.tollbit.com/tollbit/dev/v2/rate/https://www.forbes.com/sites/jefffromm/2018/03/27/marketing-to-millennial-new-home-buyers-lowes-innovative-diy-training-program/' \
+    curl --location 'https://gateway.tollbit.com/dev/v2/rate/https://www.forbes.com/sites/jefffromm/2018/03/27/marketing-to-millennial-new-home-buyers-lowes-innovative-diy-training-program/' \
     --header 'TollbitKey: <key>'
     ```
 
@@ -286,7 +286,7 @@ Example error response:
 ```json
 {
     "detail": "access to this page is not allowed",
-    "instance": "/tollbit/dev/v2/rate/https://www.example.com/article",
+    "instance": "/dev/v2/rate/https://www.example.com/article",
     "status": 400,
     "title": "Bad Request",
     "type": "about:blank"
@@ -320,7 +320,7 @@ Example error response:
   <Tab title="cURL">
     ```bash
     # Save the response
-    curl --location 'https://gateway.tollbit.com/tollbit/dev/v2/rate/<url>' \
+    curl --location 'https://gateway.tollbit.com/dev/v2/rate/<url>' \
     --header 'TollbitKey: <key>' \
     --output rates.json
 
@@ -569,7 +569,7 @@ Here's a complete example that ties all the steps together:
     # Step 1: Search for content
     echo "Step 1: Searching for content..."
     SEARCH_RESPONSE=$(curl -s --location "https://gateway.tollbit.com/dev/v2/search?q=$(echo $SEARCH_QUERY | jq -sRr @uri)" \
-      --header "TollBitKey: $API_KEY")
+      --header "TollbitKey: $API_KEY")
 
     # Extract first result URL (requires jq)
     SELECTED_URL=$(echo $SEARCH_RESPONSE | jq -r '.items[0].url')
@@ -588,7 +588,7 @@ Here's a complete example that ties all the steps together:
     echo "Step 2: Getting rates..."
     # URL encode the URL for the rate endpoint
     ENCODED_URL=$(echo "$SELECTED_URL" | jq -sRr @uri)
-    RATES_RESPONSE=$(curl -s --location "https://gateway.tollbit.com/tollbit/dev/v2/rate/$ENCODED_URL" \
+    RATES_RESPONSE=$(curl -s --location "https://gateway.tollbit.com/dev/v2/rate/$ENCODED_URL" \
       --header "TollbitKey: $API_KEY")
 
     # Extract first rate price (requires jq)
@@ -727,7 +727,7 @@ The API returns standard HTTP status codes:
     "title": "Bad Request",
     "status": 400,
     "detail": "access to this page is not allowed",
-    "instance": "/tollbit/dev/v2/rate/https://www.example.com/article"
+    "instance": "/dev/v2/rate/https://www.example.com/article"
 }
 ```
 
@@ -737,7 +737,7 @@ The API returns standard HTTP status codes:
     # Check HTTP status code
     HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
       --location 'https://gateway.tollbit.com/dev/v2/search?q=test' \
-      --header 'TollBitKey: <key>')
+      --header 'TollbitKey: <key>')
 
     if [ $HTTP_CODE -ne 200 ]; then
       echo "Error: HTTP $HTTP_CODE"
