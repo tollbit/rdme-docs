@@ -1,7 +1,7 @@
 ---
 title: Analytics (Coming soon!)
 deprecated: false
-hidden: false
+hidden: true
 metadata:
   robots: index
 ---
