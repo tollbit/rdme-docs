@@ -395,52 +395,153 @@ The content response contains a `content` block (`header`, `body`, `footer`), a 
 
 ## End-to-End Example (Approach 2)
 
-Tie the three steps together: search with a third-party API, filter to licensable URLs, then license the first one.
+Tie the three steps together: search with a third-party API, filter to licensable URLs, then license the first one. Only Step 1 changes per provider — Steps 2 and 3 are identical across all three.
 
-```python
-import os, requests
-from tollbit import use_content, licenses, currencies
+<Tabs>
+  <Tab title="Perplexity">
+    ```python
+    import os, requests
+    from tollbit import use_content, licenses, currencies
 
-TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
-USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
+    TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
+    USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
 
-# Step 1: Search (Exa shown here — swap in Perplexity or Parallel as needed)
-search_resp = requests.post(
-    "https://api.exa.ai/search",
-    headers={"x-api-key": os.environ["EXA_API_KEY"]},
-    json={"query": "DIY home projects for millennials", "numResults": 10},
-)
-urls = [r["url"] for r in search_resp.json()["results"]]
+    # Step 1: Search with Perplexity
+    search_resp = requests.post(
+        "https://api.perplexity.ai/search",
+        headers={"Authorization": f"Bearer {os.environ['PERPLEXITY_API_KEY']}"},
+        json={"query": "DIY home projects for millennials", "max_results": 10},
+    )
+    urls = [r["url"] for r in search_resp.json()["results"]]
 
-# Step 2: Check licenseability via TollBit's batch rate endpoint
-batch_resp = requests.post(
-    "https://gateway.tollbit.com/dev/v2/rates/batch",
-    headers={"TollbitKey": TOLLBIT_KEY},
-    json={"urls": urls},
-)
-licensable = [
-    entry for entry in batch_resp.json()
-    if entry.get("rates") and not any(r.get("error") for r in entry["rates"])
-]
-if not licensable:
-    print("None of the search results are licensable through TollBit.")
-    raise SystemExit(0)
+    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    batch_resp = requests.post(
+        "https://gateway.tollbit.com/dev/v2/rates/batch",
+        headers={"TollbitKey": TOLLBIT_KEY},
+        json={"urls": urls},
+    )
+    licensable = [
+        entry for entry in batch_resp.json()
+        if entry.get("rates") and not any(r.get("error") for r in entry["rates"])
+    ]
+    if not licensable:
+        print("None of the search results are licensable through TollBit.")
+        raise SystemExit(0)
 
-# Step 3: License the first available result
-target = licensable[0]
-max_price = target["rates"][0]["price"]["priceMicros"]
+    # Step 3: License the first available result
+    target = licensable[0]
+    max_price = target["rates"][0]["price"]["priceMicros"]
 
-content_client = use_content.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
-data = content_client.get_sanctioned_content(
-    url=target["url"],
-    max_price_micros=max_price,
-    currency=currencies.USD,
-    license_type=licenses.types.ON_DEMAND_LICENSE,
-)
+    content_client = use_content.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
+    data = content_client.get_sanctioned_content(
+        url=target["url"],
+        max_price_micros=max_price,
+        currency=currencies.USD,
+        license_type=licenses.types.ON_DEMAND_LICENSE,
+    )
 
-print(f"Licensed: {data.metadata.title}")
-print(data.content.body[:200] + "...")
-```
+    print(f"Licensed: {data.metadata.title}")
+    print(data.content.body[:200] + "...")
+    ```
+  </Tab>
+
+  <Tab title="Parallel">
+    ```python
+    import os, requests
+    from tollbit import use_content, licenses, currencies
+
+    TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
+    USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
+
+    # Step 1: Search with Parallel
+    search_resp = requests.post(
+        "https://api.parallel.ai/v1/search",
+        headers={"x-api-key": os.environ["PARALLEL_API_KEY"]},
+        json={
+            "objective": "Find articles about DIY home projects for millennials",
+            "search_queries": ["DIY home projects millennials", "millennial home improvement"],
+        },
+    )
+    urls = [r["url"] for r in search_resp.json()["results"]]
+
+    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    batch_resp = requests.post(
+        "https://gateway.tollbit.com/dev/v2/rates/batch",
+        headers={"TollbitKey": TOLLBIT_KEY},
+        json={"urls": urls},
+    )
+    licensable = [
+        entry for entry in batch_resp.json()
+        if entry.get("rates") and not any(r.get("error") for r in entry["rates"])
+    ]
+    if not licensable:
+        print("None of the search results are licensable through TollBit.")
+        raise SystemExit(0)
+
+    # Step 3: License the first available result
+    target = licensable[0]
+    max_price = target["rates"][0]["price"]["priceMicros"]
+
+    content_client = use_content.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
+    data = content_client.get_sanctioned_content(
+        url=target["url"],
+        max_price_micros=max_price,
+        currency=currencies.USD,
+        license_type=licenses.types.ON_DEMAND_LICENSE,
+    )
+
+    print(f"Licensed: {data.metadata.title}")
+    print(data.content.body[:200] + "...")
+    ```
+  </Tab>
+
+  <Tab title="Exa">
+    ```python
+    import os, requests
+    from tollbit import use_content, licenses, currencies
+
+    TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
+    USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
+
+    # Step 1: Search with Exa
+    search_resp = requests.post(
+        "https://api.exa.ai/search",
+        headers={"x-api-key": os.environ["EXA_API_KEY"]},
+        json={"query": "DIY home projects for millennials", "numResults": 10},
+    )
+    urls = [r["url"] for r in search_resp.json()["results"]]
+
+    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    batch_resp = requests.post(
+        "https://gateway.tollbit.com/dev/v2/rates/batch",
+        headers={"TollbitKey": TOLLBIT_KEY},
+        json={"urls": urls},
+    )
+    licensable = [
+        entry for entry in batch_resp.json()
+        if entry.get("rates") and not any(r.get("error") for r in entry["rates"])
+    ]
+    if not licensable:
+        print("None of the search results are licensable through TollBit.")
+        raise SystemExit(0)
+
+    # Step 3: License the first available result
+    target = licensable[0]
+    max_price = target["rates"][0]["price"]["priceMicros"]
+
+    content_client = use_content.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
+    data = content_client.get_sanctioned_content(
+        url=target["url"],
+        max_price_micros=max_price,
+        currency=currencies.USD,
+        license_type=licenses.types.ON_DEMAND_LICENSE,
+    )
+
+    print(f"Licensed: {data.metadata.title}")
+    print(data.content.body[:200] + "...")
+    ```
+  </Tab>
+</Tabs>
 
 ***
 
