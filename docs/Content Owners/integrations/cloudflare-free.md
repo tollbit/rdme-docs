@@ -1,7 +1,7 @@
 ---
 title: Cloudflare (Free)
 deprecated: false
-hidden: false
+hidden: true
 metadata:
   robots: index
 ---
