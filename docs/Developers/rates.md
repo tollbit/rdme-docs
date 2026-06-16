@@ -16,7 +16,7 @@ Get the rate(s) for a single webpage. The content path is the full URL of the in
 ### Endpoint
 
 ```
-GET /tollbit/dev/v2/rate/{content_path}
+GET /dev/v2/rates/{content_path}
 ```
 
 **Base URL**: `https://gateway.tollbit.com`
@@ -87,7 +87,7 @@ The API returns an array of rate options. Each option includes a license and pri
 
 ```bash
 # URL-encode the content URL when using it in the path
-curl -G "https://gateway.tollbit.com/tollbit/dev/v2/rate/https%3A%2F%2Fexample.com%2Farticle" \
+curl -G "https://gateway.tollbit.com/dev/v2/rates/https%3A%2F%2Fexample.com%2Farticle" \
   --header "TollbitKey: YOUR_API_KEY_HERE"
 ```
 
@@ -100,7 +100,7 @@ Get the rates for a list of URLs in a single request.
 ### Endpoint
 
 ```
-POST /tollbit/dev/v2/rate/batch
+POST /dev/v2/rates/batch
 ```
 
 **Base URL**: `https://gateway.tollbit.com`
@@ -170,7 +170,7 @@ The API returns an array of objects, one per URL. Each object has a `url` and a 
 ### Example request
 
 ```bash
-curl --location 'https://gateway.tollbit.com/tollbit/dev/v2/rate/batch' \
+curl --location 'https://gateway.tollbit.com/dev/v2/rates/batch' \
   --header 'TollbitKey: YOUR_API_KEY_HERE' \
   --header 'Content-Type: application/json' \
   --data '{

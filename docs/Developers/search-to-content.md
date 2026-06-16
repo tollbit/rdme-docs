@@ -216,7 +216,7 @@ Once you've found a result you're interested in, check the available rates and l
 <Tabs>
   <Tab title="cURL">
     ```bash
-    curl --location 'https://gateway.tollbit.com/dev/v2/rate/https://www.forbes.com/sites/jefffromm/2018/03/27/marketing-to-millennial-new-home-buyers-lowes-innovative-diy-training-program/' \
+    curl --location 'https://gateway.tollbit.com/dev/v2/rates/https://www.forbes.com/sites/jefffromm/2018/03/27/marketing-to-millennial-new-home-buyers-lowes-innovative-diy-training-program/' \
     --header 'TollbitKey: <key>'
     ```
 
@@ -286,7 +286,7 @@ Example error response:
 ```json
 {
     "detail": "access to this page is not allowed",
-    "instance": "/dev/v2/rate/https://www.example.com/article",
+    "instance": "/dev/v2/rates/https://www.example.com/article",
     "status": 400,
     "title": "Bad Request",
     "type": "about:blank"
@@ -320,7 +320,7 @@ Example error response:
   <Tab title="cURL">
     ```bash
     # Save the response
-    curl --location 'https://gateway.tollbit.com/dev/v2/rate/<url>' \
+    curl --location 'https://gateway.tollbit.com/dev/v2/rates/<url>' \
     --header 'TollbitKey: <key>' \
     --output rates.json
 
@@ -588,7 +588,7 @@ Here's a complete example that ties all the steps together:
     echo "Step 2: Getting rates..."
     # URL encode the URL for the rate endpoint
     ENCODED_URL=$(echo "$SELECTED_URL" | jq -sRr @uri)
-    RATES_RESPONSE=$(curl -s --location "https://gateway.tollbit.com/dev/v2/rate/$ENCODED_URL" \
+    RATES_RESPONSE=$(curl -s --location "https://gateway.tollbit.com/dev/v2/rates/$ENCODED_URL" \
       --header "TollbitKey: $API_KEY")
 
     # Extract first rate price (requires jq)
@@ -727,7 +727,7 @@ The API returns standard HTTP status codes:
     "title": "Bad Request",
     "status": 400,
     "detail": "access to this page is not allowed",
-    "instance": "/dev/v2/rate/https://www.example.com/article"
+    "instance": "/dev/v2/rates/https://www.example.com/article"
 }
 ```
 
