@@ -91,7 +91,7 @@ For any bulk update (10+ sites), we recommend using each provider's API or CLI t
 
 ##
 
-Once your property is verified, TollBit recommends whitelisting the TollBot user agent. This allows the platform to run periodic reviews o understand site structure and content changes over time. The fetched site map can then be indexed for analytics and content delivery to LLMs for the fee that you choose.
+Once your property is verified, TollBit recommends whitelisting the TollBot user agent. This allows the platform to run periodic reviews to understand site structure and content changes over time. The fetched site map can then be indexed for analytics and content delivery to LLMs for the fee that you choose.
 
 Our user agent will be called "tollbot", stylized as "tollbot/1.0". Please whitelist this user agent. You can also find our IPs here: [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt).
 
