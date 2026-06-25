@@ -475,11 +475,47 @@ The content response contains a `content` block (`header`, `body`, `footer`), a 
 
 ***
 
-## End-to-End Example (Approach 2)
+## End-to-End Example
 
-Tie the three steps together: search with a third-party API, filter to licensable URLs, then license the first one. Only Step 1 changes per provider — Steps 2 and 3 are identical across all three.
+Tie the three steps together. The **TollBit** tab shows Approach 1 — licensed search end to end. The **Perplexity**, **Firecrawl**, and **Exa** tabs show Approach 2 — third-party search filtered through TollBit licensing; only Step 1 changes per provider, while Steps 2 and 3 are identical across all three.
 
 <Tabs>
+  <Tab title="TollBit">
+    ```python
+    import os
+    from tollbit import search, use_content, licenses, currencies
+
+    TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
+    USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
+
+    # Step 1: Search TollBit's licensed search
+    search_client = search.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
+    results = search_client.search(q="DIY home projects for millennials")
+
+    # Step 2: Keep only results that are ready to license now
+    licensable = [item for item in results.items if item.availability.ready_to_license]
+    if not licensable:
+        print("No results are ready to license.")
+        raise SystemExit(0)
+
+    # Step 3: License the first available result
+    target = licensable[0]
+    content_client = use_content.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
+
+    # Check the rate, then license up to that price
+    rate = content_client.get_rate(url=target.url)[0]
+    data = content_client.get_sanctioned_content(
+        url=target.url,
+        max_price_micros=rate.price.price_micros,
+        currency=currencies.USD,
+        license_type=licenses.types.ON_DEMAND_LICENSE,
+    )
+
+    print(f"Licensed: {data.metadata.title}")
+    print(data.content.body[:200] + "...")
+    ```
+  </Tab>
+
   <Tab title="Perplexity">
     ```python
     import os, requests
