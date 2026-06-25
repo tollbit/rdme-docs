@@ -33,32 +33,23 @@ Before you begin, make sure you have:
   </Tab>
 
   <Tab title="Python">
-    1. **Installed the TollBit SDK**: Used for licensing in both approaches.
-       ```bash
-       pip install tollbit-python-sdk
-       ```
+    Install the **TollBit SDK** (used for licensing in both approaches), plus **`requests`** for the Approach 2 third-party search calls:
 
-    2. **Installed `requests`** (Approach 2 only): The third-party search examples call those APIs over HTTP.
-       ```bash
-       pip install requests
-       ```
+    ```bash
+    pip install tollbit-python-sdk requests
+    ```
 
-    3. **A TollBit organization API key**: Required for both approaches. Set it as an environment variable:
-       ```bash
-       export TOLLBIT_ORG_API_KEY="your-tollbit-key-here"
-       ```
+    Then set your credentials as environment variables. Add your user agent to the dev dashboard under the `My Agents` tab first, then:
 
-    4. **A user agent**: Identifies your application. Add it to the dev dashboard under the `My Agents` tab, then set it as an environment variable:
-       ```bash
-       export TOLLBIT_USER_AGENT="your-app-name/1.0.0"
-       ```
+    ```bash
+    export TOLLBIT_ORG_API_KEY="your-tollbit-key-here"  # required for both approaches
+    export TOLLBIT_USER_AGENT="your-app-name/1.0.0"
 
-    5. **A third-party search API key** (Approach 2 only): A Perplexity, Firecrawl, or Exa API key. Set whichever provider you use:
-       ```bash
-       export PERPLEXITY_API_KEY="your-perplexity-key-here"
-       export FIRECRAWL_API_KEY="your-firecrawl-key-here"
-       export EXA_API_KEY="your-exa-key-here"
-       ```
+    # Approach 2 only — set whichever provider you use
+    export PERPLEXITY_API_KEY="your-perplexity-key-here"
+    export FIRECRAWL_API_KEY="your-firecrawl-key-here"
+    export EXA_API_KEY="your-exa-key-here"
+    ```
   </Tab>
 </Tabs>
 
