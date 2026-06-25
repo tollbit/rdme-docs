@@ -1,5 +1,5 @@
 ---
-title: Open Access
+title: Enabling Open Access
 excerpt: >-
   Choose whether or not you'd like to provide free or paywalled access to your
   content.
