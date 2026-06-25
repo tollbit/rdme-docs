@@ -9,10 +9,28 @@ excerpt: >-
 
 When you ground an agent's response in real web content, you need two things: a way to **discover** relevant pages, and a way to **license** the ones you use. TollBit supports two approaches:
 
-1. **TollBit Licensed Search** — discovery and licensing in a single network. You search TollBit, and every one of the results is ready to be licensed.
-2. **Bring your own search** — use a third-party search API (Perplexity, Firecrawl, or Exa) for discovery, then use TollBit to check which results are licensable and to license the ones you need.
+1. **Using TollBit Search** — discovery and licensing in a single network. You search TollBit, and every one of the results is ready to be licensed.
+2. **Using a 3rd-party search** — use a third-party search API (Perplexity, Firecrawl, or Exa) for discovery, then use TollBit to check which results are licensable and to license the ones you need.
 
-Use **Approach 1** when you want the simplest path and are happy to discover content within the TollBit network. Use **Approach 2** when you already have a preferred search provider, or want broader web coverage, and only need TollBit for the licensing layer.
+Use **TollBit Search** when you want the simplest path and are happy to discover content within the TollBit network. Use a **3rd-party search** when you already have a preferred search provider, or want broader web coverage, and only need TollBit for the licensing layer.
+
+Whichever way you discover content, the **license + get content** step is the same:
+
+```mermaid
+flowchart LR
+    A1["<b>Using TollBit Search</b>"]
+    A2["<b>Using a 3rd party search</b><br/>Perplexity · Firecrawl · Exa"]
+    B["Batch rate check<br/>filter to licensable URLs"]
+    L["License the content"]
+    C["Get content"]
+
+    A1 --> L
+    A2 --> B --> L
+    L --> C
+
+    style L fill:#e8f0fe,stroke:#1a73e8
+    style C fill:#e8f0fe,stroke:#1a73e8
+```
 
 ## Prerequisites
 
@@ -29,11 +47,11 @@ Before you begin, make sure you have:
 
     3. **A user agent**: Identifies your application. Add it to the dev dashboard under the `My Agents` tab.
 
-    4. **A third-party search API key** (Approach 2 only): A Perplexity, Firecrawl, or Exa API key, depending on which provider you use.
+    4. **A third-party search API key** (only when using a 3rd-party search): A Perplexity, Firecrawl, or Exa API key, depending on which provider you use.
   </Tab>
 
   <Tab title="Python">
-    Install the **TollBit SDK** (used for licensing in both approaches), plus **`requests`** for the Approach 2 third-party search calls:
+    Install the **TollBit SDK** (used for licensing either way), plus **`requests`** for the 3rd-party search calls:
 
     ```bash
     pip install tollbit-python-sdk requests
@@ -45,7 +63,7 @@ Before you begin, make sure you have:
     export TOLLBIT_ORG_API_KEY="your-tollbit-key-here"  # required for both approaches
     export TOLLBIT_USER_AGENT="your-app-name/1.0.0"
 
-    # Approach 2 only — set whichever provider you use
+    # Only when using a 3rd-party search — set whichever provider you use
     export PERPLEXITY_API_KEY="your-perplexity-key-here"
     export FIRECRAWL_API_KEY="your-firecrawl-key-here"
     export EXA_API_KEY="your-exa-key-here"
@@ -55,7 +73,7 @@ Before you begin, make sure you have:
 
 ***
 
-## Approach 1: TollBit Licensed Search
+## Using TollBit Search
 
 With licensed search, discovery happens inside TollBit. The workflow is three steps:
 
@@ -200,7 +218,7 @@ The content response contains a `content` block (`header`, `body`, `footer`), a 
 
 ***
 
-## Approach 2: Third-Party Search + TollBit Licensing
+## Using a 3rd Party Search
 
 If you already use a search provider, you can keep it for discovery and use TollBit only for licensing. The workflow is three steps:
 
@@ -477,7 +495,7 @@ The content response contains a `content` block (`header`, `body`, `footer`), a 
 
 ## End-to-End Example
 
-Tie the three steps together. The **TollBit** tab shows Approach 1 — licensed search end to end. The **Perplexity**, **Firecrawl**, and **Exa** tabs show Approach 2 — third-party search filtered through TollBit licensing; only Step 1 changes per provider, while Steps 2 and 3 are identical across all three.
+Tie the three steps together. The **TollBit** tab uses TollBit Search end to end. The **Perplexity**, **Firecrawl**, and **Exa** tabs use a 3rd-party search filtered through TollBit licensing; only Step 1 changes per provider, while Steps 2 and 3 are identical across all three.
 
 <Tabs>
   <Tab title="TollBit">
@@ -669,7 +687,7 @@ Both approaches use standard HTTP status codes on the TollBit endpoints:
 - **401 Unauthorized**: Invalid or missing API key
 - **500–599 Server Error**: Server-side errors
 
-For Approach 2, a URL that exists in TollBit but isn't enabled for your organization surfaces as an `error` on its batch rate entry (or a `400` on the single-URL rate endpoint) with a message like `"access to this page is not allowed"`. Reach out to your TollBit contact to request access to that property.
+When using a 3rd-party search, a URL that exists in TollBit but isn't enabled for your organization surfaces as an `error` on its batch rate entry (or a `400` on the single-URL rate endpoint) with a message like `"access to this page is not allowed"`. Reach out to your TollBit contact to request access to that property.
 
 Third-party search providers return their own status codes and error shapes — consult each provider's documentation.
 
