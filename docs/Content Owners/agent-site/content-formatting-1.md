@@ -1,5 +1,5 @@
 ---
-title: Paid Access (Default)
+title: Default Settings
 excerpt: Default configurations for Agent Sites when you redirect traffic.
 deprecated: false
 hidden: false
