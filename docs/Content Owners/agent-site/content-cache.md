@@ -16,15 +16,9 @@ Select a TollBit property, and under Agent Site select Open Access on the top of
 
 ![](https://files.readme.io/e709be393955ab0876312d1450fd109ad3a028d721569b10105c27038a2ec676-Screenshot_2026-06-25_at_12.15.20_PM.png)
 
-Once you add open access, you can configure open access by either selecting a content path (via dropdown or text entry) or user agent. In the example below, all articles under the Opinion folder path have been enabled for ChatGPT-User, as an example.
+Once you add open access, you can configure open access by either selecting a content path (via dropdown or text entry) or user agent. In the example below, all articles under the Opinion / Editorials folder path have been enabled for ChatGPT-User, as an example.
 
-
-<Image src="https://files.readme.io/05b340f981d7fd43624ceb465e98a3e085c623cec196df8fe2d0185b1c54f0b6-Screenshot_2026-06-25_at_12.18.21_PM.png" align="left" />
-
-
-<br />
-
-<br />
+![](https://files.readme.io/7242a582633eae7bfdd260036703290c92b273e7541706f87a5fb3c81fb2884d-Screenshot_2026-06-25_at_12.21.22_PM.png)
 
 <br />
 
