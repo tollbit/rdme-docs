@@ -2,7 +2,7 @@
 title: Search and Grounding
 excerpt: >-
   Ground your agent in licensed content — either with TollBit's licensed search,
-  or by pairing a third-party search API (Perplexity, Parallel, Exa) with
+  or by pairing a third-party search API (Perplexity, Firecrawl, Exa) with
   TollBit licensing.
 ---
 # Search and Grounding
@@ -10,7 +10,7 @@ excerpt: >-
 When you ground an agent's response in real web content, you need two things: a way to **discover** relevant pages, and a way to **license** the ones you use. TollBit supports two approaches:
 
 1. **TollBit Licensed Search** — discovery and licensing in a single network. You search TollBit, and every one of the results is ready to be licensed.
-2. **Bring your own search** — use a third-party search API (Perplexity, Parallel, or Exa) for discovery, then use TollBit to check which results are licensable and to license the ones you need.
+2. **Bring your own search** — use a third-party search API (Perplexity, Firecrawl, or Exa) for discovery, then use TollBit to check which results are licensable and to license the ones you need.
 
 Use **Approach 1** when you want the simplest path and are happy to discover content within the TollBit network. Use **Approach 2** when you already have a preferred search provider, or want broader web coverage, and only need TollBit for the licensing layer.
 
@@ -18,21 +18,49 @@ Use **Approach 1** when you want the simplest path and are happy to discover con
 
 Before you begin, make sure you have:
 
-- **A TollBit organization API key** — replace `<key>` in the examples below with your actual key. Required for both approaches.
-- **A user agent** — identifies your application. Add it to the dev dashboard under the `My Agents` tab.
-- **A third-party search API key** (Approach 2 only) — a Perplexity, Parallel, or Exa API key, depending on which provider you use.
+<Tabs>
+  <Tab title="cURL">
+    1. **cURL installed**: cURL is available on most systems. Check with:
+       ```bash
+       curl --version
+       ```
 
-We recommend setting these as environment variables:
+    2. **A TollBit organization API key**: Required for both approaches. Replace {'`<key>`'} in the examples below with your actual key.
 
-```bash
-export TOLLBIT_ORG_API_KEY="your-tollbit-key-here"
-export TOLLBIT_USER_AGENT="your-app-name/1.0.0"
+    3. **A user agent**: Identifies your application. Add it to the dev dashboard under the `My Agents` tab.
 
-# Approach 2 — set whichever provider you use
-export PERPLEXITY_API_KEY="your-perplexity-key-here"
-export PARALLEL_API_KEY="your-parallel-key-here"
-export EXA_API_KEY="your-exa-key-here"
-```
+    4. **A third-party search API key** (Approach 2 only): A Perplexity, Firecrawl, or Exa API key, depending on which provider you use.
+  </Tab>
+
+  <Tab title="Python">
+    1. **Installed the TollBit SDK**: Used for licensing in both approaches.
+       ```bash
+       pip install tollbit-python-sdk
+       ```
+
+    2. **Installed `requests`** (Approach 2 only): The third-party search examples call those APIs over HTTP.
+       ```bash
+       pip install requests
+       ```
+
+    3. **A TollBit organization API key**: Required for both approaches. Set it as an environment variable:
+       ```bash
+       export TOLLBIT_ORG_API_KEY="your-tollbit-key-here"
+       ```
+
+    4. **A user agent**: Identifies your application. Add it to the dev dashboard under the `My Agents` tab, then set it as an environment variable:
+       ```bash
+       export TOLLBIT_USER_AGENT="your-app-name/1.0.0"
+       ```
+
+    5. **A third-party search API key** (Approach 2 only): A Perplexity, Firecrawl, or Exa API key. Set whichever provider you use:
+       ```bash
+       export PERPLEXITY_API_KEY="your-perplexity-key-here"
+       export FIRECRAWL_API_KEY="your-firecrawl-key-here"
+       export EXA_API_KEY="your-exa-key-here"
+       ```
+  </Tab>
+</Tabs>
 
 ***
 
@@ -119,7 +147,7 @@ This step is identical for both approaches — see [License the Content](#step-3
 
 If you already use a search provider, you can keep it for discovery and use TollBit only for licensing. The workflow is three steps:
 
-1. **Search** with your preferred search API (Perplexity, Parallel, or Exa) to get a list of result URLs
+1. **Search** with your preferred search API (Perplexity, Firecrawl, or Exa) to get a list of result URLs
 2. **Check licenseability** by passing those URLs to TollBit's batch rate endpoint to see which are available to license
 3. **License the content** for the URLs you want — acquire a token and retrieve the content
 
@@ -157,16 +185,16 @@ Run a search with your provider of choice and collect the result URLs. You'll pa
     Each item in `results` includes `title`, `url`, `snippet`, `date`, and `last_updated`.
   </Tab>
 
-  <Tab title="Parallel">
-    **Endpoint**: `POST https://api.parallel.ai/v1/search` · **Auth**: `x-api-key: <PARALLEL_API_KEY>`
+  <Tab title="Firecrawl">
+    **Endpoint**: `POST https://api.firecrawl.dev/v2/search` · **Auth**: `Authorization: Bearer <FIRECRAWL_API_KEY>`
 
     ```bash
-    curl --location 'https://api.parallel.ai/v1/search' \
-    --header 'x-api-key: <PARALLEL_API_KEY>' \
+    curl --location 'https://api.firecrawl.dev/v2/search' \
+    --header 'Authorization: Bearer <FIRECRAWL_API_KEY>' \
     --header 'Content-Type: application/json' \
     --data '{
-        "objective": "Find articles about DIY home projects for millennials",
-        "search_queries": ["DIY home projects millennials", "millennial home improvement"]
+        "query": "DIY home projects for millennials",
+        "limit": 10
     }'
     ```
 
@@ -174,19 +202,16 @@ Run a search with your provider of choice and collect the result URLs. You'll pa
     import os, requests
 
     resp = requests.post(
-        "https://api.parallel.ai/v1/search",
-        headers={"x-api-key": os.environ["PARALLEL_API_KEY"]},
-        json={
-            "objective": "Find articles about DIY home projects for millennials",
-            "search_queries": ["DIY home projects millennials", "millennial home improvement"],
-        },
+        "https://api.firecrawl.dev/v2/search",
+        headers={"Authorization": f"Bearer {os.environ['FIRECRAWL_API_KEY']}"},
+        json={"query": "DIY home projects for millennials", "limit": 10},
     )
-    results = resp.json()["results"]
+    results = resp.json()["data"]["web"]
     urls = [r["url"] for r in results]
     print(urls)
     ```
 
-    Each item in `results` includes `url`, `title`, `publish_date`, and `excerpts` (LLM-optimized text snippets).
+    Each item in `data.web` includes `title`, `url`, `description`, and `metadata`.
   </Tab>
 
   <Tab title="Exa">
@@ -445,7 +470,7 @@ Tie the three steps together: search with a third-party API, filter to licensabl
     ```
   </Tab>
 
-  <Tab title="Parallel">
+  <Tab title="Firecrawl">
     ```python
     import os, requests
     from tollbit import use_content, licenses, currencies
@@ -453,16 +478,13 @@ Tie the three steps together: search with a third-party API, filter to licensabl
     TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
     USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
 
-    # Step 1: Search with Parallel
+    # Step 1: Search with Firecrawl
     search_resp = requests.post(
-        "https://api.parallel.ai/v1/search",
-        headers={"x-api-key": os.environ["PARALLEL_API_KEY"]},
-        json={
-            "objective": "Find articles about DIY home projects for millennials",
-            "search_queries": ["DIY home projects millennials", "millennial home improvement"],
-        },
+        "https://api.firecrawl.dev/v2/search",
+        headers={"Authorization": f"Bearer {os.environ['FIRECRAWL_API_KEY']}"},
+        json={"query": "DIY home projects for millennials", "limit": 10},
     )
-    urls = [r["url"] for r in search_resp.json()["results"]]
+    urls = [r["url"] for r in search_resp.json()["data"]["web"]]
 
     # Step 2: Check licenseability via TollBit's batch rate endpoint
     batch_resp = requests.post(
@@ -566,5 +588,5 @@ Third-party search providers return their own status codes and error shapes — 
 
 - **TollBit API documentation**: [docs.tollbit.com](https://docs.tollbit.com)
 - **Perplexity Search API**: [docs.perplexity.ai](https://docs.perplexity.ai)
-- **Parallel Search API**: [docs.parallel.ai](https://docs.parallel.ai)
+- **Firecrawl Search API**: [docs.firecrawl.dev](https://docs.firecrawl.dev)
 - **Exa Search API**: [docs.exa.ai](https://docs.exa.ai)
