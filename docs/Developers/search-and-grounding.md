@@ -130,7 +130,73 @@ Useful query parameters: `size` (max 20), `next-token` (pagination), `allowedOnl
 
 ### Step 3: License the Content
 
-This step is identical for both approaches — see [License the Content](#step-3-license-the-content) under Approach 2 below.
+Once you've picked a licensable URL, licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
+
+#### Step 3a: Get a Token (cURL only)
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl --location 'https://gateway.tollbit.com/dev/v2/tokens/content' \
+    --header 'Content-Type: application/json' \
+    --header 'TollbitKey: <key>' \
+    --data '{
+        "url": "https://www.example.com/article",
+        "userAgent": "test-agent",
+        "maxPriceMicros": 11000000,
+        "currency": "USD",
+        "licenseType": "ON_DEMAND_LICENSE"
+    }'
+    ```
+
+    The response contains a `token` you'll use in Step 3b. For `CUSTOM_LICENSE`, also include `licenseCuid` in the request body.
+  </Tab>
+
+  <Tab title="Python">
+    The Python SDK acquires the token automatically inside `get_sanctioned_content` (Step 3b) — no separate token call needed.
+  </Tab>
+</Tabs>
+
+#### Step 3b: Get the Content
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl --location 'https://gateway.tollbit.com/dev/v2/content/https://www.example.com/article' \
+    --header 'TollbitToken: <Token>' \
+    --header 'User-Agent: test-agent'
+    ```
+
+    Request a format with the `Accept` header: `text/markdown` (default) or `text/html`.
+  </Tab>
+
+  <Tab title="Python">
+    ```python
+    from tollbit import use_content, licenses, currencies
+    import os
+
+    api_key = os.getenv("TOLLBIT_ORG_API_KEY", "YOUR_API_KEY_HERE")
+    user_agent = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
+
+    content_client = use_content.create_client(secret_key=api_key, user_agent=user_agent)
+
+    # Automatically acquires a token and retrieves the content
+    data = content_client.get_sanctioned_content(
+        url=results.items[0].url,
+        max_price_micros=11000000,  # 11.00 USD
+        currency=currencies.USD,
+        license_type=licenses.types.ON_DEMAND_LICENSE,
+    )
+
+    print(data.metadata.title)
+    print(data.content.body)
+    ```
+  </Tab>
+</Tabs>
+
+The content response contains a `content` block (`header`, `body`, `footer`), a `metadata` block (`title`, `description`, `author`, `published`, …), and the `rate` that was applied.
+
+**Available license types**: `ON_DEMAND_LICENSE`, `ON_DEMAND_FULL_USE_LICENSE`, `CUSTOM_LICENSE` (requires `licenseCuid` for cURL / `license_id` for the SDK).
 
 ***
 
