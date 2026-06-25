@@ -28,8 +28,8 @@ flowchart LR
     A2 --> B --> L
     L --> C
 
-    style L fill:#e8f0fe,stroke:#1a73e8
-    style C fill:#e8f0fe,stroke:#1a73e8
+    style L fill:#e8f0fe,stroke:#1a73e8,color:#1a1a1a
+    style C fill:#e8f0fe,stroke:#1a73e8,color:#1a1a1a
 ```
 
 ## Prerequisites
