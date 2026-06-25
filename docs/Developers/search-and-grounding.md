@@ -132,7 +132,7 @@ Useful query parameters: `size` (max 20), `next-token` (pagination), `allowedOnl
 
 Once you've picked a licensable URL, licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
 
-#### Step 3a: Get a Token (cURL only)
+#### Step 3a: Get a Token
 
 <Tabs>
   <Tab title="cURL">
@@ -407,7 +407,7 @@ The endpoint returns an array with one entry per URL. Each entry has the URL and
 
 Once you've picked a licensable URL (from either approach), licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
 
-#### Step 3a: Get a Token (cURL only)
+#### Step 3a: Get a Token
 
 <Tabs>
   <Tab title="cURL">
