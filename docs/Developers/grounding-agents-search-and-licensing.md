@@ -1,11 +1,11 @@
 ---
-title: Grounding Agents in Licensed Content
+title: "Grounding Agents: Search and Licensing"
 excerpt: >-
   Ground your agent in licensed content — either with TollBit Search, or by
   pairing a 3rd-party search API (Perplexity, Firecrawl, Exa) with TollBit
   licensing.
 ---
-# Grounding Agents in Licensed Content
+# Search and Fetch Content
 
 When you ground an agent's response in real web content, you need two things: a way to **discover** relevant pages, and a way to **license** the ones you use. TollBit supports two approaches:
 
