@@ -1,16 +1,16 @@
 ---
-title: Search and Grounding
+title: Grounding Agents in Licensed Content
 excerpt: >-
-  Ground your agent in licensed content — either with TollBit's licensed search,
-  or by pairing a third-party search API (Perplexity, Firecrawl, Exa) with
-  TollBit licensing.
+  Ground your agent in licensed content — either with TollBit Search, or by
+  pairing a 3rd-party search API (Perplexity, Firecrawl, Exa) with TollBit
+  licensing.
 ---
-# Search and Grounding
+# Grounding Agents in Licensed Content
 
 When you ground an agent's response in real web content, you need two things: a way to **discover** relevant pages, and a way to **license** the ones you use. TollBit supports two approaches:
 
 1. **Using TollBit Search** — discovery and licensing in a single network. You search TollBit, and every one of the results is ready to be licensed.
-2. **Using a 3rd-party search** — use a third-party search API (Perplexity, Firecrawl, or Exa) for discovery, then use TollBit to check which results are licensable and to license the ones you need.
+2. **Using a 3rd-party search** — use a third-party search API (Perplexity, Firecrawl, or Exa) for discovery, then use TollBit to check which results are available to license, and license the ones you need.
 
 Use **TollBit Search** when you want the simplest path and are happy to discover content within the TollBit network. Use a **3rd-party search** when you already have a preferred search provider, or want broader web coverage, and only need TollBit for the licensing layer.
 
@@ -75,13 +75,13 @@ Before you begin, make sure you have:
 
 ## Using TollBit Search
 
-With licensed search, discovery happens inside TollBit. The workflow is three steps:
+With TollBit Search, discovery happens inside TollBit. The workflow is three steps:
 
-1. **Search** for content with the licensed search endpoint
-2. **Get rates** for a result to check pricing and license options
+1. **Search** for content with the TollBit Search endpoint
+2. **Check pricing** for a result to see its price and license options
 3. **License the content** — acquire a token and retrieve the content
 
-Each search result includes an `availability` block that tells you whether the content is `discoverable` (in the TollBit network) and `readyToLicense` (rates are set and it can be transacted now), so you know up front what is licensable.
+Each search result tells you whether it's `discoverable` (found in the TollBit network) and `readyToLicense` (priced and ready to use right now), so you know up front what's available to license.
 
 > 📘 Full walkthrough
 >
@@ -118,7 +118,7 @@ Each search result includes an `availability` block that tells you whether the c
 
 Useful query parameters: `size` (max 20), `next-token` (pagination), `allowedOnly` (limit to properties your account is authorized to license), and `properties` (comma-separated domains, max 20).
 
-### Step 2: Get Rates
+### Step 2: Check Pricing
 
 <Tabs>
   <Tab title="cURL">
@@ -148,7 +148,7 @@ Useful query parameters: `size` (max 20), `next-token` (pagination), `allowedOnl
 
 ### Step 3: License the Content
 
-Once you've picked a licensable URL, licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
+Once you've picked a URL to license, licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
 
 #### Step 3a: Get a Token
 
@@ -214,7 +214,7 @@ Once you've picked a licensable URL, licensing is two parts: get an access token
 
 The content response contains a `content` block (`header`, `body`, `footer`), a `metadata` block (`title`, `description`, `author`, `published`, …), and the `rate` that was applied.
 
-**Available license types**: `ON_DEMAND_LICENSE`, `ON_DEMAND_FULL_USE_LICENSE`, `CUSTOM_LICENSE` (requires `licenseCuid` for cURL / `license_id` for the SDK).
+**Available license types**: `ON_DEMAND_LICENSE` (pay-per-use), `ON_DEMAND_FULL_USE_LICENSE` (full-use), `CUSTOM_LICENSE` (custom — requires `licenseCuid` for cURL / `license_id` for the SDK).
 
 ***
 
@@ -223,10 +223,10 @@ The content response contains a `content` block (`header`, `body`, `footer`), a 
 If you already use a search provider, you can keep it for discovery and use TollBit only for licensing. The workflow is three steps:
 
 1. **Search** with your preferred search API (Perplexity, Firecrawl, or Exa) to get a list of result URLs
-2. **Check licenseability** by passing those URLs to TollBit's batch rate endpoint to see which are available to license
+2. **Check availability** by passing those URLs to TollBit's batch rate endpoint to see which are available to license
 3. **License the content** for the URLs you want — acquire a token and retrieve the content
 
-### Step 1: Search with a Third-Party API
+### Step 1: Search with a 3rd-Party API
 
 Run a search with your provider of choice and collect the result URLs. You'll pass these URLs to TollBit in Step 2.
 
@@ -319,13 +319,13 @@ Run a search with your provider of choice and collect the result URLs. You'll pa
   </Tab>
 </Tabs>
 
-At the end of this step you have a list of URLs from across the web — some licensable through TollBit, some not. The next step tells you which is which.
+At the end of this step you have a list of URLs from across the web — some available to license through TollBit, some not. The next step tells you which is which.
 
-### Step 2: Check Licenseability (Batch Rate Check)
+### Step 2: Check Availability (Batch Rate Check)
 
-Pass the URLs from Step 1 to TollBit's batch rate endpoint. For each URL, TollBit returns the available licenses and rates. A URL with one or more `rates` is licensable through TollBit; a URL that returns an `error` or no rates is not available to license. Use this to filter your search results down to the content you can transact on.
+Pass the URLs from Step 1 to TollBit's batch rate endpoint. For each URL, TollBit returns the available licenses and pricing. A URL with one or more `rates` is available to license; a URL that returns an `error` or no rates is not. Use this to filter your search results down to the content you can license.
 
-This is the same `rates/batch` endpoint covered in the **Rates** reference — here it's used as a licenseability filter over third-party search results.
+This is the same `rates/batch` endpoint covered in the **Rates** reference — here it's used as an availability filter over 3rd-party search results.
 
 **Endpoint**
 
@@ -412,7 +412,7 @@ The endpoint returns an array with one entry per URL. Each entry has the URL and
 **Response fields (per URL entry)**
 
 - **`url`** (string) — the URL this entry refers to.
-- **`rates`** (array) — the available license options. Empty when the URL is not licensable through TollBit.
+- **`rates`** (array) — the available license options. Empty when the URL is not available to license through TollBit.
   - **`price`** — `priceMicros` (1/1,000,000 of the currency unit; divide by 1,000,000 for the amount) and `currency`.
   - **`license`** — `cuid`, `licenseType`, `licensePath`, `permissions`, and `validUntil`.
   - **`error`** (string) — populated when a rate could not be returned for the URL; empty otherwise.
@@ -423,7 +423,7 @@ The endpoint returns an array with one entry per URL. Each entry has the URL and
 
 ### Step 3: License the Content
 
-Once you've picked a licensable URL (from either approach), licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
+Once you've picked a URL to license (from either approach), licensing is two parts: get an access token, then use it to retrieve the content. With the Python SDK, `get_sanctioned_content` handles both in one call. With cURL, you obtain the token first, then request the content.
 
 #### Step 3a: Get a Token
 
@@ -489,7 +489,7 @@ Once you've picked a licensable URL (from either approach), licensing is two par
 
 The content response contains a `content` block (`header`, `body`, `footer`), a `metadata` block (`title`, `description`, `author`, `published`, …), and the `rate` that was applied.
 
-**Available license types**: `ON_DEMAND_LICENSE`, `ON_DEMAND_FULL_USE_LICENSE`, `CUSTOM_LICENSE` (requires `licenseCuid` for cURL / `license_id` for the SDK).
+**Available license types**: `ON_DEMAND_LICENSE` (pay-per-use), `ON_DEMAND_FULL_USE_LICENSE` (full-use), `CUSTOM_LICENSE` (custom — requires `licenseCuid` for cURL / `license_id` for the SDK).
 
 ***
 
@@ -506,7 +506,7 @@ Tie the three steps together. The **TollBit** tab uses TollBit Search end to end
     TOLLBIT_KEY = os.environ["TOLLBIT_ORG_API_KEY"]
     USER_AGENT = os.getenv("TOLLBIT_USER_AGENT", "tollbit-python-sdk-example/0.1.0")
 
-    # Step 1: Search TollBit's licensed search
+    # Step 1: Search with TollBit Search
     search_client = search.create_client(secret_key=TOLLBIT_KEY, user_agent=USER_AGENT)
     results = search_client.search(q="DIY home projects for millennials")
 
@@ -550,7 +550,7 @@ Tie the three steps together. The **TollBit** tab uses TollBit Search end to end
     )
     urls = [r["url"] for r in search_resp.json()["results"]]
 
-    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    # Step 2: Check availability via TollBit's batch rate endpoint
     batch_resp = requests.post(
         "https://gateway.tollbit.com/dev/v2/rates/batch",
         headers={"TollbitKey": TOLLBIT_KEY},
@@ -597,7 +597,7 @@ Tie the three steps together. The **TollBit** tab uses TollBit Search end to end
     )
     urls = [r["url"] for r in search_resp.json()["data"]["web"]]
 
-    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    # Step 2: Check availability via TollBit's batch rate endpoint
     batch_resp = requests.post(
         "https://gateway.tollbit.com/dev/v2/rates/batch",
         headers={"TollbitKey": TOLLBIT_KEY},
@@ -644,7 +644,7 @@ Tie the three steps together. The **TollBit** tab uses TollBit Search end to end
     )
     urls = [r["url"] for r in search_resp.json()["results"]]
 
-    # Step 2: Check licenseability via TollBit's batch rate endpoint
+    # Step 2: Check availability via TollBit's batch rate endpoint
     batch_resp = requests.post(
         "https://gateway.tollbit.com/dev/v2/rates/batch",
         headers={"TollbitKey": TOLLBIT_KEY},
