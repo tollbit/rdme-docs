@@ -81,7 +81,7 @@ Akamai allows you to set up redirection rules at the edge using either Cloudlets
 
 **Cloudlets Set Up**
 
-To set up agent sites for Akamai with Cloudlets, you would use their Forward Rewrite Cloudlet. Follow the documentation [here](https://techdocs.akamai.com/cloudlets/docs/what-forward-rewrite) for reference.&#x20;
+To set up agent sites for Akamai with Cloudlets, you would use their Forward Rewrite Cloudlet. Follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-forward-rewrite">here</Anchor> for reference.&#x20;
 
 <Callout icon="📘" theme="info">
   ### Pro Tip
@@ -89,11 +89,11 @@ To set up agent sites for Akamai with Cloudlets, you would use their Forward Rew
   If you are previously following our docs and have set up Agent Site via **Edge Redirector** to forward bot traffic to your `tollbit` subdomain, you would replace the Edge Redirector with the Forward Rewrite Cloudlet.
 </Callout>
 
-**Setup New Origin<br />**&#x59;ou’ll need to set up a new conditional origin that is your `tollbit` subdomain to have the forward rewrite cloudlet correctly route the request. Follow the docs [here](https://techdocs.akamai.com/cloudlets/docs/about-conditional-origins#set-up-a-conditional-origin-definition-rule) on doing this.&#x20;
+**Setup New Origin<br />**&#x59;ou’ll need to set up a new conditional origin that is your `tollbit` subdomain to have the forward rewrite cloudlet correctly route the request. Follow the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/about-conditional-origins#set-up-a-conditional-origin-definition-rule">here</Anchor> on doing this.&#x20;
 
 At a high level, you would go to Property Manager and create a new Conditional Origin with the server domain name url as your `tollbit` subdomain (i.e. tollbit.example.com). Ensure that this origin is activated and deployed.
 
-**Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs [here](https://techdocs.akamai.com/cloudlets/docs/create-forward-rewrite-policy). Then create a forward rewrite rule following the docs [here](https://techdocs.akamai.com/cloudlets/docs/add-forward-rewrite-rule). For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
+**Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-forward-rewrite-policy">here</Anchor>. Then create a forward rewrite rule following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-forward-rewrite-rule">here</Anchor>. For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
 
 ```
 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
