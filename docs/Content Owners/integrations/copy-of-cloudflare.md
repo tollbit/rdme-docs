@@ -638,6 +638,4 @@ const checkIfBotRequest = (request) => {
   This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
 
-### Enterprise
-
-If you have CloudFlare enterprise, you should be able to use the <Anchor target="_blank" href="https://developers.cloudflare.com/bots/get-started/bm-subscription/">Bot Management</Anchor> product to get a bot score for each request. You can add logic in the above code's `checkIfBotRequest` function to also return `true` if the bot score is lower than a certain threshold.
+<br />
