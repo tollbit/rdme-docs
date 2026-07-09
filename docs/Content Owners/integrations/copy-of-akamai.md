@@ -1,5 +1,5 @@
 ---
-title: Akamai v2
+title: Akamai
 excerpt: Learn how to integrate TollBit with Akamai.
 deprecated: false
 hidden: false
