@@ -1,5 +1,5 @@
 ---
-title: Akamai
+title: Akamai (old)
 excerpt: Learn how to integrate TollBit with Akamai.
 hidden: true
 ---
