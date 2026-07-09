@@ -2,7 +2,7 @@
 - akamai
 - arc-xp
 - aws-s3-cloudfront-alb
-- cloudflare
+- cloudflare-archive
 - copy-of-cloudflare
 - datadome
 - fastly
