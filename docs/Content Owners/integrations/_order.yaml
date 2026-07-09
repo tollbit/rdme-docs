@@ -5,7 +5,6 @@
 - cloudflare
 - copy-of-cloudflare
 - datadome
-- fastly-archive
 - fastly
 - google
 - azure
@@ -14,6 +13,7 @@
 - imperva
 - akamai-old
 - aws-archived
+- fastly-archive
 - index.md
 - fastly.md
 - cloudflare.md
