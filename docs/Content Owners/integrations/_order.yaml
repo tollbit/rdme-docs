@@ -1,5 +1,4 @@
 - other
-- akamai-old
 - akamai
 - arc-xp
 - aws
@@ -14,6 +13,7 @@
 - vercel
 - wordpress-vip
 - imperva
+- akamai-old
 - index.md
 - fastly.md
 - cloudflare.md
