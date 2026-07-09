@@ -2,7 +2,6 @@
 - akamai
 - arc-xp
 - aws-s3-cloudfront-alb
-- cloudflare-archive
 - cloudflare
 - datadome
 - fastly
@@ -14,6 +13,7 @@
 - akamai-old
 - aws-archived
 - fastly-archive
+- cloudflare-archive
 - index.md
 - fastly.md
 - cloudflare.md
