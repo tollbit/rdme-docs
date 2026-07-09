@@ -3,6 +3,7 @@
 - copy-of-akamai
 - arc-xp
 - aws
+- copy-of-aws-s3-cloudfront-alb
 - cloudflare
 - cloudflare-free
 - datadome
@@ -24,4 +25,3 @@
 - wordpress-vip.md
 - imperva.md
 - other.md
-- copy-of-aws-s3-cloudfront-alb
