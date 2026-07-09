@@ -62,7 +62,7 @@ Navigate to the Origin tab in your left navigation and create a new host. Use yo
 
 Once you create this, you might see a warning that this backend is unused. No need to worry about this for now.
 
-![](https://files.readme.io/4e4e34a70df1ac78efb6c1e94a335da3919d2f1c5dcc4f372a76bf4a69945feb-Screenshot_2026-07-09_at_1.47.20_PM.png)
+![](https://files.readme.io/1590d22a507a3fbd4af45aee2e88356de590545284a199a607ed83849baf61f9-image6.png)
 
 <br />
 
@@ -70,7 +70,7 @@ Once it’s been added, scroll down and click the little pencil icon next to the
 
 In this example, we are using our test website _thedailydispatching.com_.
 
-![](https://files.readme.io/6253ee14104f4f0ed1c8aba7c7f013233d4566fdab34107324afd247513af4a1-Screenshot_2026-07-09_at_1.48.23_PM.png)
+![](https://files.readme.io/0cfa040e63a3b941f453e5810ed05c842579e955a1d77af966e089893a14cbb1-image1.png)
 
 <br />
 
@@ -90,7 +90,7 @@ On the left hand sidebar, click "VCL Snippets".
 
 In your left nav, go to VCL snippets. If you haven’t already, create a new snippet for the recv step called **tollbit-recv-snippet**.
 
-![](https://files.readme.io/a2cff3fcad7010065b51b07748923674ccbeb3fa437a062e88937decece2fddd-Screenshot_2026-07-09_at_1.56.39_PM.png)
+![](https://files.readme.io/7cca53f95f7b1b2521427658ddcfb6a4e2f2c79ce0f42e7cef00715a54b4b076-image9.png)
 
 <br />
 
