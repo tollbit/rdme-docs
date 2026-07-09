@@ -5,6 +5,7 @@
 - aws
 - copy-of-aws-s3-cloudfront-alb
 - cloudflare
+- copy-of-cloudflare
 - datadome
 - fastly
 - copy-of-fastly
@@ -25,4 +26,3 @@
 - wordpress-vip.md
 - imperva.md
 - other.md
-- copy-of-cloudflare
