@@ -1,8 +1,8 @@
 ---
-title: AWS (S3, CloudFront, ALB) v2
+title: AWS (S3, CloudFront, ALB)
 excerpt: Learn how to implementate TollBit with Amazon S3, ALB, and/or CloudFront.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
