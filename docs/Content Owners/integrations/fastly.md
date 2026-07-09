@@ -1,6 +1,7 @@
 ---
 title: Fastly
 excerpt: Learn how to integrate TollBit with Fastly.
+hidden: true
 ---
 There are two integration options to connect Fastly with TollBit.
 
