@@ -6,9 +6,13 @@ hidden: true
 metadata:
   robots: index
 ---
-We provide a way for all CloudFlare customers, regardless of plan, to forward HTTP logs to our platform for analytics. We recommend this method over others like LogPush as CloudFlare Enterprise is not required to create workers, and you have much more control over how logs are sent.
+We provide a way for all CloudFlare customers, regardless of plan, to forward HTTP logs to our platform to enable Analytics and to set up bot rewrites to set up Agent Site.&#x20;
+
+For each product implementation below, choose the sub-section most relevant to your CloudFlare plan and follow the instructions accordingly.&#x20;
 
 ### Steps for Analytics
+
+Enterprise customers on CloudFlare are recommended to forward logs to TollBit via LogPush. All other customers are recommended to send logs via CF Workers.
 
 #### Enterprise Plan Customers
 
@@ -362,7 +366,7 @@ Before doing this, ensure that your origin server accepts HTTPS requests; most s
 
 **Setting up worker.js**
 
-Follow the steps (within the Cloudflare Analytics section above) until you have created a new worker or opened your existing worker.&#x20;
+Follow the steps (within the CloudFlare Analytics section above) until you have created a new worker or opened your existing worker.&#x20;
 
 If creating a new worker, name this worker something to help you keep track of it's function (such as `bot-rewrite-worker`). Once you've created this worker or identified your current one, click into edit code and do the following to set up your rewrite.
 
@@ -655,12 +659,12 @@ Once the worker is saved, click Activate and you should be all set.
 <Callout icon="🚧" theme="warn">
   ###
 
-  This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+  This Worker **will intercept** and potentially **rewrite** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
 
 #### CloudFlare Enterprise and Bot Management
 
-If you are on Enterprise and are using Bot Management, you should have access to the bot score in the header of the request. You can replace the `checkIfBotRequest` function in the previous worker scripts to use something similar to the following, and you can set the `BOT_SCORE_THRESHOLD` to determine how strict your forwarding is. CloudFlare <Anchor target="_blank" href="https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings">lists what each score range means</Anchor>.
+If you are on Enterprise and are using Bot Management, you should have access to the bot score in the header of the request. You can replace the `checkIfBotRequest` function in the previous worker scripts to use something similar to the following, and you can set the `BOT_SCORE_THRESHOLD` to determine how strict your rewrite is. CloudFlare <Anchor target="_blank" href="https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings">lists what each score range means</Anchor>.
 
 ```js
 const checkIfBotRequest = (request) => {
