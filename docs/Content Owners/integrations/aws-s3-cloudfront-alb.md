@@ -556,7 +556,7 @@ This will detect the top known AI bots. Next, for the action, be sure to choose 
 
 You can call your function name something straightforward like "**tollbit\_agent\_site**", and select the latest Node.js Runtime version.
 
-![](https://files.readme.io/3f513c43f3acaad687a91af800a5a613d94fd65ed60ac19f56d021685c6df2c8-Screenshot_2026-07-09_at_11.56.20_AM.png)
+![](https://files.readme.io/8fba56a790bd54142918760c4bd651ff6bc490d08f0fbde067adcda6436a16b8-image10.png)
 
 <br />
 
@@ -648,9 +648,7 @@ import https from 'https';
 
 On the left tab, click “Deploy”.
 
-
-<Image src="https://files.readme.io/1e5ef4f7f15aa886221bde643334124c23d603354b87b6d22092f25e5af50c8f-Screenshot_2026-07-09_at_12.00.50_PM.png" align="left" width="-15px" wrap={false} />
-
+![](https://files.readme.io/e08e6662396ae9f7985c67d76fdb3ecf79925eafe1528e5180517a447eb1abc2-image16.png)
 
 <br />
 
@@ -664,13 +662,13 @@ On the left tab, click “Deploy”.
 
 Scroll to the top, click the “Actions” dropdown, and Deploy to Lambda\@Edge under Capabilities.
 
-![](https://files.readme.io/1f8009ef5a14409cf054e99521dc2d0ea4e780f55e157441549c14f1e99cb44e-Screenshot_2026-07-09_at_12.10.40_PM.png)
+![](https://files.readme.io/eeca2bf7c322da5a65a990ef2989f89162ec4fac4935a37fd52fd0ce9ac0c667-image2.png)
 
 <br />
 
 Ensure you pick your Cloudfront distribution and that the event is “Viewer request”. Once done, click deploy at the bottom.
 
-![](https://files.readme.io/918c5df2cfeeeb8eb8a1972a6bc9d7e3f3ae1490fdec1e7a2d44a78638e6f448-Screenshot_2026-07-09_at_12.11.53_PM.png)
+![](https://files.readme.io/ab2e9ced4bb8379db96c75e79e930a9249441cfe4c7361a1fc0ca977feaa7ec7-image3.png)
 
 <br />
 
@@ -683,7 +681,9 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
 
   Click on the “Configure” tab, and then on the left, click on “Permissions” and click on the blue highlighted role name. In this case it would be “**tollbit\_agent\_site-role-z6218mit**”
 
-  ![](https://files.readme.io/d3cb4c2e775534ed0daedb7601f7402d8b8d0aa7fac294f59396226b65153f56-Screenshot_2026-07-09_at_12.18.15_PM.png)
+  ![](https://files.readme.io/d5a221325cd0a12b7636091242f340883cc26ef747fdfae362006cbc46f4e38a-image5.png)
+
+
 
   Go to the Trust Relationship tab and edit the Trust Policy and make sure it contains the following block. Make sure to click “Update Policy” at the bottom after updating.
 
@@ -705,7 +705,7 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
   }
   ```
 
-  ![](https://files.readme.io/52e80994e22a349bf89bfea36f29d79076dc8adbc4e45b8d3fabef6cf49b164d-Screenshot_2026-07-09_at_12.22.35_PM.png)
+  ![](https://files.readme.io/82ec2e686885ea72b2264167ca0207d6eddb2f53a2d7bffdf9fb3a4941185d13-image13.png)
 
   Once you update this, you can try deploying the Lambda\@Edge to your cloudfront distribution again. You may need to wait a few minutes and refresh the lambda page before the permissions propagate.
 </Callout>
@@ -720,17 +720,19 @@ If you need to update your lambda, you can follow these steps.
 
 **Step 3** - Take note of the latest version number, these will be incrementing numbers
 
-![](https://files.readme.io/0d70ea2541d88d2e7b81dec733d7c9a5d2d9988c7a9d4c87c5ea4011e924b9bd-Screenshot_2026-07-09_at_12.25.03_PM.png)
+![](https://files.readme.io/b114470303c6af72161aeb977e0f851895d6eeb9e783747129b8648e9f4397e0-image11.png)
 
 <br />
 
 **Step 4** - Go to your cloudfront distribution and go to Behaviors, and check the default behavior. If you have multiple, check the one that regular traffic routes through, and then click edit.
 
-![](https://files.readme.io/6a53f5c5772df0fbd7072d04b5734bf5562732b966691734ab55603ef5d8eb64-Screenshot_2026-07-09_at_12.25.30_PM.png)
+![](https://files.readme.io/81d8981e7c297ec98e69eead2d31560acdddf73edc6a3c91c0f3c3a572f6ca4b-image15.png)
+
+<br />
 
 **Step 5** - Scroll to the bottom of this next page and update the version number of your lambda. You will just edit the number all the way at the end to match the newly updated version number.
 
-![](https://files.readme.io/4b5fc736be1880fee7ddb4ac3562f737987da79dedfdfe68e814b1c2c8019b2c-Screenshot_2026-07-09_at_12.25.58_PM.png)
+![](https://files.readme.io/7eb0ed83938e85b29bc74294e44f677f8a8e84e05271f2c967a25e43b7e7225f-image7.png)
 
 <br />
 
