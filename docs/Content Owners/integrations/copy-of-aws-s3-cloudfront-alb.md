@@ -560,7 +560,7 @@ You can call your function name something straightforward like "**tollbit\_agent
 
 <br />
 
-**Add the Worker Code**
+**Add the Lambda\@Edge Code**
 
 Paste the snippet below. This will use the header that the WAF added when it detected a bot to understand if a specific request is a bot request, and route it appropriately.
 
