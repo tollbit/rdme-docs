@@ -100,6 +100,10 @@ Agent Site can be set up with AWS Lambda\@Edge.&#x20;
   If you have set up Agent Site via redirection previously, you will need to disable the WAF and Cloudfront Function after this is created to ensure correct rewrite/proxy flow.
 </Callout>
 
+#### Set up Your WAF
+
+<br />
+
 **Create a new Lambda Function**
 
 You can call your function name something straightforward like "**tollbit\_agent\_site**", and select the latest Node.js Runtime version.
