@@ -257,6 +257,16 @@ If you aren't sure which route to disable, consider running the worker on your f
 
 There are several levels of bot detection and rewrites that you can configure for CloudFlare, depending on whether or not you are on their Enterprise plan.
 
+Before setting up Agent Site either via Snippets or Workers, you'll need to set up SSL / TLS encryption mode.
+
+**Setting up SSL / TLS&#x20;**
+
+Navigate to the SSL/TSL tab on the left and go into the over page, and click configure. You want to ensure that you choose **Full(Strict)** here. This will ensure that Cloudflare fetches data over HTTPS instead of HTTP.&#x20;
+
+Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
+
+![](https://files.readme.io/1b79263c5e571b1ab8a1bf8d5d4f14b741821165ee94ec250eb26132a2677ce0-Screenshot_2026-07-09_at_2.47.09_PM.png)
+
 <Callout icon="📘" theme="info">
   ###
 
@@ -353,18 +363,6 @@ Now, you should be able to click Deploy, and this Snippet will immediately begin
 #### CloudFlare Workers
 
 This section is for customers who have advanced functionality with their current request interception flow, or for customers who do not have access to Snippets.&#x20;
-
-**Setting up SSL / TLS&#x20;**
-
-Navigate to the SSL/TSL tab on the left and go into the over page, and click configure. You want to ensure that you choose Full(Strict) here. This will ensure that Cloudflare fetches data over HTTPS instead of HTTP.&#x20;
-
-Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
-
-![](https://files.readme.io/1b79263c5e571b1ab8a1bf8d5d4f14b741821165ee94ec250eb26132a2677ce0-Screenshot_2026-07-09_at_2.47.09_PM.png)
-
-<br />
-
-**Setting up worker.js**
 
 Follow the steps (within the CloudFlare Analytics section above) until you have created a new worker or opened your existing worker.&#x20;
 
