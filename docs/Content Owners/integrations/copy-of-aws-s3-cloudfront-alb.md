@@ -102,7 +102,7 @@ Agent Site can be set up with AWS Lambda\@Edge.&#x20;
 
 **Create a new Lambda Function**
 
-You can call your function name something straightforward like "tollbit\_agent\_site", and select the latest Node.js Runtime version.
+You can call your function name something straightforward like "**tollbit\_agent\_site**", and select the latest Node.js Runtime version.
 
 ![](https://files.readme.io/3f513c43f3acaad687a91af800a5a613d94fd65ed60ac19f56d021685c6df2c8-Screenshot_2026-07-09_at_11.56.20_AM.png)
 
@@ -201,7 +201,7 @@ const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
 
 **Deploy the Lambda first**
 
-On the left tab, click “deploy”
+On the left tab, click “Deploy”.
 
 
 <Image src="https://files.readme.io/1e5ef4f7f15aa886221bde643334124c23d603354b87b6d22092f25e5af50c8f-Screenshot_2026-07-09_at_12.00.50_PM.png" align="left" width="-15px" wrap={false} />
@@ -214,10 +214,10 @@ On the left tab, click “deploy”
 <Callout icon="📘" theme="info">
   ### Pro Tip
 
-  Before deploying, ensure that your site’s tollbit subdomain is set up and running correctly. Otherwise this will cause errors in the lambda.
+  Before deploying, ensure that your site’s `tollbit` subdomain is set up and running correctly. Otherwise this will cause errors in the lambda.
 </Callout>
 
-Scroll to the top, click the “Actions” dropdown, and Deploy to Lambda\@Edge.
+Scroll to the top, click the “Actions” dropdown, and Deploy to Lambda\@Edge under Capabilities.
 
 ![](https://files.readme.io/1f8009ef5a14409cf054e99521dc2d0ea4e780f55e157441549c14f1e99cb44e-Screenshot_2026-07-09_at_12.10.40_PM.png)
 
@@ -239,8 +239,6 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
   Click on the “Configure” tab, and then on the left, click on “Permissions” and click on the blue highlighted role name. In this case it would be “**tollbit\_agent\_site-role-z6218mit**”
 
   ![](https://files.readme.io/d3cb4c2e775534ed0daedb7601f7402d8b8d0aa7fac294f59396226b65153f56-Screenshot_2026-07-09_at_12.18.15_PM.png)
-
-
 
   Go to the Trust Relationship tab and edit the Trust Policy and make sure it contains the following block. Make sure to click “Update Policy” at the bottom after updating.
 
@@ -273,21 +271,19 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
 
 If you need to update your lambda, you can follow these steps.
 
-<br />Step 1 - Go back to the Lambda code editor and edit the code, and click Deploy once you are done<br />Step 2 - Under the actions drop down at the top, click Publish New Version
+<br />**Step 1** - Go back to the Lambda code editor and edit the code, and click Deploy once you are done<br />**Step 2&#x20;**- Under the actions drop down at the top, click Publish New Version
 
-Step 3 - Take note of the latest version number, these will be incrementing numbers
+**Step 3** - Take note of the latest version number, these will be incrementing numbers
 
 ![](https://files.readme.io/0d70ea2541d88d2e7b81dec733d7c9a5d2d9988c7a9d4c87c5ea4011e924b9bd-Screenshot_2026-07-09_at_12.25.03_PM.png)
 
 <br />
 
-Step 4 - Go to your cloudfront distribution and go to Behaviors, and check the default behavior. If you have multiple, check the one that regular traffic routes through, and then click edit
+**Step 4** - Go to your cloudfront distribution and go to Behaviors, and check the default behavior. If you have multiple, check the one that regular traffic routes through, and then click edit.
 
 ![](https://files.readme.io/6a53f5c5772df0fbd7072d04b5734bf5562732b966691734ab55603ef5d8eb64-Screenshot_2026-07-09_at_12.25.30_PM.png)
 
-<br />
-
-Step 5 - Scroll to the bottom of this next page and update the version number of your lambda. You will just edit the number all the way at the end to match the newly updated version number.
+**Step 5** - Scroll to the bottom of this next page and update the version number of your lambda. You will just edit the number all the way at the end to match the newly updated version number.
 
 ![](https://files.readme.io/4b5fc736be1880fee7ddb4ac3562f737987da79dedfdfe68e814b1c2c8019b2c-Screenshot_2026-07-09_at_12.25.58_PM.png)
 
