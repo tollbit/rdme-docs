@@ -251,17 +251,17 @@ If you aren't sure which route to disable, consider running the worker on your f
 
 ### Steps for Agent Site
 
-There are several levels of bot detection and forwarding that you can configure for CloudFlare, depending on whether or not you are on their Enterprise plan.
+There are several levels of bot detection and rewrites that you can configure for CloudFlare, depending on whether or not you are on their Enterprise plan.
 
 <Callout icon="📘" theme="info">
   ###
 
-  The code snippets here are for a clean CloudFlare environment. If you have existing workers that are processing requests from your domain, you will need to integrate these scripts into your existing worker.
+  The code snippets here are for a clean CloudFlare environment. If you have existing snippets or workers that are processing requests from your domain, you will need to integrate these scripts into your existing environment.
 </Callout>
 
 #### Cloudflare Snippets
 
-For customers on the Pro, Business or Enterprise plans that want to set up a simple redirect without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a redirect following simple rules.
+For customers on the Pro, Business or Enterprise plans that want to set up a simple rewrite without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a rewrite following simple rules.
 
 First, in the left nav when you're within the view for one of your websites, find the Rules tab and click the dropdown, and then click into the Snippets section.
 
@@ -269,66 +269,65 @@ First, in the left nav when you're within the view for one of your websites, fin
 <Image src="https://files.readme.io/77f26a783e280037b14b03c5bd4ce0477048afb8d8df98f7844c518d1a6ad7c3-Screenshot_2026-03-04_at_10.20.06_AM.png" align="center" />
 
 
-Once you're on the snippets page, click the Create Snippet button. This will take you to an editor similar to the Workers editor. Name this file something along the lines of `redirect_to_tollbit`. You can paste in the following code, making modifications to the bot list as you find appropriate for your goals.
+Once you're on the snippets page, click the Create Snippet button. This will take you to an editor similar to a CF Workers editor. Name this file something along the lines of `rewrite_to_tollbit`. You can paste in the following code, making modifications to the bot list as you find appropriate for your goals.
 
 ```javascript
 const botList = [
-  'ChatGPT-User',
-  'PerplexityBot',
-  'GPTBot',
-  'anthropic-ai',
-  'CCBot',
-  'Claude-Web',
-  'ClaudeBot',
-  'Claude-User',
-  'cohere-ai',
-  'YouBot',
-  'Diffbot',
-  'OAI-SearchBot',
-  'meta-externalagent',
-  'Timpibot',
-  'Amazonbot',
-  'Bytespider',
-  'Perplexity-User',
-  'Claude-SearchBot',
-'Meta-Webindexer',
-'Amzn-SearchBot'
-]
+ 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
+ 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
+ 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',
+ 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',
+ 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+];
+
 
 export default {
-  async fetch(request) {
-    const isBotRequest = checkIfBotRequest(request)
+ async fetch(request) {
+   const userAgent = request.headers.get('User-Agent') || '';
+   let host = request.headers.get('host') || '';
 
-    // if bot request, immediately forward to subdomain
-    if (isBotRequest) {
-      const path = request.url.replace(
-        'https://' + request.headers.get('host'),
-        '',
-      )
-      let host = request.headers.get('host') || ''
-      if (host.startsWith('www.')) {
-        // remove www
-        host = host.slice(4)
-      }
-      return Response.redirect('https://tollbit.' + host + path, 302)
-    } else {
-      // otherwise return the regular content
-      const response = await fetch(request)
-      return response
-    }
-  },
+
+   if (host.startsWith('www.')) {
+     host = host.slice(4);
+   }
+
+
+   const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()));
+
+
+   if (isBot) {
+     const path = request.url.replace('https://' + request.headers.get('host'), '');
+     const tollbitUrl = 'https://tollbit.' + host + path;
+
+
+     // Safe body extraction to prevent runtime errors on GET/HEAD inside Snippets
+     const hasBody = ['POST', 'PUT', 'PATCH'].includes(request.method);
+
+
+     const proxiedResponse = await fetch(new Request(tollbitUrl, {
+       method: request.method,
+       headers: request.headers,
+       body: hasBody ? request.body : null,
+       redirect: 'manual'
+     }));
+
+
+     const responseHeaders = new Headers(proxiedResponse.headers);
+     responseHeaders.set('Cache-Control', 'no-store');
+
+
+     return new Response(proxiedResponse.body, {
+       status: proxiedResponse.status,
+       statusText: proxiedResponse.statusText,
+       headers: responseHeaders
+     });
+   }
+
+
+   // Let non-bot requests pass through to your regular origin
+   return fetch(request);
+ },
 };
-
-const checkIfBotRequest = (request) => {
-  const userAgent = request.headers.get('User-Agent') || ''
-
-  for (var i = 0; i < botList.length; i++) {
-    if (userAgent.toLowerCase().includes(botList[i].toLowerCase())) {
-      return true
-    }
-  }
-  return false
-}
 ```
 
 Before saving and deploying this Snippet, click on the "Snippet rule" button on the upper right and select "All incoming requests".
@@ -337,50 +336,72 @@ Before saving and deploying this Snippet, click on the "Snippet rule" button on 
 <Image src="https://files.readme.io/3aa20f5a697cdf913c2b93e0b6af029e89c7d1a7b61b2d2e8ce9912f436a0454-Screenshot_2026-03-04_at_10.39.05_AM.png" align="center" />
 
 
-Now, you should be able to click Deploy, and this Snippet will immediately begin forwarding requests with these user agents to your `tollbit` subdomain.
+Now, you should be able to click Deploy, and this Snippet will immediately begin rewriting requests with these user agents to your `tollbit` subdomain.
 
 <Callout icon="🚧" theme="warn">
-  ###
+  ### Note
 
-  This Snippet **will intercept** and **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+  This Snippet **will intercept** and **rewrite** traffic requests from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+
+  The ordering of snippets matter if you have multiple snippets. They will evaluate in the order they are listed in the dashboard.
 </Callout>
 
 #### CloudFlare Workers
 
-This section is for customers who have advanced functionality with their current request interception flow, or for customers who do not have access to Snippets. Follow the steps described above (within the Cloudflare Analytics section) up until you have created a new worker. Name this working something to help you keep track of it's function (such as `bot-forwarding-worker`). Once you've created this worker, click into edit code and do the following to set up your forwarding worker.
+This section is for customers who have advanced functionality with their current request interception flow, or for customers who do not have access to Snippets.&#x20;
+
+**Setting up SSL / TLS&#x20;**
+
+Navigate to the SSL/TSL tab on the left and go into the over page, and click configure. You want to ensure that you choose Full(Strict) here. This will ensure that Cloudflare fetches data over HTTPS instead of HTTP.&#x20;
+
+Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
+
+![](https://files.readme.io/1b79263c5e571b1ab8a1bf8d5d4f14b741821165ee94ec250eb26132a2677ce0-Screenshot_2026-07-09_at_2.47.09_PM.png)
+
+<br />
+
+**Setting up worker.js**
+
+Follow the steps (within the Cloudflare Analytics section above) until you have created a new worker or opened your existing worker.&#x20;
+
+If creating a new worker, name this worker something to help you keep track of it's function (such as `bot-rewrite-worker`). Once you've created this worker or identified your current one, click into edit code and do the following to set up your rewrite.
 
 <Callout icon="📘" theme="info">
-  ###
+  ### Note
 
   If you have already created a CloudFlare worker for log forwarding, **DO NOT** create a new worker. Use your existing worker when following these instructions. This is because you cannot have two CloudFlare workers on the same route, and if you do, only one will be receive requests.
 </Callout>
 
-**If you have set up log forwarding**, copy and replace your `worker.js` file with this code instead. Make sure that you keep your TollBit token copied over into the code.
+**If you have set up log forwarding via Workers**, copy and _replace_ your `worker.js` file with this code instead. Make sure that you keep your TollBit token copied over into the code (line 33).
 
 ```js
 // this is a non-exhaustive list of agents that we recommend you get started with first
 // Add any other agents you would like to forward into this list.
 const botList = [
-  'ChatGPT-User',
-  'PerplexityBot',
-  'GPTBot',
+  'Amazonbot',
+  'Amzn-SearchBot',
   'anthropic-ai',
+  'Bytespider',
   'CCBot',
+  'ChatGPT-User',
+  'claude-code',
+  'Claude-SearchBot',
+  'Claude-User',
   'Claude-Web',
   'ClaudeBot',
-  'Claude-User',
   'cohere-ai',
-  'YouBot',
   'Diffbot',
-  'OAI-SearchBot',
+  'ExaBot',
+  'Exabot',
+  'GPTBot',
   'meta-externalagent',
-  'Timpibot',
-  'Amazonbot',
-  'Bytespider',
+  'Meta-Webindexer',
+  'OAI-AdsBot',
+  'OAI-SearchBot',
   'Perplexity-User',
-  'Claude-SearchBot',
-'Meta-Webindexer',
-'Amzn-SearchBot'
+  'PerplexityBot',
+  'Timpibot',
+  'YouBot'
 ]
 
 const CF_APP_VERSION = '1.0.0'
@@ -455,42 +476,45 @@ async function addToBatch(body, event) {
 }
 
 async function handleRequest(event) {
-  const { request } = event
-  const isBotRequest = checkIfBotRequest(request)
+    const { request } = event
+    const isBotRequest = checkIfBotRequest(request)
 
-  // if bot request, immediately forward to subdomain
-  if (isBotRequest) {
-    const path = request.url.replace(
-      'https://' + request.headers.get('host'),
-      '',
-    )
-    let host = request.headers.get('host') || ''
-    if (host.startsWith('www.')) {
-      // remove www
-      host = host.slice(4)
-    }
-    const redirectUrl = 'https://tollbit.' + host + path;
-    const response = new Response(null, {
-      status: 302,
-      headers: {
-        'Location': redirectUrl,
-        'Cache-Control': 'no-store',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+    if (isBotRequest) {
+      const path = request.url.replace('https://' + request.headers.get('host'), '')
+      let host = request.headers.get('host') || ''
+      if (host.startsWith('www.')) {
+        host = host.slice(4)
       }
-    });
-    const logObject = buildLogMessage(request, response);
-    event.waitUntil(addToBatch(logObject, event));
+      const tollbitUrl = 'https://tollbit.' + host + path
 
-    return response;
-  } else {
-    const response = await fetch(request)
-    // otherwise add to log batch and return response
-    const eventBody = buildLogMessage(request, response)
-    event.waitUntil(addToBatch(eventBody, event))
-    return response
+      const proxiedResponse = await fetch(new Request(tollbitUrl, {
+        method: request.method,
+        headers: request.headers,
+        body: request.body,
+        redirect: 'manual'
+      }))
+
+      const responseHeaders = new Headers(proxiedResponse.headers)
+      responseHeaders.set('Cache-Control', 'no-store')
+
+      const response = new Response(proxiedResponse.body, {
+        status: proxiedResponse.status,
+        statusText: proxiedResponse.statusText,
+        headers: responseHeaders
+      })
+
+      const logObject = buildLogMessage(request, response)
+      event.waitUntil(addToBatch(logObject, event))
+
+      return response
+    } else {
+      const response = await fetch(request)
+      const eventBody = buildLogMessage(request, response)
+      event.waitUntil(addToBatch(eventBody, event))
+      return response
+    }
   }
-}
+
 
 const fetchAndSetBackOff = async (lfRequest, event) => {
   if (backoff <= Date.now()) {
@@ -553,59 +577,86 @@ addEventListener('fetch', (event) => {
   event.waitUntil(scheduleBatch(event))
   event.respondWith(handleRequest(event))
 })
+
 ```
 
 This code will immediately let through anyone with a known browser, and check all other requests against a list that we will periodically update with known bad user agents.
 
-**If you have not set up log forwarding and just want to forward bot traffic**, put this code in your `worker.js` file.
+**If you have not set up log forwarding via Workers and just want to forward bot traffic**, put the code in your `worker.js` file. Note this will also be the code to deploy if you have enabled TollBit Analytics via CF LogPush.
 
 ```js
 // this is a non-exhaustive list of agents that we recommend you get started with first
 // Add any other agents you would like to forward into this list.
 const botList = [
-  'ChatGPT-User',
-  'PerplexityBot',
-  'GPTBot',
+  'Amazonbot',
+  'Amzn-SearchBot',
   'anthropic-ai',
+  'Bytespider',
   'CCBot',
+  'ChatGPT-User',
+  'claude-code',
+  'Claude-SearchBot',
+  'Claude-User',
   'Claude-Web',
   'ClaudeBot',
-  'Claude-User',
   'cohere-ai',
-  'YouBot',
   'Diffbot',
-  'OAI-SearchBot',
+  'ExaBot',
+  'Exabot',
+  'GPTBot',
   'meta-externalagent',
-  'Timpibot',
-  'Amazonbot',
-  'Bytespider',
+  'Meta-Webindexer',
+  'OAI-AdsBot',
+  'OAI-SearchBot',
   'Perplexity-User',
-  'Claude-SearchBot',
-]
+  'PerplexityBot',
+  'Timpibot',
+  'YouBot'
+  ]
 
-export default {
-  fetch(request) {
-    const userAgent = request.headers.get('User-Agent') || ''
-    const path = request.url.replace(
-      'https://' + request.headers.get('host'),
-      '',
-    )
-    let host = request.headers.get('host') || ''
-    if (host.startsWith('www.')) {
-      // remove www
-      host = host.slice(4)
-    }
-    for (var i = 0; i < botList.length; i++) {
-      if (userAgent.toLowerCase().includes(botList[i].toLowerCase())) {
-        return Response.redirect('https://tollbit.' + host + path, 302)
+  export default {
+    async fetch(request) {
+      const userAgent = request.headers.get('User-Agent') || ''
+      let host = request.headers.get('host') || ''
+      if (host.startsWith('www.')) {
+        host = host.slice(4)
       }
-    }
 
-    // Default behaviour
-    return fetch(request)
-  },
-}
+      const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()))
+
+      if (isBot) {
+        const path = request.url.replace('https://' + request.headers.get('host'), '')
+        const tollbitUrl = 'https://tollbit.' + host + path
+
+        const proxiedResponse = await fetch(new Request(tollbitUrl, {
+          method: request.method,
+          headers: request.headers,
+          body: request.body,
+          redirect: 'manual'
+        }))
+
+        const responseHeaders = new Headers(proxiedResponse.headers)
+        responseHeaders.set('Cache-Control', 'no-store')
+
+        return new Response(proxiedResponse.body, {
+          status: proxiedResponse.status,
+          statusText: proxiedResponse.statusText,
+          headers: responseHeaders
+        })
+      }
+
+      return fetch(request)
+    },
+  }
 ```
+
+Once the worker is saved, click Activate and you should be all set.
+
+<Callout icon="🚧" theme="warn">
+  ###
+
+  This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+</Callout>
 
 #### CloudFlare Enterprise and Bot Management
 
@@ -631,11 +682,5 @@ const checkIfBotRequest = (request) => {
   return false;
 };
 ```
-
-<Callout icon="🚧" theme="warn">
-  ###
-
-  This Worker **will intercept** and potentially **forward** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
-</Callout>
 
 <br />
