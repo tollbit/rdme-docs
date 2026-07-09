@@ -562,64 +562,60 @@ You can call your function name something straightforward like "**tollbit\_agent
 
 **Add the Worker Code**
 
-Paste the snippet below. You may need to add/remove user agents as necessary based on who you want to target. Ensure that these user agents are allowed in your agent site configurations.
+Paste the snippet below. This will use the header that the WAF added when it detected a bot to understand if a specific request is a bot request, and route it appropriately.
 
-```json
+```javascript
 import https from 'https';
 
+  const BOT_HEADER = 'x-amzn-waf-bot';
 
-  const TOLLBIT_USER_AGENTS = [
-  'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot', 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User', 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot', 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot', 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
-];
-
-
-const TOLLBIT_UA_REGEX = new RegExp(
-  TOLLBIT_USER_AGENTS.map(p => p instanceof RegExp ? p.source : p).join('|'),
-  'i'
-);
-
-
-const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
-
-
-  const RESTRICTED_HEADERS = new Set([
-    'connection', 'content-length', 'transfer-encoding', 'via',
-    'x-amz-cf-id', 'x-amzn-trace-id', 'x-cache', 'x-forwarded-for'
+  // Only these origin response headers are passed back to the viewer.
+  // Everything else (hop-by-hop, x-amz-*, keep-alive, etc.) is dropped,
+  // since CloudFront rejects the entire response if a disallowed header is set.
+  const ALLOWED_RESPONSE_HEADERS = new Set([
+    'content-type', 'content-encoding', 'content-language',
+    'set-cookie', 'location', 'vary', 'etag', 'last-modified',
+    'expires', 'retry-after', 'www-authenticate', 'x-robots-tag'
   ]);
 
+  // Viewer-request lambdas are killed at 5s total; time out the origin
+  // fetch earlier so we can still fail open.
+  const PROXY_TIMEOUT_MS = 4000;
 
   const proxy = (url, reqHeaders) => new Promise((resolve, reject) => {
     const req = https.get(url, { headers: reqHeaders }, (res) => {
       const chunks = [];
       res.on('data', chunk => chunks.push(chunk));
+      res.on('error', reject);
       res.on('end', () => resolve({
         status: res.statusCode,
         headers: res.headers,
         body: Buffer.concat(chunks)
       }));
     });
+    req.setTimeout(PROXY_TIMEOUT_MS, () => req.destroy(new Error('tollbit origin timeout')));
     req.on('error', reject);
   });
-
 
   export const handler = async (event) => {
     const request = event.Records[0].cf.request;
     const headers = request.headers;
 
+    const isBot = headers[BOT_HEADER]?.[0]?.value === 'true';
 
-    const userAgent = headers['user-agent']?.[0]?.value ?? '';
+    if (!isBot) {
+      return request;
+    }
 
-
-    if (matchesUserAgent(userAgent)) {
+    try {
       const host = headers['host'][0].value;
       const tollbitDomain = `tollbit.${host.replace(/^www\./, '')}`;
-
 
       const reqHeaders = Object.fromEntries(
         Object.entries(headers).map(([k, v]) => [k, v[0].value])
       );
       reqHeaders['host'] = tollbitDomain;
-
+      delete reqHeaders[BOT_HEADER]; // internal signal, don't forward it
 
       const qs = request.querystring ? `?${request.querystring}` : '';
       const { status, headers: resHeaders, body } = await proxy(
@@ -627,15 +623,13 @@ const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
         reqHeaders
       );
 
-
       const cfHeaders = {};
       for (const [key, value] of Object.entries(resHeaders)) {
-        if (!RESTRICTED_HEADERS.has(key.toLowerCase()) && typeof value === 'string') {
-          cfHeaders[key.toLowerCase()] = [{ key, value }];
-        }
+        if (!ALLOWED_RESPONSE_HEADERS.has(key.toLowerCase())) continue;
+        const values = Array.isArray(value) ? value : [value];
+        cfHeaders[key.toLowerCase()] = values.map(v => ({ key, value: v }));
       }
       cfHeaders['cache-control'] = [{ key: 'Cache-Control', value: 'no-store' }];
-
 
       return {
         status: String(status),
@@ -643,12 +637,11 @@ const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
         bodyEncoding: 'base64',
         body: body.toString('base64')
       };
+    } catch (err) {
+      console.error('tollbit proxy failed, falling back to origin:', err.message);
+      return request; // fail open: serve normal origin content
     }
-
-
-    return request;
   };
-
 ```
 
 **Deploy the Lambda first**
