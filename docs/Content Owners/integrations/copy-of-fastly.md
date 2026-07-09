@@ -1,8 +1,8 @@
 ---
-title: Fastly v2
+title: Fastly
 excerpt: Learn how to integrate TollBit with Fastly.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
