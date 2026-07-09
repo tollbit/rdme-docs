@@ -1,8 +1,8 @@
 ---
-title: CloudFlare v2
+title: CloudFlare
 excerpt: Learn how to integrate TollBit with CloudFlare.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
