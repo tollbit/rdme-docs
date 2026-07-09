@@ -8,7 +8,7 @@ metadata:
 ---
 We provide a way for all CloudFlare customers, regardless of plan, to forward HTTP logs to our platform for analytics. We recommend this method over others like LogPush as CloudFlare Enterprise is not required to create workers, and you have much more control over how logs are sent.
 
-### Enable Analytics with CloudFlare
+### Steps for Analytics
 
 #### Enterprise Plan Customers
 
@@ -249,7 +249,7 @@ Your route page will then look something like the following.
 
 If you aren't sure which route to disable, consider running the worker on your full site and then using the top pages chart in our analytics platform to understand any routes you wish to filter out.
 
-### Route to Agent Site
+### Steps for Agent Site
 
 There are several levels of bot detection and forwarding that you can configure for CloudFlare, depending on whether or not you are on their Enterprise plan.
 
