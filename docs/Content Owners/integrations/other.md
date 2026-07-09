@@ -16,7 +16,7 @@ If you are already forwarding logs to an S3 bucket, you can get a head start on 
 
 ```json
 {
-  "Version": "2025-05-07",
+  "Version": "2012-10-17",
   "Statement": [
     {
       "Sid": "AllowTollbitAccountsAccess",
