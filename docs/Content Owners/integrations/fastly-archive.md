@@ -1,5 +1,5 @@
 ---
-title: Fastly
+title: Fastly (old)
 excerpt: Learn how to integrate TollBit with Fastly.
 hidden: true
 ---
