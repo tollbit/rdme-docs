@@ -83,6 +83,12 @@ Akamai allows you to set up redirection rules at the edge using either Cloudlets
 
 To set up agent sites for Akamai with Cloudlets, you would use their Forward Rewrite Cloudlet. Follow the documentation [here](https://techdocs.akamai.com/cloudlets/docs/what-forward-rewrite) for reference.&#x20;
 
+<Callout icon="📘" theme="info">
+  ### Pro Tip
+
+  If you are currently following our docs and have set up Agent Site via **Edge Redirector** to forward bot traffic to your tollbit subdomain, you would replace the Edge Redirector with the Forward Rewrite Cloudlet.
+</Callout>
+
 **Setup New Origin&#xA;**&#x59;ou’ll need to set up a new conditional origin that is your tollbit subdomain to have the forward rewrite cloudlet correctly route the request. Follow the docs here on doing this. At a high level, you would go to Property Manager and create a new Conditional Origin with the server domain name url as your tollbit subdomain (i.e. tollbit.example.com). Ensure that this origin is activated and deployed.
 
 **Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs here. Then create a forward rewrite rule following the docs here. For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
@@ -98,9 +104,7 @@ Once you’ve tested this appropriately, you can activate and deploy.
 <Callout icon="📘" theme="info">
   ### Pro Tip
 
-  Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
-  first rule that matches. If you have other Cloudlets with rules that also
-  intercept requests, they may match before the rule you just added.
+  Cloudlets Policy Manager evaluates rules from top to bottom, and picks the first rule that matches. If you have other Cloudlets with rules that also intercept requests, they may match before the rule you just added.
 </Callout>
 
 <br />
