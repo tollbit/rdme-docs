@@ -110,207 +110,439 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
 
 ```json
 {
-  "Name": "cloudfront-agent-rule",
-  "Priority": 0,
-  "Statement": {
-    "OrStatement": {
-      "Statements": [
-        {
-          "ByteMatchStatement": {
-            "SearchString": "chatgpt-user",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "perplexitybot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "NONE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "gptbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "anthropic-ai",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "ccbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "amazonbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "claude-web",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "cohere-ai",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "omgilibot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "omgili",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "youbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "bytespider",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "diffbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "oai-searchbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "meta-externalagent",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "timpibot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "perplexity-user",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "claudebot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "google-notebooklm",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "claude-user",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "duckassistbot",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
-        },
-        {
-          "ByteMatchStatement": {
-            "SearchString": "mistralai-user",
-            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
-            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
-            "PositionalConstraint": "CONTAINS"
-          }
+    "Name": "cloudfront-agent-rule",
+    "Priority": 0,
+    "Statement": {
+        "OrStatement": {
+            "Statements": [
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "amazonbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "amzn-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "anthropic-ai",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "bytespider",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "ccbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "chatgpt-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "claude-code",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "claude-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "claude-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "claude-web",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "claudebot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "cohere-ai",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "diffbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "exabot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "gptbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "meta-externalagent",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "meta-webindexer",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "oai-adsbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "oai-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "omgili",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "perplexity-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "perplexitybot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "timpibot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "youbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                }
+            ]
         }
-      ]
+    },
+    "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "cloudfront-agent-rule"
+    },
+    "Action": {
+        "Allow": {
+            "CustomRequestHandling": {
+                "InsertHeaders": [
+                    {
+                        "Name": "Bot",
+                        "Value": "true"
+                    }
+                ]
+            }
+        }
     }
-  },
-  "Action": {
-    "Allow": {
-      "CustomRequestHandling": {
-        "InsertHeaders": [
-          {
-            "Name": "Bot",
-            "Value": "true"
-          }
-        ]
-      }
-    }
-  },
-  "VisibilityConfig": {
-    "SampledRequestsEnabled": true,
-    "CloudWatchMetricsEnabled": true,
-    "MetricName": "cloudfront-agent-rule"
-  }
 }
 ```
 
@@ -509,7 +741,98 @@ If you need to update your lambda, you can follow these steps.
 
 <br />
 
-<br />
+### Just Lambda + CloudFront Route To Agent Site (No WAF)
+
+If you'd like to set this up without WAF managing the bot detection and want to only use Lambda and CloudFront, use the following Lambda instead. This will do the bot user agent check directly within the Lambda.
+
+```javascript
+import https from 'https';
+
+  const TOLLBIT_USER_AGENTS = [
+    'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
+    'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
+    'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'GPTBot',
+    'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot', 'OAI-SearchBot',
+    'omgili', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+  ];
+
+  const TOLLBIT_UA_REGEX = new RegExp(TOLLBIT_USER_AGENTS.join('|'), 'i');
+
+  const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
+
+  // Only these origin response headers are passed back to the viewer.
+  // Everything else (hop-by-hop, x-amz-*, keep-alive, etc.) is dropped,
+  // since CloudFront rejects the entire response if a disallowed header is set.
+  const ALLOWED_RESPONSE_HEADERS = new Set([
+    'content-type', 'content-encoding', 'content-language',
+    'set-cookie', 'location', 'vary', 'etag', 'last-modified',
+    'expires', 'retry-after', 'www-authenticate', 'x-robots-tag'
+  ]);
+
+  // Viewer-request lambdas are killed at 5s total; time out the origin
+  // fetch earlier so we can still fail open.
+  const PROXY_TIMEOUT_MS = 4000;
+
+  const proxy = (url, reqHeaders) => new Promise((resolve, reject) => {
+    const req = https.get(url, { headers: reqHeaders }, (res) => {
+      const chunks = [];
+      res.on('data', chunk => chunks.push(chunk));
+      res.on('error', reject);
+      res.on('end', () => resolve({
+        status: res.statusCode,
+        headers: res.headers,
+        body: Buffer.concat(chunks)
+      }));
+    });
+    req.setTimeout(PROXY_TIMEOUT_MS, () => req.destroy(new Error('tollbit origin timeout')));
+    req.on('error', reject);
+  });
+
+  export const handler = async (event) => {
+    const request = event.Records[0].cf.request;
+    const headers = request.headers;
+
+    const userAgent = headers['user-agent']?.[0]?.value ?? '';
+
+    if (!matchesUserAgent(userAgent)) {
+      return request;
+    }
+
+    try {
+      const host = headers['host'][0].value;
+      const tollbitDomain = `tollbit.${host.replace(/^www\./, '')}`;
+
+      const reqHeaders = Object.fromEntries(
+        Object.entries(headers).map(([k, v]) => [k, v[0].value])
+      );
+      reqHeaders['host'] = tollbitDomain;
+
+      const qs = request.querystring ? `?${request.querystring}` : '';
+      const { status, headers: resHeaders, body } = await proxy(
+        `https://${tollbitDomain}${request.uri}${qs}`,
+        reqHeaders
+      );
+
+      const cfHeaders = {};
+      for (const [key, value] of Object.entries(resHeaders)) {
+        if (!ALLOWED_RESPONSE_HEADERS.has(key.toLowerCase())) continue;
+        const values = Array.isArray(value) ? value : [value];
+        cfHeaders[key.toLowerCase()] = values.map(v => ({ key, value: v }));
+      }
+      cfHeaders['cache-control'] = [{ key: 'Cache-Control', value: 'no-store' }];
+
+      return {
+        status: String(status),
+        headers: cfHeaders,
+        bodyEncoding: 'base64',
+        body: body.toString('base64')
+      };
+    } catch (err) {
+      console.error('tollbit proxy failed, falling back to origin:', err.message);
+      return request; // fail open: serve normal origin content
+    }
+  };
+```
 
 <br />
 
