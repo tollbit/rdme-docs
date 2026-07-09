@@ -199,8 +199,6 @@ const matchesUserAgent = (ua) => ua && TOLLBIT_UA_REGEX.test(ua);
 
 ```
 
-<br />
-
 **Deploy the Lambda first**
 
 On the left tab, click “deploy”
@@ -221,32 +219,12 @@ On the left tab, click “deploy”
 
 Scroll to the top, click the “Actions” dropdown, and Deploy to Lambda\@Edge.
 
+![](https://files.readme.io/1f8009ef5a14409cf054e99521dc2d0ea4e780f55e157441549c14f1e99cb44e-Screenshot_2026-07-09_at_12.10.40_PM.png)
+
 <br />
 
-```javascript
-function handler(event) {
-  if (event.request.headers['x-amzn-waf-bot'] !== undefined) {
-    const host = event.request.headers.host.value
-    const uri = event.request.uri
-    const newurl = `https://tollbit.${host}${uri}`
-    const response = {
-      statusCode: 302,
-      statusDescription: 'Found',
-      headers: { location: { value: newurl } },
-    }
-    return response
-  }
-  return event.request
-}
-```
+Ensure you pick your Cloudfront distribution and that the event is “Viewer request”. Once done, click deploy at the bottom.
 
-Earlier, our WAF rule had set a header called `bot` onto the request if it matched the rule. Amazon automatically appends `x-amzn-waf-` to the header, so the actual header to look for is now called `x-amzn-waf-bot`. If this header exists, it means that our WAF rule detected that this request
-is a bot request, so we now want to forward it to our `tollbit` subdomain. Once you are ready, save the changes and publish this code. On the publish tab, you will then need to associate this function to your existing CloudFront distribution.
-
-<Callout icon="🚧" theme="warn">
-  ### Note
-
-  This code snippet will run for every request to your distribution. Please<br />ensure you've tested this function before completing this step.
-</Callout>
+![](https://files.readme.io/918c5df2cfeeeb8eb8a1972a6bc9d7e3f3ae1490fdec1e7a2d44a78638e6f448-Screenshot_2026-07-09_at_12.11.53_PM.png)
 
 <br />
