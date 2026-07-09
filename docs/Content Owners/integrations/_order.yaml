@@ -8,6 +8,7 @@
 - cloudflare-free
 - datadome
 - fastly
+- copy-of-fastly
 - google
 - azure
 - vercel
@@ -25,4 +26,3 @@
 - wordpress-vip.md
 - imperva.md
 - other.md
-- copy-of-fastly
