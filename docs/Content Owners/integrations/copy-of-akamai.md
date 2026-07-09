@@ -1,5 +1,5 @@
 ---
-title: Copy of Akamai
+title: Akamai v2
 excerpt: Learn how to integrate TollBit with Akamai.
 deprecated: false
 hidden: true
@@ -79,35 +79,30 @@ Akamai allows you to set up redirection rules at the edge using either Cloudlets
 - For Cloudlets, please see the steps outlined below.
 - For Content Protector, please reach out to your Akamai account team and loop in [team@tollbit.com](mailto:team@tollbit.com) as well.
 
-**Cloudlets set up**
+**Cloudlets Set Up**
 
-Akamai provides <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/what-edge-redirector">Edge Redirector</Anchor> Cloudlets that help you manage redirection using certain matching rules.
+To set up agent sites for Akamai with Cloudlets, you would use their Forward Rewrite Cloudlet. Follow the documentation [here](https://techdocs.akamai.com/cloudlets/docs/what-forward-rewrite) for reference.&#x20;
 
-We want to first start by creating an Edge Redirector policy. Follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-edge-redirector-policy">here</Anchor> to do so in accordance with how your Akamai instance is set up.
+**Setup New Origin&#xA;**&#x59;ou’ll need to set up a new conditional origin that is your tollbit subdomain to have the forward rewrite cloudlet correctly route the request. Follow the docs here on doing this. At a high level, you would go to Property Manager and create a new Conditional Origin with the server domain name url as your tollbit subdomain (i.e. tollbit.example.com). Ensure that this origin is activated and deployed.
 
-Once you have set up your policy, follow the documentation <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-edge-redirector-rules">here</Anchor> to set up rules for your Edge Redirector. Because we want to be redirecting based on the `User-Agent` header, we will need to create a redirector with advance matching rules. You will want to create a match type based on the <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/req-header">request header</Anchor>. The name of the header should be `User-Agent`, and the value should be a tab separated list of bad user agents. You can use the following list:
+**Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs here. Then create a forward rewrite rule following the docs here. For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
 
 ```
-ChatGPT-User PerplexityBot GPTBot anthropic-ai CCBot Claude-Web ClaudeBot Claude-User Claude-SearchBot cohere-ai YouBot Diffbot OAI-SearchBot meta-externalagent Timpibot Amazonbot Bytespider Perplexity-User
+'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
 ```
 
-For the operator value, use `is one of` without case sensitivity. These settings should let you match our known bad users agents. In the redirection rule, you can set the redirect url to your `tollbit` subdomain.
-Ensure that the path is preserved in the redirect. Akamai has an example of this in their <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/review-available-match-types-edge-redirector#edge-redirector-regular-expression-example">docs</Anchor>
-and we should be able to follow it by setting the redirect url to `https://tollbit.<your_site>/\2`. The `\2` should preserve the path.
+Ensure that the rewrite points to the new tollbit subdomain origin you added, while preserving the original URL path and query strings.
 
-> 📘 Pro Tip
->
-> Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
-> first rule that matches. If you have other Cloudlets with rules that also
-> intercept requests, they may match before the rule you just added.
+Once you’ve tested this appropriately, you can activate and deploy.
 
-Click save rule to save your changes, and you should be ready to activate! Follow the steps <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/activate-cloudlets-beh-prop-manager">here</Anchor> to do so.
+<Callout icon="📘" theme="info">
+  ### Pro Tip
 
-> 🚧 Note
->
-> The rule you just added **will intercept** and potentially **redirect**
-> traffic to your main site. Please ensure that you have tested this in a test
-> environment or for a small subset of pages before activating this across your
-> entire site.
+  Cloudlets Policy Manager evaluates rules from top to bottom, and picks the
+  first rule that matches. If you have other Cloudlets with rules that also
+  intercept requests, they may match before the rule you just added.
+</Callout>
+
+<br />
 
 <br />
