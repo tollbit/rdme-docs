@@ -228,3 +228,73 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
 ![](https://files.readme.io/918c5df2cfeeeb8eb8a1972a6bc9d7e3f3ae1490fdec1e7a2d44a78638e6f448-Screenshot_2026-07-09_at_12.11.53_PM.png)
 
 <br />
+
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  Deploying this has the lambda intercept all traffic to your site. Please ensure you have tested this change.
+
+  If you run into a deploy error and permissions issue, you will need to update your lambda’s execution role.&#x20;
+
+  Click on the “Configure” tab, and then on the left, click on “Permissions” and click on the blue highlighted role name. In this case it would be “**tollbit\_agent\_site-role-z6218mit**”
+
+  ![](https://files.readme.io/d3cb4c2e775534ed0daedb7601f7402d8b8d0aa7fac294f59396226b65153f56-Screenshot_2026-07-09_at_12.18.15_PM.png)
+
+
+
+  Go to the Trust Relationship tab and edit the Trust Policy and make sure it contains the following block. Make sure to click “Update Policy” at the bottom after updating.
+
+  ```text
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Principal": {
+                  "Service": [
+                      "edgelambda.amazonaws.com",
+                      "lambda.amazonaws.com"
+                  ]
+              },
+              "Action": "sts:AssumeRole"
+          }
+      ]
+  }
+  ```
+
+  ![](https://files.readme.io/52e80994e22a349bf89bfea36f29d79076dc8adbc4e45b8d3fabef6cf49b164d-Screenshot_2026-07-09_at_12.22.35_PM.png)
+
+  Once you update this, you can try deploying the Lambda\@Edge to your cloudfront distribution again. You may need to wait a few minutes and refresh the lambda page before the permissions propagate.
+</Callout>
+
+<br />
+
+**Updating your Lambda**
+
+If you need to update your lambda, you can follow these steps.
+
+<br />Step 1 - Go back to the Lambda code editor and edit the code, and click Deploy once you are done<br />Step 2 - Under the actions drop down at the top, click Publish New Version
+
+Step 3 - Take note of the latest version number, these will be incrementing numbers
+
+![](https://files.readme.io/0d70ea2541d88d2e7b81dec733d7c9a5d2d9988c7a9d4c87c5ea4011e924b9bd-Screenshot_2026-07-09_at_12.25.03_PM.png)
+
+<br />
+
+Step 4 - Go to your cloudfront distribution and go to Behaviors, and check the default behavior. If you have multiple, check the one that regular traffic routes through, and then click edit
+
+![](https://files.readme.io/6a53f5c5772df0fbd7072d04b5734bf5562732b966691734ab55603ef5d8eb64-Screenshot_2026-07-09_at_12.25.30_PM.png)
+
+<br />
+
+Step 5 - Scroll to the bottom of this next page and update the version number of your lambda. You will just edit the number all the way at the end to match the newly updated version number.
+
+![](https://files.readme.io/4b5fc736be1880fee7ddb4ac3562f737987da79dedfdfe68e814b1c2c8019b2c-Screenshot_2026-07-09_at_12.25.58_PM.png)
+
+<br />
+
+<br />
+
+<br />
+
+<br />
