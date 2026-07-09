@@ -40,7 +40,7 @@ Once you are ready to publish these changes, click the “Activate” button. Ke
 
 ## Steps for Agent Site
 
-Fastly allows you to set up redirectly using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
+Fastly allows you to set up redirects using VCL snippets. In this document, we will go over setting up forwarding requests from known bots to your `tollbit` subdomain.
 
 <Callout icon="📘" theme="info">
   ### Pro Tip
@@ -58,13 +58,17 @@ Go to the Deliver tab and select the domain you wish to add bot forwarding to. O
 
 **Create a New Host**
 
-Navigate to the Origin tab in your left navigation and create a new host. Use your `tollbit` subdomain as the host. Once you create this, you might see a warning that this backend is unused. No need to worry about this for now.
+Navigate to the Origin tab in your left navigation and create a new host. Use your `tollbit` subdomain as the host.&#x20;
+
+Once you create this, you might see a warning that this backend is unused. No need to worry about this for now.
 
 ![](https://files.readme.io/4e4e34a70df1ac78efb6c1e94a335da3919d2f1c5dcc4f372a76bf4a69945feb-Screenshot_2026-07-09_at_1.47.20_PM.png)
 
 <br />
 
-Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. You can name it something more clear, like “**tollbit\_origin**”. Scroll down and click Update to save. In this example, we are using our test website _thedailydispatching.com_.
+Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. You can name it something more clear, like “**tollbit\_origin**”. Scroll down and click Update to save.&#x20;
+
+In this example, we are using our test website _thedailydispatching.com_.
 
 ![](https://files.readme.io/6253ee14104f4f0ed1c8aba7c7f013233d4566fdab34107324afd247513af4a1-Screenshot_2026-07-09_at_1.48.23_PM.png)
 
@@ -90,7 +94,7 @@ In your left nav, go to VCL snippets. If you haven’t already, create a new sni
 
 <br />
 
-For the recv snippet, paste in the following snippet. Ensure that the backend name is the same that you’ve set before. If you applied our recommended edit, it will be **F\_tollbit\_origin**.
+For the recv snippet, paste in the following snippet. Ensure that the backend name is the same that you’ve set before. If you applied our recommended edit, it will be **F\_tollbit\_origin** (line 2 below).
 
 ```json
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|timpibot|youbot") {
@@ -107,15 +111,15 @@ if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|
 
 If you created an error snippet in the past for the redirect, you no longer need it, and can remove it.
 
-Once this is saved or updated, you can now activate your service configuration and this will be live in a few minutes.
-
 <Callout icon="🚧" theme="warn">
   ### Note
 
   The VCL scripts you just added **will intercept** and potentially **redirect** traffic to your main site. Please ensure that you have tested this in a test environment or for a small subset of pages before activating this across your entire site.
 </Callout>
 
-This should now be all you need to forward known bot traffic to your `tollbit` subdomain! You can activate these changes by clicking "Activate".
+This should now be all you need to forward known bot traffic to your `tollbit` subdomain!&#x20;
+
+Once this is saved or updated, you can now activate your service configuration and this will be live in a few minutes.
 
 ![Fastly Activate](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/fastly-activate.png)
 
