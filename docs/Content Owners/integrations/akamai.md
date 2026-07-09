@@ -1,6 +1,7 @@
 ---
 title: Akamai
 excerpt: Learn how to integrate TollBit with Akamai.
+hidden: true
 ---
 We provide a way for all Akamai customers to stream logs to our platform, as well as configure agent site.
 
