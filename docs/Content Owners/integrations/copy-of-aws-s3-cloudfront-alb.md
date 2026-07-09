@@ -102,6 +102,222 @@ Agent Site can be set up with AWS Lambda\@Edge.&#x20;
 
 #### Set up Your WAF
 
+First, go to the WAF & Shield and create a new Web ACL. Ensure that the ACL being created is for CloudFront distributions. Add your existing CloudFront distribution to this ACL under the "Associated AWS resources" section of the page.
+
+![Aws Acl Configuration](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/aws-acl-configuration.png)
+
+Once you've created the ACL, you can choose any rules you'd like to enable bot detection. AWS Marketplace has managed bot detection rules that you can add to your ACL. We will provide our own WAF rule as well. To use our WAF rule, select the option for using your own rules and rule groups, and use the JSON editor. Copy and paste the following rule:
+
+```json
+{
+  "Name": "cloudfront-agent-rule",
+  "Priority": 0,
+  "Statement": {
+    "OrStatement": {
+      "Statements": [
+        {
+          "ByteMatchStatement": {
+            "SearchString": "chatgpt-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "perplexitybot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "NONE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "gptbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "anthropic-ai",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "ccbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "amazonbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "claude-web",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "cohere-ai",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "omgilibot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "omgili",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "youbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "bytespider",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "diffbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "oai-searchbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "meta-externalagent",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "timpibot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "perplexity-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "claudebot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "google-notebooklm",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "claude-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "duckassistbot",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        },
+        {
+          "ByteMatchStatement": {
+            "SearchString": "mistralai-user",
+            "FieldToMatch": { "SingleHeader": { "Name": "user-agent" } },
+            "TextTransformations": [{ "Priority": 0, "Type": "LOWERCASE" }],
+            "PositionalConstraint": "CONTAINS"
+          }
+        }
+      ]
+    }
+  },
+  "Action": {
+    "Allow": {
+      "CustomRequestHandling": {
+        "InsertHeaders": [
+          {
+            "Name": "Bot",
+            "Value": "true"
+          }
+        ]
+      }
+    }
+  },
+  "VisibilityConfig": {
+    "SampledRequestsEnabled": true,
+    "CloudWatchMetricsEnabled": true,
+    "MetricName": "cloudfront-agent-rule"
+  }
+}
+```
+
+This will detect the top known AI bots. Next, for the action, be sure to choose "Allow" and to add a custom header. Ours is called `bot`, but feel free to make this anything unique.
+
+![Waf Action](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/waf-action.png)
+
 <br />
 
 **Create a new Lambda Function**
