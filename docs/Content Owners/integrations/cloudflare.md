@@ -265,7 +265,9 @@ Navigate to the SSL/TSL tab on the left and go into the over page, and click con
 
 Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
 
-![](https://files.readme.io/1b79263c5e571b1ab8a1bf8d5d4f14b741821165ee94ec250eb26132a2677ce0-Screenshot_2026-07-09_at_2.47.09_PM.png)
+![](https://files.readme.io/992ff8dd9ad7ea3acc89cfe0f0013d4e0b6d2be296b09b74bdeeb4edd6d7c0eb-image12.png)
+
+<br />
 
 <Callout icon="📘" theme="info">
   ###
