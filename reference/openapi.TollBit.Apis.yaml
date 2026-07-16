@@ -266,7 +266,8 @@ paths:
           in: query
           required: false
           description: >-
-            Comma-separated list of domains (max 20) to include in search results.
+            Comma-separated list of domains (max 20) to boost in search results.
+            When provided, generates a custom goggle string.
           schema:
             type: string
           explode: false
@@ -275,8 +276,22 @@ paths:
           required: false
           description: >-
             When true, restrict search to properties the calling org is allowed
-            to use (feature-flag-based). Intersects with `properties` when both
-            are provided.
+            to access.
+
+            Intersects with `properties` when both are provided.
+
+            Currently mirrors `readyToLicense`; will be expanded to broader
+            allowlist semantics later.
+          schema:
+            type: boolean
+          explode: false
+        - name: readyToLicense
+          in: query
+          required: false
+          description: >-
+            When true, restrict search to properties ready to license
+            (rates-enabled / content-catalog path). Intersects with `properties`
+            when both are provided. Currently equivalent to `allowedOnly`.
           schema:
             type: boolean
           explode: false
@@ -674,6 +689,7 @@ components:
         - maxPriceMicros
         - currency
         - licenseType
+        - licenseCuid
       properties:
         url:
           type: string
