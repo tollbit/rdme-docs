@@ -105,7 +105,7 @@ You can customize your search with additional query parameters:
 
 * `size`: Number of results to return (maximum 20)
 * `next-token`: Token for pagination to get the next page
-* `allowedOnly`: Reduce search to only the properties that your account is authorized to license
+* `readyToLicense`: Reduce search to only the properties that are ready to license, meaning they have set rates and can be licensed programmatically
 * `properties`: Comma-separated list of domains (max 20) to filter results to only those properties
 
 <Tabs>
@@ -117,6 +117,10 @@ You can customize your search with additional query parameters:
 
     # Search on specific properties (filter to only these domains)
     curl --location 'https://gateway.tollbit.com/dev/v2/search?q=tutorial&size=10&properties=example.com,tutorial.com' \
+    --header 'TollbitKey: <key>'
+
+    # Search only properties that can be licensed programmatically
+    curl --location 'https://gateway.tollbit.com/dev/v2/search?q=tutorial&readyToLicense=true' \
     --header 'TollbitKey: <key>'
 
     # Pagination - get next page
@@ -176,7 +180,7 @@ The search response is a JSON object with the following structure:
 
 * `discoverable`: Indicates the content is available in TollBit
 * `readyToLicense` / `ready_to_license`: Indicates the property owner has already set rates and the content is ready to transact
-  * NOTE: You might need to reach out to TollBit to request authorization for a specific property, use the `allowedOnly` query param to ensure you only get results for properties that your account is authorized to license
+  * NOTE: Pass the `readyToLicense` query param to filter the search itself, so you only get back results you can license programmatically
 
 ### Example: Parsing Search Results
 
