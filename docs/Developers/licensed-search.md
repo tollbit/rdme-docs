@@ -36,8 +36,9 @@ GET /dev/v2/search
 * **`next-token`** (string, optional)
   * Token to get the next page of results
 
-* **`allowedOnly`** (bool, optional)
-  * Will limit search to only the properties that your account has already been authorized to license
+* **`readyToLicense`** (bool, optional)
+  * When `true`, limits search to only the properties that are ready to license — those that have set rates and can be licensed programmatically
+  * Every result returned will have `availability.readyToLicense` set to `true`
 
 * **`properties`** (string, optional)
   * Comma-separated list of domains to search, only results from these domains will be included in the results
@@ -155,6 +156,15 @@ curl --location 'https://gateway.tollbit.com/dev/v2/search?q=technology&properti
 ```
 
 This will filter the search results to only show results from `example.com` and `www.techsite.com`. Only verified properties in the TollBit system will be used.
+
+### Search Only Properties Ready to License
+
+```bash
+curl --location 'https://gateway.tollbit.com/dev/v2/search?q=technology&readyToLicense=true' \
+  --header 'TollBitKey: <KEY>'
+```
+
+This will filter the search results to only properties that have set rates and can be licensed programmatically. Every result returned will have `availability.readyToLicense` set to `true`. When combined with `properties`, the two filters intersect.
 
 ### Pagination
 
