@@ -8,13 +8,13 @@ metadata:
 ---
 Every TollBit Fastly setup is built from the same two pieces, which you create and own in your Fastly service:
 
-- A **backend** named `tollbit_origin` that bot traffic is forwarded through.
-- An **HTTPS log streaming endpoint** that powers TollBit analytics.
+- A backend named `tollbit_origin` that bot traffic is forwarded through.
+- An HTTPS log streaming endpoint that powers TollBit analytics.
 
 Set those up first, then choose how bot blocking is managed:
 
-- **TollBit Managed** — you give TollBit a scoped API token, and bot blocking is controlled from the TollBit dashboard. TollBit only rewrites the content of a dynamic VCL snippet you own — it never creates objects, clones versions, or activates configurations, so it fits cleanly into Terraform and other infrastructure-as-code workflows.
-- **User Managed** — you write and maintain the snippet content yourself, and TollBit needs no API access to your Fastly account.
+- TollBit Managed: you give TollBit a scoped API token, and bot blocking is controlled from the TollBit dashboard. TollBit only rewrites the content of a dynamic VCL snippet you own — it never creates objects, clones versions, or activates configurations, so it fits cleanly into Terraform and other infrastructure-as-code workflows.
+- User Managed: you write and maintain the snippet content yourself, and TollBit needs no API access to your Fastly account.
 
 ## Set up the TollBit Origin
 
@@ -34,7 +34,7 @@ Once you create this, you might see a warning that this backend is unused. No ne
 
 <br />
 
-Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. Name it exactly “**tollbit_origin**”. Scroll down and click Update to save.&#x20;
+Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. Name it exactly `tollbit_origin`. Scroll down and click Update to save.&#x20;
 
 In this example, we are using our test website _thedailydispatching.com_.
 
@@ -46,7 +46,7 @@ If you manage your service with Terraform or another infrastructure-as-code tool
 
 ## Steps for Analytics
 
-Analytics is powered by a log streaming endpoint on your own Fastly service — TollBit never adds or removes logging configuration for you. If you use the TollBit dashboard, it shows analytics as enabled once it detects the endpoint; you may need to refresh the page after setting it up.
+Analytics is powered by a log streaming endpoint on your own Fastly service. TollBit never adds or removes logging configuration for you. If you use the TollBit dashboard, it shows analytics as enabled once it detects the endpoint; you may need to refresh the page after setting it up.
 
 **Create a new Logging Configuration**
 
