@@ -42,18 +42,7 @@ In this example, we are using our test website _thedailydispatching.com_.
 
 <br />
 
-If you manage your service with Terraform, add this to your `fastly_service_vcl` resource instead:
-
-```hcl
-backend {
-  name              = "tollbit_origin"
-  address           = "tollbit.<your-domain>"
-  port              = 443
-  use_ssl           = true
-  ssl_cert_hostname = "tollbit.<your-domain>"
-  ssl_sni_hostname  = "tollbit.<your-domain>"
-}
-```
+If you manage your service with Terraform or another infrastructure-as-code tool, define the backend there instead. The requirements are simply: the name must be exactly `tollbit_origin`, the address is your `tollbit.<your-domain>` subdomain, and TLS is enabled on port 443.
 
 ## Steps for Analytics
 
@@ -93,7 +82,7 @@ Go into Advanced Options and set the “Custom header name” field to “Tollbi
 
 Once you are ready to publish these changes, click the “Activate” button. Keep in mind that if you have other unpublished changes in Fastly, this may also publish those as well.
 
-If you manage logging with Terraform, add a `logging_https` block to your `fastly_service_vcl` resource with `url = "https://log.tollbit.com/log"`, `method = "POST"`, `header_name = "TollbitKey"`, `header_value` set to your TollBit secret key, `message_type = "blank"`, `format_version = 2`, and the log format above. Note that Terraform treats `%{` in strings as a template directive, so each `%{` in the format string must be escaped as `%%{`.
+If you manage logging with infrastructure-as-code, define the equivalent HTTPS logging endpoint there — it just needs to match the settings above: the URL, the log format, the `TollbitKey` header, and a POST method.
 
 ## Steps for Agent Site
 
@@ -127,19 +116,12 @@ Go to your TollBit dashboard and pick the Integrations tab in the main navigatio
 
 **Create the dynamic snippet and connect**
 
-Create a dynamic VCL snippet named exactly `tollbit_recv_dynamic_snippet` with type `recv`. You can leave its content empty — TollBit manages the content from here on. With Terraform, add this to your `fastly_service_vcl` resource:
-
-```hcl
-dynamicsnippet {
-  name = "tollbit_recv_dynamic_snippet"
-  type = "recv"
-}
-```
+Create a dynamic VCL snippet named exactly `tollbit_recv_dynamic_snippet` with type `recv`, either in the console or in your infrastructure-as-code configuration. You can leave its content empty — TollBit manages the content from here on.
 
 <Callout icon="🚧" theme="warn">
   ### Leave the snippet's content unmanaged
 
-  Do **not** add a `fastly_service_dynamic_snippet_content` resource for this snippet. Dynamic snippet content lives outside the versioned configuration — that is what lets TollBit update your bot list without publishing a new version. If Terraform manages the content too, every TollBit update will show up as drift.
+  If you use Terraform, do **not** add a `fastly_service_dynamic_snippet_content` resource for this snippet. Dynamic snippet content lives outside the versioned configuration — that is what lets TollBit update your bot list without publishing a new version. If Terraform manages the content too, every TollBit update will show up as drift.
 </Callout>
 
 Activate the version that contains the backend and snippet, then click **Verify connection** on the Fastly integration page in your TollBit dashboard. If anything is missing or misnamed, the error message will tell you exactly what to fix.
