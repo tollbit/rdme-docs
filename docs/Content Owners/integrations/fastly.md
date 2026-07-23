@@ -34,7 +34,7 @@ Once you create this, you might see a warning that this backend is unused. No ne
 
 <br />
 
-Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. Name it exactly “**tollbit\_origin**”. Scroll down and click Update to save.&#x20;
+Once it’s been added, scroll down and click the little pencil icon next to the host name to edit this and give it a better name. Name it exactly “**tollbit_origin**”. Scroll down and click Update to save.&#x20;
 
 In this example, we are using our test website _thedailydispatching.com_.
 
@@ -108,6 +108,10 @@ Next, hover over Account on the main navigation bar on the left and choose API t
 
 ![Integrations Fastly Service 2](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-fastly-service-2.png)
 
+Create a new token that has Global API access as well as Global read access. Ensure that this token is granted access to the service of your site(s), and that there is no expiration on this token.
+
+![](https://files.readme.io/fa6babeb1f936c04a0fb76e52bff64823bffc1b4ae985dce93161656083ab9c1-Screenshot_2026-07-23_at_5.28.04_PM.png)
+
 **Setup Integration in TollBit**
 
 Go to your TollBit dashboard and pick the Integrations tab in the main navigation menu. Input your Fastly API key and service ID in the form and click Save.
@@ -148,11 +152,11 @@ You can also manage the snippet's content yourself, without giving TollBit API a
 
 In your left nav of your cloned configuration, go to VCL snippets. If you haven’t already, create a new snippet for the recv step named `tollbit_recv_dynamic_snippet`, and choose the **Dynamic** snippet type. Because this is the same snippet name and type the TollBit Managed option uses, you can switch to it at any point by adding your API credentials and clicking Verify connection in the TollBit dashboard.
 
-![](https://files.readme.io/7cca53f95f7b1b2521427658ddcfb6a4e2f2c79ce0f42e7cef00715a54b4b076-image9.png)
+![](https://files.readme.io/39bc1086ee50031cf99b86bb1ba70e4cde335bf3c219f9a3c6b635a154ecb39c-Screenshot_2026-07-23_at_5.30.14_PM.png)
 
 <br />
 
-For the recv snippet, paste in the following snippet. Ensure that the backend name is the same that you’ve set before. If you applied our recommended edit, it will be **F\_tollbit\_origin** (line 2 below). Edit the user agent list to control which bots are forwarded.
+For the recv snippet, paste in the following snippet. Ensure that the backend name is the same that you’ve set before. If you applied our recommended edit, it will be **F_tollbit_origin** (line 2 below). Edit the user agent list to control which bots are forwarded.
 
 ```json
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|timpibot|youbot") {
@@ -175,7 +179,7 @@ Once this is saved, you can now activate your service configuration and this wil
 <Callout icon="📘" theme="info">
   ### Note
 
-  Once the snippet exists on your active version, later edits to a dynamic snippet's *content* take effect immediately — there is no draft-and-activate step for content changes.
+  Once the snippet exists on your active version, later edits to a dynamic snippet's _content_ take effect immediately — there is no draft-and-activate step for content changes.
 </Callout>
 
 <br />
