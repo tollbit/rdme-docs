@@ -120,12 +120,12 @@ Go to your TollBit dashboard and pick the Integrations tab in the main navigatio
 
 **Create the dynamic snippet and connect**
 
-Create a dynamic VCL snippet named exactly `tollbit_recv_dynamic_snippet` with type `recv`, either in the console or in your infrastructure-as-code configuration. You can leave its content empty — TollBit manages the content from here on.
+Create a dynamic VCL snippet named exactly `tollbit_recv_dynamic_snippet` with type `recv`, either in the console or in your infrastructure-as-code configuration. You can leave its content empty as TollBit manages the content from here on.
 
 <Callout icon="🚧" theme="warn">
   ### Leave the snippet's content unmanaged
 
-  If you use Terraform, do **not** add a `fastly_service_dynamic_snippet_content` resource for this snippet. Dynamic snippet content lives outside the versioned configuration — that is what lets TollBit update your bot list without publishing a new version. If Terraform manages the content too, every TollBit update will show up as drift.
+  If you use Terraform, do **not** have Terraform manage the contents of this snippet. Dynamic snippet content lives outside the versioned configuration and that is what lets TollBit update your bot list without publishing a new version. If Terraform manages the content too, every TollBit update will show up as drift.
 </Callout>
 
 Activate the version that contains the backend and snippet, then click **Verify connection** on the Fastly integration page in your TollBit dashboard. If anything is missing or misnamed, the error message will tell you exactly what to fix.
