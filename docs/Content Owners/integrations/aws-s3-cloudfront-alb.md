@@ -846,6 +846,23 @@ export const handler = async (event) => {
 };
 ```
 
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  If your distribution serves more than one domain, a single hardcoded `TOLLBIT_DOMAIN` will send every bot request to the same Agent Site, no matter which of your sites was requested.
+
+  In that case, work out the domain from the visitor's host instead. Replace the `TOLLBIT_DOMAIN` constant with the following, and use `tollbitDomain` in place of `TOLLBIT_DOMAIN` further down:
+
+  ```javascript
+  const host = request.headers.host[0].value;
+  const tollbitDomain = `tollbit.${host.replace(/^www\./, '')}`;
+  ```
+
+  This requires the `AllViewer` origin request policy, because `AllViewerExceptHostHeader` replaces `Host` with your origin's own domain before the function runs.
+
+  You should also add `Host` to your cache policy headers. CloudFront does not include `Host` in the cache key by default, so without it every domain on the distribution shares the same cached objects.
+</Callout>
+
 **Deploy the Lambda first**
 
 On the left tab, click "Deploy".
