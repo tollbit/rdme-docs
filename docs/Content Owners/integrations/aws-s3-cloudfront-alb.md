@@ -736,7 +736,7 @@ If you need to update your lambda, you can follow these steps.
 
 ### AWS WAF + CloudFront Route To Agent Site (Origin Request)
 
-This is an alternate to the setup above. It does the same thing — routes detected bots to your Agent Site — but attaches the Lambda to the **Origin request** event instead of **Viewer request**, and uses CloudFront's cache key to keep bot and human responses separate.
+This is an alternate to the setup above. It routes detected bots to your Agent Site in the same way, but attaches the Lambda to the **Origin request** event instead of **Viewer request**, and uses CloudFront's cache key to keep bot and human responses separate.
 
 <Callout icon="📘" theme="info">
   ### When To Use This
@@ -750,7 +750,7 @@ This is an alternate to the setup above. It does the same thing — routes detec
 
 #### Set up Your WAF
 
-Identical to the Viewer request setup above. Create the Web ACL, associate your CloudFront distribution, and add the `cloudfront-agent-rule` bot detection rule with the Allow action and the `bot` custom request header.
+This is the same as the Viewer request setup above. Create the Web ACL, associate your CloudFront distribution, and add the `cloudfront-agent-rule` bot detection rule with the Allow action and the `bot` custom request header.
 
 AWS prefixes WAF custom request headers with `x-amzn-waf-`, so a header named `bot` arrives as `x-amzn-waf-bot`.
 
@@ -758,9 +758,9 @@ AWS prefixes WAF custom request headers with `x-amzn-waf-`, so a header named `b
 
 #### Update Your Cache Policy
 
-This step is what keeps a human from ever being served a bot response and vice versa, and the integration will not work correctly without it.
+This step keeps a human from being served a bot response, and a bot from being served a human response. The integration will not work correctly without it.
 
-Go to **CloudFront → Policies → Cache** and create a cache policy (or edit your existing one, if it is not an AWS managed policy — managed policies cannot be edited).
+Go to **CloudFront → Policies → Cache** and create a cache policy. You can also edit your existing one, as long as it is not an AWS managed policy, since those cannot be edited.
 
 - Under **Headers**, choose _Include the following headers_ and add `x-amzn-waf-bot`, along with any viewer headers your caching already relies on, such as `CloudFront-Viewer-Country`.
 - Set **Minimum TTL** to `0`.
@@ -778,21 +778,36 @@ Then go to **Distribution → Behaviors**, edit the behavior that regular traffi
 
 #### Update Your Origin Request Policy
 
-On the same **Behaviors** edit screen, set **Origin request policy** to `AllViewer`. Your Agent Site needs the visitor's `User-Agent` and other request headers, and this forwards all of them.
+Your behavior needs an origin request policy that forwards `User-Agent`. Without one, CloudFront replaces `User-Agent` with the string `Amazon CloudFront` before sending the request on, and your Agent Site will not be able to tell which crawler it is serving.
 
-If `AllViewer` is greyed out and cannot be selected, your behavior's origin is an S3 bucket, an API Gateway, or a Lambda function URL. Those origins require the `Host` header to be their own domain, so CloudFront blocks the policy. Select `AllViewerExceptHostHeader` instead — it forwards everything except `Host`, which is all this setup needs.
+If your distribution already uses an origin request policy that forwards `User-Agent`, you can keep it. This setup does not require you to change it.
+
+If you do not have one, set **Origin request policy** on the same **Behaviors** edit screen to one of the AWS managed policies below. Both forward everything the Agent Site needs. The only difference between them is the `Host` header, and the Lambda sets `Host` itself for the Agent Site request, so either one will work.
+
+- **`AllViewer`** forwards every viewer header, including `Host`. Your origin will receive requests with your public domain as the `Host`.
+- **`AllViewerExceptHostHeader`** forwards everything except `Host`. CloudFront substitutes your origin's own domain instead.
+
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  This setting applies to all traffic through the behavior, not just bots, so pick the one your origin already expects.
+
+  Only choose `AllViewer` if your origin accepts requests for your public domain. Origins that route by hostname, such as an ALB with host based rules or a platform where the custom domain has not been added, will reject a `Host` they do not recognize. This returns a `502` for regular visitors.
+
+  If `AllViewer` is greyed out and cannot be selected, your behavior's origin is an S3 bucket, an API Gateway, or a Lambda function URL. Those origins require `Host` to be their own domain, so CloudFront blocks the policy. Use `AllViewerExceptHostHeader` instead.
+</Callout>
 
 ![](https://files.readme.io/b3c6c6405c850073af7345b9ce6a10d0a6f2ff90f25f5cd3f6499fa1ac98adda-Screenshot_2026-08-07_at_8.21.14_AM.png)
 
 #### Create a new Lambda Function
 
-Same as the Viewer request setup — call it something like "**tollbit_agent_site**" and select the latest Node.js runtime.
+This is the same as the Viewer request setup. You can call your function name something straightforward like "**tollbit_agent_site**", and select the latest Node.js Runtime version.
 
 **Add the Lambda\@Edge Code**
 
 Paste the snippet below and change `TOLLBIT_DOMAIN` on the second line to your site's TollBit subdomain.
 
-Rather than proxying the request, this function points CloudFront at your Agent Site by rewriting the origin. CloudFront then fetches from it directly, so response headers, cookies, and large pages all pass through untouched.
+This function does not proxy the request. Instead it rewrites the origin so that CloudFront fetches from your Agent Site directly, which lets response headers, cookies, and large pages pass through untouched.
 
 ```javascript
 const BOT_HEADER = 'x-amzn-waf-bot';
@@ -803,8 +818,8 @@ const TOLLBIT_DOMAIN = 'tollbit.example.com';
 export const handler = async (event) => {
   const request = event.Records[0].cf.request;
 
-  // The WAF rule inserts this header only on a bot match, so anything other
-  // than an exact "true" — including the header being absent — is a human.
+  // The WAF rule inserts this header only on a bot match. Anything other than
+  // an exact "true", including the header being absent, is treated as a human.
   if (request.headers[BOT_HEADER]?.[0]?.value !== 'true') {
     return request;
   }
@@ -840,7 +855,7 @@ On the left tab, click "Deploy".
 <Callout icon="📘" theme="info">
   ### Pro Tip
 
-  Before deploying, ensure that your site's `tollbit` subdomain is set up and running correctly. Unlike the Viewer request setup, this function cannot fall back to your origin if the Agent Site is unreachable — CloudFront will return an error to the visitor instead.
+  Before deploying, ensure that your site's `tollbit` subdomain is set up and running correctly. Unlike the Viewer request setup, this function cannot fall back to your origin if the Agent Site is unreachable. CloudFront will return an error to the visitor instead.
 </Callout>
 
 Scroll to the top, click the "Actions" dropdown, and choose Deploy to Lambda\@Edge under Capabilities.
@@ -853,7 +868,7 @@ Pick your CloudFront distribution and set the event to **"Origin request"**. Onc
 
 If you are migrating from the Viewer request setup, remove the old **Viewer request** function association from the behavior at the same time. Leaving both attached will proxy the request twice.
 
-The execution role requirements and the "Updating your Lambda" steps are identical to the Viewer request setup above.
+The execution role requirements and the "Updating your Lambda" steps are the same as the Viewer request setup above.
 
 #### Order of Operations
 
@@ -862,9 +877,9 @@ Apply the changes in this order:
 1. Update the cache policy and origin request policy, and wait for the distribution to show **Deployed**.
 2. Attach the Lambda to the **Origin request** event.
 
-Doing it in this order matters. If the Lambda goes on first, there is a window where `x-amzn-waf-bot` is not yet part of the cache key, and Agent Site responses can be cached and then served to human visitors — the exact thing this setup prevents. In the recommended order the worst case is the reverse and far less harmful: a bot receives a cached human page until the entry expires.
+The order matters. If you attach the Lambda first, there is a window where `x-amzn-waf-bot` is not yet part of the cache key. During that window, Agent Site responses can be cached and then served to human visitors, which is what this setup is meant to prevent. If you update the policies first, the worst case is that a bot receives a cached human page until the entry expires.
 
-No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and age out on their own. Keep the gap between the two steps short — anything cached in between expires on your normal TTL.
+No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and will age out on their own. Try to keep the gap between the two steps short, as anything cached in between will expire on your normal TTL.
 
 ### Just Lambda + CloudFront Route To Agent Site (No WAF)
 
