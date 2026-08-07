@@ -554,7 +554,7 @@ This will detect the top known AI bots. Next, for the action, be sure to choose 
 
 **Create a new Lambda Function**
 
-You can call your function name something straightforward like "**tollbit\_agent\_site**", and select the latest Node.js Runtime version.
+You can call your function name something straightforward like "**tollbit_agent_site**", and select the latest Node.js Runtime version.
 
 ![](https://files.readme.io/8fba56a790bd54142918760c4bd651ff6bc490d08f0fbde067adcda6436a16b8-image10.png)
 
@@ -679,11 +679,9 @@ Ensure you pick your Cloudfront distribution and that the event is “Viewer req
 
   If you run into a deploy error and permissions issue, you will need to update your lambda’s execution role.&#x20;
 
-  Click on the “Configure” tab, and then on the left, click on “Permissions” and click on the blue highlighted role name. In this case it would be “**tollbit\_agent\_site-role-z6218mit**”
+  Click on the “Configure” tab, and then on the left, click on “Permissions” and click on the blue highlighted role name. In this case it would be “**tollbit_agent_site-role-z6218mit**”
 
   ![](https://files.readme.io/d5a221325cd0a12b7636091242f340883cc26ef747fdfae362006cbc46f4e38a-image5.png)
-
-
 
   Go to the Trust Relationship tab and edit the Trust Policy and make sure it contains the following block. Make sure to click “Update Policy” at the bottom after updating.
 
@@ -745,7 +743,7 @@ This is an alternate to the setup above. It does the same thing — routes detec
 
   Use this setup instead of the Viewer request one if your cache policy relies on CloudFront viewer headers such as `CloudFront-Viewer-Country`, `CloudFront-Viewer-City`, or the device type headers.
 
-  CloudFront adds those headers *after* the viewer request event, so they are not available to a Viewer request Lambda\@Edge function. If a Viewer request function tries to add `CloudFront-Viewer-Country`, CloudFront rejects the response and returns a `502` to the visitor.
+  CloudFront adds those headers _after_ the viewer request event, so they are not available to a Viewer request Lambda\@Edge function. If a Viewer request function tries to add `CloudFront-Viewer-Country`, CloudFront rejects the response and returns a `502` to the visitor.
 </Callout>
 
 <br />
@@ -764,13 +762,13 @@ This step is what keeps a human from ever being served a bot response and vice v
 
 Go to **CloudFront → Policies → Cache** and create a cache policy (or edit your existing one, if it is not an AWS managed policy — managed policies cannot be edited).
 
-* Under **Headers**, choose *Include the following headers* and add **`x-amzn-waf-bot`**, along with any viewer headers your caching already relies on, such as `CloudFront-Viewer-Country`.
-* Set **Minimum TTL** to **`0`**.
-* Leave query strings and cookies matching whatever your distribution uses today.
+- Under **Headers**, choose _Include the following headers_ and add `x-amzn-waf-bot`, along with any viewer headers your caching already relies on, such as `CloudFront-Viewer-Country`.
+- Set **Minimum TTL** to `0`.
+- Leave query strings and cookies matching whatever your distribution uses today.
+
+![](https://files.readme.io/889235133f0c602796571ba8c5bfe42c38442d5a08873f0717d98ce6e019edc6-Screenshot_2026-08-07_at_9.20.53_AM.png)
 
 Then go to **Distribution → Behaviors**, edit the behavior that regular traffic routes through, and attach the policy under **Cache key and origin requests**.
-
-<!-- screenshot: cache policy header allowlist showing x-amzn-waf-bot -->
 
 <Callout icon="🚧" theme="warn">
   ### Note
@@ -778,27 +776,21 @@ Then go to **Distribution → Behaviors**, edit the behavior that regular traffi
   Minimum TTL must be `0`. With a non-zero Minimum TTL, CloudFront caches Agent Site responses even though they are returned with `no-store`.
 </Callout>
 
-<br />
-
 #### Update Your Origin Request Policy
 
-On the same **Behaviors** edit screen, set **Origin request policy** to **`AllViewer`**. Your Agent Site needs the visitor's `User-Agent` and other request headers, and this forwards all of them.
+On the same **Behaviors** edit screen, set **Origin request policy** to `AllViewer`. Your Agent Site needs the visitor's `User-Agent` and other request headers, and this forwards all of them.
 
-If `AllViewer` is greyed out and cannot be selected, your behavior's origin is an S3 bucket, an API Gateway, or a Lambda function URL. Those origins require the `Host` header to be their own domain, so CloudFront blocks the policy. Select **`AllViewerExceptHostHeader`** instead — it forwards everything except `Host`, which is all this setup needs.
+If `AllViewer` is greyed out and cannot be selected, your behavior's origin is an S3 bucket, an API Gateway, or a Lambda function URL. Those origins require the `Host` header to be their own domain, so CloudFront blocks the policy. Select `AllViewerExceptHostHeader` instead — it forwards everything except `Host`, which is all this setup needs.
 
-<!-- screenshot: behavior edit screen with cache policy + origin request policy selected -->
-
-<br />
+![](https://files.readme.io/b3c6c6405c850073af7345b9ce6a10d0a6f2ff90f25f5cd3f6499fa1ac98adda-Screenshot_2026-08-07_at_8.21.14_AM.png)
 
 #### Create a new Lambda Function
 
-Same as the Viewer request setup — call it something like "**tollbit\_agent\_site**" and select the latest Node.js runtime.
-
-<br />
+Same as the Viewer request setup — call it something like "**tollbit_agent_site**" and select the latest Node.js runtime.
 
 **Add the Lambda\@Edge Code**
 
-Paste the snippet below and change `TOLLBIT_DOMAIN` on the second line to your site's TollBit subdomain. Lambda\@Edge does not support environment variables, so this value has to live in the code.
+Paste the snippet below and change `TOLLBIT_DOMAIN` on the second line to your site's TollBit subdomain.
 
 Rather than proxying the request, this function points CloudFront at your Agent Site by rewriting the origin. CloudFront then fetches from it directly, so response headers, cookies, and large pages all pass through untouched.
 
@@ -839,13 +831,9 @@ export const handler = async (event) => {
 };
 ```
 
-<br />
-
 **Deploy the Lambda first**
 
 On the left tab, click "Deploy".
-
-<br />
 
 **Deploy to Lambda\@Edge**
 
@@ -859,13 +847,13 @@ Scroll to the top, click the "Actions" dropdown, and choose Deploy to Lambda\@Ed
 
 Pick your CloudFront distribution and set the event to **"Origin request"**. Once done, click deploy at the bottom.
 
-<!-- screenshot: deploy dialog with Origin request selected -->
+![](https://files.readme.io/9d51aa6c35b836791fb9faeb8d91ca1244a95be45a3ec40107c72424fd718c8f-Screenshot_2026-08-07_at_9.23.15_AM.png)
+
+<br />
 
 If you are migrating from the Viewer request setup, remove the old **Viewer request** function association from the behavior at the same time. Leaving both attached will proxy the request twice.
 
 The execution role requirements and the "Updating your Lambda" steps are identical to the Viewer request setup above.
-
-<br />
 
 #### Order of Operations
 
@@ -877,8 +865,6 @@ Apply the changes in this order:
 Doing it in this order matters. If the Lambda goes on first, there is a window where `x-amzn-waf-bot` is not yet part of the cache key, and Agent Site responses can be cached and then served to human visitors — the exact thing this setup prevents. In the recommended order the worst case is the reverse and far less harmful: a bot receives a cached human page until the entry expires.
 
 No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and age out on their own. Keep the gap between the two steps short — anything cached in between expires on your normal TTL.
-
-<br />
 
 ### Just Lambda + CloudFront Route To Agent Site (No WAF)
 
