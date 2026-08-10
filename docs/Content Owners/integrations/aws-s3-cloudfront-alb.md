@@ -743,7 +743,7 @@ This is an alternate to the setup above. It routes detected bots to your Agent S
 
   Use this setup instead of the Viewer request one if your cache policy relies on CloudFront viewer headers such as `CloudFront-Viewer-Country`, `CloudFront-Viewer-City`, or the device type headers.
 
-  CloudFront adds those headers _after_ the viewer request event, so they are not available to a Viewer request Lambda\@Edge function. If a Viewer request function tries to add `CloudFront-Viewer-Country`, CloudFront rejects the response and returns a `502` to the visitor.
+  CloudFront adds those headers _after_ the viewer request event, so they are not available to a Viewer request Lambda\@Edge function.
 </Callout>
 
 <br />
@@ -784,8 +784,8 @@ If your distribution already uses an origin request policy that forwards `User-A
 
 If you do not have one, set **Origin request policy** on the same **Behaviors** edit screen to one of the AWS managed policies below. Both forward everything the Agent Site needs. The only difference between them is the `Host` header, and the Lambda sets `Host` itself for the Agent Site request, so either one will work.
 
-- **`AllViewer`** forwards every viewer header, including `Host`. Your origin will receive requests with your public domain as the `Host`.
-- **`AllViewerExceptHostHeader`** forwards everything except `Host`. CloudFront substitutes your origin's own domain instead.
+- `AllViewer` forwards every viewer header, including `Host`. Your origin will receive requests with your public domain as the `Host`.
+- `AllViewerExceptHostHeader` forwards everything except `Host`. CloudFront substitutes your origin's own domain instead.
 
 <Callout icon="🚧" theme="warn">
   ### Note
