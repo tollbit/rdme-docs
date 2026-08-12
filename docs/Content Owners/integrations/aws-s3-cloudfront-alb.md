@@ -898,6 +898,89 @@ The order matters. If you attach the Lambda first, there is a window where `x-am
 
 No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and will age out on their own. Try to keep the gap between the two steps short, as anything cached in between will expire on your normal TTL.
 
+### ALB + Lambda Route to Agent Site
+
+If you do not have CloudFront set up, but instead are having inbound request hit your Application Load Balancer directly, you should be able to set up Lambda with your ALB to set up Agent Site routing.
+
+#### Create a Lambda
+
+Create a Lambda and put in the following code block. Be sure to update the `TOLLBIT_DOMAIN` with your actual TollBit subdomain. Deploy this lambda code. You can also publish versions of this lambda and use the versioned ARN in the target group, or you have have the target group point to `$LATEST`.
+
+```javascript
+JavaScript
+// Customer config: Set this to your dedicated Tollbit subdomain
+const TOLLBIT_DOMAIN = 'tollbit.example.com';
+
+export const handler = async (event) => {
+  const query = event.queryStringParameters
+    ? `?${new URLSearchParams(event.queryStringParameters)}`
+    : '';
+  const url = `https://${TOLLBIT_DOMAIN}${event.path}${query}`;
+
+  const headers = event.headers || {};
+
+  try {
+    const response = await fetch(url, {
+      method: event.httpMethod,
+      headers: { ...headers, host: TOLLBIT_DOMAIN },
+      body: ['GET', 'HEAD'].includes(event.httpMethod) ? undefined : event.body,
+      redirect: 'manual'
+    });
+
+    const arrayBuffer = await response.arrayBuffer();
+
+    return {
+      statusCode: response.status,
+      isBase64Encoded: true,
+      headers: {
+        ...Object.fromEntries(response.headers.entries()),
+        'cache-control': 'no-store'
+      },
+      body: Buffer.from(arrayBuffer).toString('base64')
+    };
+  } catch (err) {
+    console.error('Tollbit proxy error:', err);
+    return {
+      statusCode: 502,
+      headers: { 'content-type': 'text/plain' },
+      body: 'Bad Gateway'
+    };
+  }
+};
+```
+
+Next, create a target group for this Lambda by going to the EC2 Console -> Target Groups -> Create Target Group.
+
+![](https://files.readme.io/5c96b861292b927599c4363b1433067e0776b6e4b7c719a1a0f1863ad7f10512-Screenshot_2026-08-12_at_10.29.23_AM.png)
+
+![](https://files.readme.io/6cdfbb2f54b11b835664a94bf3a1dd9be44e920bd3a66380ce6997406ff2fb1b-Screenshot_2026-08-12_at_10.29.49_AM.png)
+
+#### Create an ALB Listener Rule
+
+We can create a Listener rule under your default ALB Listener to inspect incoming user agents and route bot user agents to the lambda. This takes the place of the WAF in the above integrations. Go into the Listener and create a new rule. Create a condition using Regex matching for the header `user-agent`. For the values, add the following as three values (we need to do this because each condition only has a 128 character limit).
+
+```text
+(?i).*(amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude).*
+
+(?i).*(cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer).*
+
+(?i).*(oai-adsbot|oai-searchbot|omgili|perplexity|timpibot|youbot).*
+```
+
+![](https://files.readme.io/d8801c2453b079b88dfa213da752192e0823f147f3aeb0e16f1893a75b0130a3-Screenshot_2026-08-12_at_1.50.37_PM.png)
+
+Ensure that you forward this to the lambda target group with weight 1.
+
+![](https://files.readme.io/4c84d838d95acf719cdac8acceb64c1a126efdf1edde7374bf289744821bf64f-Screenshot_2026-08-12_at_10.32.50_AM.png)
+
+Go through the rest of the creation flow and ensure that this rule evaluates with a high priority (we use 1).
+
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  This will start rerouting requests hitting your ALB. Ensure that you've tested this thoroughly before deploying to your production website.
+</Callout>
+
 ### Just Lambda + CloudFront Route To Agent Site (No WAF)
 
 If you'd like to set this up without WAF managing the bot detection and want to only use Lambda and CloudFront, use the following Lambda instead. This will do the bot user agent check directly within the Lambda.
