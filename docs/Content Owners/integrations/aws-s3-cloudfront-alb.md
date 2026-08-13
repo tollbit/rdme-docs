@@ -917,7 +917,8 @@ export const handler = async (event) => {
     .join('&');
   const url = `https://${TOLLBIT_DOMAIN}${event.path}${qs ? `?${qs}` : ''}`;
 
-  const headers = event.headers || {};
+  const headers = { ...(event.headers || {}), host: TOLLBIT_DOMAIN };
+  delete headers['accept-encoding'];
 
   try {
     const response = await fetch(url, {
