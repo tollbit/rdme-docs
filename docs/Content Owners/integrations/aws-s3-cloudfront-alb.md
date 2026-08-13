@@ -907,15 +907,15 @@ If you do not have CloudFront set up, but instead are having inbound request hit
 Create a Lambda and put in the following code block. Be sure to update the `TOLLBIT_DOMAIN` with your actual TollBit subdomain. Deploy this lambda code. You can also publish versions of this lambda and use the versioned ARN in the target group, or you have have the target group point to `$LATEST`.
 
 ```javascript
-JavaScript
-// Customer config: Set this to your dedicated Tollbit subdomain
+// Customer config: set this to your dedicated TollBit subdomain
 const TOLLBIT_DOMAIN = 'tollbit.example.com';
 
 export const handler = async (event) => {
-  const query = event.queryStringParameters
-    ? `?${new URLSearchParams(event.queryStringParameters)}`
-    : '';
-  const url = `https://${TOLLBIT_DOMAIN}${event.path}${query}`;
+  // ALB does not url-decode query params, so URLSearchParams would double-encode them.
+  const qs = Object.entries(event.queryStringParameters || {})
+    .map(([k, v]) => `${k}=${v}`)
+    .join('&');
+  const url = `https://${TOLLBIT_DOMAIN}${event.path}${qs ? `?${qs}` : ''}`;
 
   const headers = event.headers || {};
 
@@ -933,7 +933,11 @@ export const handler = async (event) => {
       statusCode: response.status,
       isBase64Encoded: true,
       headers: {
-        ...Object.fromEntries(response.headers.entries()),
+        ...Object.fromEntries(
+          [...response.headers].filter(
+            ([k]) => k !== 'content-encoding' && k !== 'content-length'
+          )
+        ),
         'cache-control': 'no-store'
       },
       body: Buffer.from(arrayBuffer).toString('base64')
