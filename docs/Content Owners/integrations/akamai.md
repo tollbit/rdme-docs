@@ -18,7 +18,7 @@ You will need to first create a stream by going to your <Anchor target="_blank" 
 
 **Choose Data Parameters**
 
-When choosing <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>, make sure to parameters that cover at least everything in following sample log JSON. Also, please ensure that your log format is JSON.
+When choosing <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">data parameters</Anchor>, make sure to choose parameters that cover at least everything in the following sample log JSON. Also, please ensure that your log format is JSON.
 
 ```json
 {
@@ -47,7 +47,6 @@ When choosing <Anchor target="_blank" href="https://techdocs.akamai.com/datastre
   "queryStr": "param=value",
   "breadcrumbs": "//BC/%5Ba=23.33.41.20,c=g,k=0,l=1%5D",
   "accLang": "en-US",
-  "cookie": "cookie-content",
   "range": "37334-42356",
   "referer": "https%3A%2F%2Ftest.referrer.net%2Fen-US%2Fdocs%2FWeb%2Ftest",
   "xForwardedFor": "8.47.28.38",
@@ -91,17 +90,17 @@ To set up agent sites for Akamai with Cloudlets, you would use their Forward Rew
 
 **Setup New Origin<br />**&#x59;ou’ll need to set up a new conditional origin that is your `tollbit` subdomain to have the forward rewrite cloudlet correctly route the request. Follow the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/about-conditional-origins#set-up-a-conditional-origin-definition-rule">here</Anchor> on doing this.&#x20;
 
-At a high level, you would go to Property Manager and create a new Conditional Origin with the server domain name url as your `tollbit` subdomain (i.e. tollbit.example.com). Ensure that this origin is activated and deployed.
+At a high level, you would go to Property Manager and create a new Conditional Origin with the server domain name url as your `tollbit` subdomain (i.e. tollbit.example.com). In the origin's settings, set **Forward Host Header** to **Origin Hostname** — TollBit serves agent content based on the `tollbit` subdomain hostname, so rewritten requests should arrive with the Host header set to tollbit.example.com rather than your site's incoming hostname. Ensure that this origin is activated and deployed.
 
 **Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-forward-rewrite-policy">here</Anchor>. Then create a forward rewrite rule following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-forward-rewrite-rule">here</Anchor>. For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
 
 ```
-'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
 ```
 
 Ensure that the rewrite points to the new `tollbit` subdomain origin you added, while preserving the original URL path and query strings.
 
-Once you’ve tested this appropriately, you can activate and deploy.
+To verify the setup, request a page on your site with one of the user agents above (for example `curl -A "GPTBot" https://example.com/some-article`) and confirm the response body contains the agent version of the page. Once you’ve tested this appropriately, you can activate and deploy.
 
 <Callout icon="📘" theme="info">
   ### Pro Tip
