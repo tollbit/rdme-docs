@@ -161,6 +161,7 @@ For the recv snippet, paste in the following snippet. Ensure that the backend na
 ```json
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|timpibot|youbot") {
   set req.backend = F_tollbit_origin;
+  set req.http.Fastly-Orig-Host = req.http.host;
   if (std.prefixof(req.http.host, "www.")) {
       set req.http.host = std.replace_prefix(req.http.host, "www.", "tollbit.");
   } else {
@@ -168,6 +169,7 @@ if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|
   }
   return(pass); 
 }
+
 ```
 
 If you created an error snippet in the past for the redirect, you no longer need it, and can remove it.
@@ -181,5 +183,3 @@ Once this is saved, you can now activate your service configuration and this wil
 
   Once the snippet exists on your active version, later edits to a dynamic snippet's _content_ take effect immediately — there is no draft-and-activate step for content changes.
 </Callout>
-
-<br />
