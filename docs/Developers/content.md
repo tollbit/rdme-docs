@@ -264,6 +264,12 @@ GET /dev/v2/content/{base_url}/catalog/list
 - **`pageSize`** (integer, optional)
   - Number of items per page (if supported).
 
+- **`from`** (string, optional)
+  - Only return pages last modified on or after this date. RFC3339 date or datetime (e.g. `2025-12-01` or `2025-12-01T00:00:00Z`); inclusive, UTC day granularity.
+
+- **`to`** (string, optional)
+  - Only return pages last modified on or before this date. Same format as `from`; inclusive, UTC day granularity.
+
 ### Response format
 
 ```json

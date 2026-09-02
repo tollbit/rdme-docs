@@ -86,6 +86,22 @@ paths:
           schema:
             type: string
           explode: false
+        - name: from
+          in: query
+          required: false
+          description: Only return pages last modified on or after this date. RFC3339 date or datetime; inclusive, UTC day granularity.
+          schema:
+            type: string
+            format: date-time
+          explode: false
+        - name: to
+          in: query
+          required: false
+          description: Only return pages last modified on or before this date. RFC3339 date or datetime; inclusive, UTC day granularity.
+          schema:
+            type: string
+            format: date-time
+          explode: false
       responses:
         '200':
           description: The request has succeeded.
@@ -256,42 +272,31 @@ paths:
         - name: next-token
           in: query
           required: false
-          description: >-
-            Token for pagination. If provided, continues from the encoded page.
-            If not provided, returns first page.
+          description: Token for pagination. If provided, continues from the encoded page. If not provided, returns first page.
           schema:
             type: string
           explode: false
         - name: properties
           in: query
           required: false
-          description: >-
-            Comma-separated list of domains (max 20) to boost in search results.
-            When provided, generates a custom goggle string.
+          description: Comma-separated list of domains (max 20) to boost in search results.
           schema:
             type: string
           explode: false
         - name: allowedOnly
           in: query
           required: false
-          description: >-
-            When true, restrict search to properties the calling org is allowed
-            to access.
-
+          description: |-
+            When true, restrict search to properties the calling org is allowed to access.
             Intersects with `properties` when both are provided.
-
-            Currently mirrors `readyToLicense`; will be expanded to broader
-            allowlist semantics later.
+            Uses the org content-catalog allowlist; will be expanded to broader allowlist semantics later.
           schema:
             type: boolean
           explode: false
         - name: readyToLicense
           in: query
           required: false
-          description: >-
-            When true, restrict search to properties ready to license
-            (rates-enabled / content-catalog path). Intersects with `properties`
-            when both are provided. Currently equivalent to `allowedOnly`.
+          description: When true, restrict search to properties ready to license. Intersects with `properties` when both are provided.
           schema:
             type: boolean
           explode: false
@@ -965,15 +970,10 @@ components:
           type: string
           enum:
             - Bearer
-      description: >-
-        To access content on a TollBit subdomain, you will need an access token.
-        This token is a JWT that is signed by TollBit and includes information
-        about the subdomain and the permissions granted to the token.
+      description: |-
+        To access content on a TollBit subdomain, you will need an access token. This token is a JWT that is signed by TollBit and includes information about the subdomain and the permissions granted to the token.
 
-
-        You can obtain the token by calling the TokensService to create a
-        Content Access Token. Once you have the token, you can include it in the
-        Authorization header of your requests to the subdomain.
+        You can obtain the token by calling the TokensService to create a Content Access Token. Once you have the token, you can include it in the Authorization header of your requests to the subdomain.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
