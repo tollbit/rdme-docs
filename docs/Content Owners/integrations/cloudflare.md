@@ -72,7 +72,7 @@ If your logs are already being sent to an S3 bucket, add the following IAM polic
 
 Once you have done that, reach out to [team@tollbit.com](mailto:team@tollbit.com) and provide the path to your logs in your bucket and we will be able to quickly enable TollBit analytics for your site.
 
-## Steps for Agent Site
+### Steps for Agent Site
 
 Make sure you've completed the SSL / TLS prerequisite above first.
 
@@ -393,7 +393,7 @@ Your route page will then look something like the following.
 
 If you aren't sure which route to disable, consider running the worker on your full site and then using the top pages chart in our analytics platform to understand any routes you wish to filter out.
 
-## Steps for Agent Site
+### Steps for Agent Site
 
 Make sure you've completed the SSL / TLS prerequisite above first.
 
@@ -645,42 +645,42 @@ const botList = [
   'PerplexityBot',
   'Timpibot',
   'YouBot'
-]
+  ]
 
-export default {
-  async fetch(request) {
-    const userAgent = request.headers.get('User-Agent') || ''
-    let host = request.headers.get('host') || ''
-    if (host.startsWith('www.')) {
-      host = host.slice(4)
-    }
+  export default {
+    async fetch(request) {
+      const userAgent = request.headers.get('User-Agent') || ''
+      let host = request.headers.get('host') || ''
+      if (host.startsWith('www.')) {
+        host = host.slice(4)
+      }
 
-    const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()))
+      const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()))
 
-    if (isBot) {
-      const path = request.url.replace('https://' + request.headers.get('host'), '')
-      const tollbitUrl = 'https://tollbit.' + host + path
+      if (isBot) {
+        const path = request.url.replace('https://' + request.headers.get('host'), '')
+        const tollbitUrl = 'https://tollbit.' + host + path
 
-      const proxiedResponse = await fetch(new Request(tollbitUrl, {
-        method: request.method,
-        headers: request.headers,
-        body: request.body,
-        redirect: 'manual'
-      }))
+        const proxiedResponse = await fetch(new Request(tollbitUrl, {
+          method: request.method,
+          headers: request.headers,
+          body: request.body,
+          redirect: 'manual'
+        }))
 
-      const responseHeaders = new Headers(proxiedResponse.headers)
-      responseHeaders.set('Cache-Control', 'no-store')
+        const responseHeaders = new Headers(proxiedResponse.headers)
+        responseHeaders.set('Cache-Control', 'no-store')
 
-      return new Response(proxiedResponse.body, {
-        status: proxiedResponse.status,
-        statusText: proxiedResponse.statusText,
-        headers: responseHeaders
-      })
-    }
+        return new Response(proxiedResponse.body, {
+          status: proxiedResponse.status,
+          statusText: proxiedResponse.statusText,
+          headers: responseHeaders
+        })
+      }
 
-    return fetch(request)
+      return fetch(request)
+    },
   }
-}
 ```
 
 Once the worker is saved, click Activate and you should be all set.
