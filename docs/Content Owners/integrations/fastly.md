@@ -161,6 +161,10 @@ For the recv snippet, paste in the following snippet. Ensure that the backend na
 ```json
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|timpibot|youbot") {
   set req.backend = F_tollbit_origin;
+  # Preserve the original host for logging: the TollBit log format reads
+  # Fastly-Orig-Host first, so forwarded bot traffic attributes to your site
+  # instead of the tollbit subdomain
+  set req.http.Fastly-Orig-Host = req.http.host;
   if (std.prefixof(req.http.host, "www.")) {
       set req.http.host = std.replace_prefix(req.http.host, "www.", "tollbit.");
   } else {
