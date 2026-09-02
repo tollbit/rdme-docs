@@ -6,17 +6,42 @@ hidden: false
 metadata:
   robots: index
 ---
-We provide a way for all CloudFlare customers, regardless of plan, to forward HTTP logs to our platform to enable Analytics and to set up bot rewrites to set up Agent Site.&#x20;
+We provide a way for all CloudFlare customers to forward HTTP logs to our platform to enable Analytics and to set up bot rewrites to enable Agent Site.
 
-For each product implementation below, choose the sub-section most relevant to your CloudFlare plan and follow the instructions accordingly.&#x20;
+The right setup depends on your CloudFlare plan, because it determines how you can forward logs:
 
-### Steps for Analytics
+- **Enterprise plan:** you have access to LogPush, which records every request at the zone level. Analytics comes from LogPush, and Agent Site is handled by a lightweight Snippet. No Worker is required.
+- **Free, Pro or Business plan:** you do not have LogPush, so analytics is forwarded by a Worker. Because a Snippet would run before that Worker and hide bot traffic from your logs (see the note under Snippets), these plans use a single combined Worker that forwards logs and routes bots together.
 
-Enterprise customers on CloudFlare are recommended to forward logs to TollBit via LogPush. All other customers are recommended to send logs via CF Workers.
+Find your plan below and follow that section. If you only want Agent Site and are not using TollBit Analytics, either path's Agent Site steps will work on their own.
 
-#### Enterprise Plan Customers
+# Before You Set Up Agent Site
 
-If you are on the Enterprise plan, you should have access to CloudFlare's <Anchor target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature. You may already be pushing logs to an S3, R2 or GCP bucket. If this is the case, we are able to ingest your logs from where they are already being stored.
+Regardless of plan, before setting up Agent Site you'll need to set up SSL / TLS encryption mode.
+
+**Setting up SSL / TLS**
+
+Navigate to the SSL/TSL tab on the left and go into the over page, and click configure. You want to ensure that you choose **Full(Strict)** here. This will ensure that Cloudflare fetches data over HTTPS instead of HTTP.
+
+Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
+
+![](https://files.readme.io/992ff8dd9ad7ea3acc89cfe0f0013d4e0b6d2be296b09b74bdeeb4edd6d7c0eb-image12.png)
+
+<br />
+
+<Callout icon="📘" theme="info">
+  ###
+
+  The code snippets here are for a clean CloudFlare environment. If you have existing snippets or workers that are processing requests from your domain, you will need to integrate these scripts into your existing environment.
+</Callout>
+
+# Enterprise Plan
+
+On the Enterprise plan, analytics is forwarded via LogPush and Agent Site is handled by a Snippet. Because LogPush records every request at the zone level — including requests the Snippet proxies to your `tollbit` subdomain — the Snippet and LogPush together give you complete analytics with no Worker and no per-request Worker cost.
+
+## Steps for Analytics
+
+On the Enterprise plan, you should have access to CloudFlare's <Anchor target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature. You may already be pushing logs to an S3, R2 or GCP bucket. If this is the case, we are able to ingest your logs from where they are already being stored.
 
 One small update you may need to make is adding the `location` response header and the `signature-agent`, `signature-input` and `signature` request headers to the logs. Follow <Anchor target="_blank" href="https://developers.cloudflare.com/logs/reference/custom-fields/#enable-custom-fields-via-dashboard">these steps</Anchor> in Cloudflare's documentation to add this header. You will want to select "Response Header" as the field type and type in `location`, and select "Request Header" and type in `signature-agent`, `signature-input` and `signature`.
 
@@ -47,9 +72,118 @@ If your logs are already being sent to an S3 bucket, add the following IAM polic
 
 Once you have done that, reach out to [team@tollbit.com](mailto:team@tollbit.com) and provide the path to your logs in your bucket and we will be able to quickly enable TollBit analytics for your site.
 
-If you are not on Enterprise, read on to set up a worker to forward logs.
+### Steps for Agent Site
 
-#### Free, Pro or Business Plan Customers
+Make sure you've completed the SSL / TLS prerequisite above first.
+
+For customers that want to set up a simple rewrite without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a rewrite following simple rules. Because your analytics comes from LogPush rather than a Worker, the Snippet is all you need for Agent Site.
+
+<Callout icon="🚧" theme="warn">
+  ### Snippets and the Log Forwarding Worker Do Not Mix
+
+  Snippets execute earlier in Cloudflare's traffic sequence than Worker routes. When a Snippet matches a bot and proxies the request, it returns the response itself and any Worker route never runs for that request. This is fine on Enterprise because LogPush records the request at the zone level regardless. But it means the Snippet must **not** be combined with the log forwarding Worker used on the Free, Pro and Business plans — if it were, bot traffic would silently never appear in your logs. On Enterprise, use the Snippet with LogPush and do not deploy a logging Worker.
+</Callout>
+
+First, in the left nav when you're within the view for one of your websites, find the Rules tab and click the dropdown, and then click into the Snippets section.
+
+
+<Image src="https://files.readme.io/77f26a783e280037b14b03c5bd4ce0477048afb8d8df98f7844c518d1a6ad7c3-Screenshot_2026-03-04_at_10.20.06_AM.png" align="center" />
+
+
+Once you're on the snippets page, click the Create Snippet button. This will take you to an editor similar to a CF Workers editor. Name this file something along the lines of `rewrite_to_tollbit`. You can paste in the following code, making modifications to the bot list as you find appropriate for your goals.
+
+```javascript
+const botList = [
+ 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
+ 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
+ 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',
+ 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',
+ 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+];
+
+
+export default {
+ async fetch(request) {
+   const userAgent = request.headers.get('User-Agent') || '';
+   let host = request.headers.get('host') || '';
+
+
+   if (host.startsWith('www.')) {
+     host = host.slice(4);
+   }
+
+
+   const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()));
+
+
+   if (isBot) {
+     const path = request.url.replace('https://' + request.headers.get('host'), '');
+     const tollbitUrl = 'https://tollbit.' + host + path;
+
+
+     // Safe body extraction to prevent runtime errors on GET/HEAD inside Snippets
+     const hasBody = ['POST', 'PUT', 'PATCH'].includes(request.method);
+
+
+     const proxiedResponse = await fetch(new Request(tollbitUrl, {
+       method: request.method,
+       headers: request.headers,
+       body: hasBody ? request.body : null,
+       redirect: 'manual'
+     }));
+
+
+     const responseHeaders = new Headers(proxiedResponse.headers);
+     responseHeaders.set('Cache-Control', 'no-store');
+
+
+     return new Response(proxiedResponse.body, {
+       status: proxiedResponse.status,
+       statusText: proxiedResponse.statusText,
+       headers: responseHeaders
+     });
+   }
+
+
+   // Let non-bot requests pass through to your regular origin
+   return fetch(request);
+ },
+};
+```
+
+Before saving and deploying this Snippet, click on the "Snippet rule" button on the upper right and select "All incoming requests".
+
+
+<Image src="https://files.readme.io/3aa20f5a697cdf913c2b93e0b6af029e89c7d1a7b61b2d2e8ce9912f436a0454-Screenshot_2026-03-04_at_10.39.05_AM.png" align="center" />
+
+
+Now, you should be able to click Deploy, and this Snippet will immediately begin rewriting requests with these user agents to your `tollbit` subdomain.
+
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  This Snippet **will intercept** and **rewrite** traffic requests from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
+
+  The ordering of snippets matter if you have multiple snippets. They will evaluate in the order they are listed in the dashboard.
+</Callout>
+
+### Bot Management
+
+If you are using Cloudflare Bot Management, you also have access to the bot score on each request. You can widen the Snippet's detection to catch bots beyond the user agent list by also checking the bot score. Replace the `isBot` line in the Snippet above with the following, and set `BOT_SCORE_THRESHOLD` to determine how strict your rewrite is. CloudFlare <Anchor target="_blank" href="https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings">lists what each score range means</Anchor>.
+
+```javascript
+const BOT_SCORE_THRESHOLD = 30;
+const botScore = request.cf?.botManagement?.score;
+const isBot =
+  botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase())) ||
+  (botScore !== undefined && botScore < BOT_SCORE_THRESHOLD);
+```
+
+# Free, Pro and Business Plans
+
+On these plans there is no LogPush, so analytics is forwarded by a Worker. Snippets are **not** used on these plans: a Snippet runs before your Worker route and would proxy bot requests before the logging Worker ever sees them, silently dropping all bot traffic from your analytics. Instead, a single combined Worker forwards logs and routes bots together, so every request is logged with the status actually served.
+
+## Steps for Analytics
 
 **Create new Worker**
 
@@ -61,7 +195,7 @@ If you are not on Enterprise, read on to set up a worker to forward logs.
   ![Cloudflare Proxied](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-proxied.png)
 </Callout>
 
-If you already have an existing worker that is intercepting requests for your site, or you already set up a worker in the Agent Site section below, you will need to integrate this logging code with that worker. If you just have a bot deterrence worker set up, see that section to get a code snippet that also pushes logs.
+If you already have an existing worker that is intercepting requests for your site, or you plan to also set up Agent Site below, you will need to integrate this logging code with that worker. If you want both analytics and Agent Site, skip ahead to the combined Worker in the Agent Site section, which does both in one script.
 
 Log into your <Anchor target="_blank" href="https://dash.cloudflare.com/">CloudFlare Dashboard</Anchor> and click on the "Compute (Workers)" tab to have it open as a dropdown, and click on "Workers & Pages".
 
@@ -86,6 +220,12 @@ Once your worker has finished deploying, click "Edit code".
 ![Cloudflare Edit Code](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-edit-code.png)
 
 In the `worker.js` file, delete everything and copy the following code over exactly, making sure to replace `YOUR_SECRET_KEY_HERE` with the secret key you can find in your <Anchor target="_blank" href="https://app.tollbit.com">portal</Anchor>.
+
+<Callout icon="📘" theme="info">
+  ### Setting up Agent Site too?
+
+  If you plan to set up Agent Site as well, skip this log-only Worker and use the combined Worker in the Agent Site section below, which forwards logs **and** routes bots in a single script. Deploying this log-only Worker and then a separate bot Worker on the same route does not work — CloudFlare only runs one Worker per route.
+</Callout>
 
 ```js
 const CF_APP_VERSION = '1.0.0'
@@ -255,128 +395,17 @@ If you aren't sure which route to disable, consider running the worker on your f
 
 ### Steps for Agent Site
 
-There are several levels of bot detection and rewrites that you can configure for CloudFlare, depending on whether or not you are on their Enterprise plan.
+Make sure you've completed the SSL / TLS prerequisite above first.
 
-Before setting up Agent Site either via Snippets or Workers, you'll need to set up SSL / TLS encryption mode.
-
-**Setting up SSL / TLS&#x20;**
-
-Navigate to the SSL/TSL tab on the left and go into the over page, and click configure. You want to ensure that you choose **Full(Strict)** here. This will ensure that Cloudflare fetches data over HTTPS instead of HTTP.&#x20;
-
-Before doing this, ensure that your origin server accepts HTTPS requests; most should unless you are running custom or legacy servers.
-
-![](https://files.readme.io/992ff8dd9ad7ea3acc89cfe0f0013d4e0b6d2be296b09b74bdeeb4edd6d7c0eb-image12.png)
-
-<br />
+On these plans, Agent Site runs in a Worker. Which script you deploy depends on whether you also want TollBit Analytics.
 
 <Callout icon="📘" theme="info">
-  ###
+  ### One Worker Per Route
 
-  The code snippets here are for a clean CloudFlare environment. If you have existing snippets or workers that are processing requests from your domain, you will need to integrate these scripts into your existing environment.
+  CloudFlare only runs one Worker per route. If you already created the log forwarding Worker above, **do not** create a second Worker for bots — replace that Worker's code with the combined script below, keeping your TollBit token. Two Workers on the same route will result in only one receiving requests.
 </Callout>
 
-#### Cloudflare Snippets
-
-For customers on the Pro, Business or Enterprise plans that want to set up a simple rewrite without the overhead of setting up workers, Snippets are a quick and cost effective way to set up a rewrite following simple rules.
-
-First, in the left nav when you're within the view for one of your websites, find the Rules tab and click the dropdown, and then click into the Snippets section.
-
-
-<Image src="https://files.readme.io/77f26a783e280037b14b03c5bd4ce0477048afb8d8df98f7844c518d1a6ad7c3-Screenshot_2026-03-04_at_10.20.06_AM.png" align="center" />
-
-
-Once you're on the snippets page, click the Create Snippet button. This will take you to an editor similar to a CF Workers editor. Name this file something along the lines of `rewrite_to_tollbit`. You can paste in the following code, making modifications to the bot list as you find appropriate for your goals.
-
-```javascript
-const botList = [
- 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
- 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
- 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',
- 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',
- 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
-];
-
-
-export default {
- async fetch(request) {
-   const userAgent = request.headers.get('User-Agent') || '';
-   let host = request.headers.get('host') || '';
-
-
-   if (host.startsWith('www.')) {
-     host = host.slice(4);
-   }
-
-
-   const isBot = botList.some(b => userAgent.toLowerCase().includes(b.toLowerCase()));
-
-
-   if (isBot) {
-     const path = request.url.replace('https://' + request.headers.get('host'), '');
-     const tollbitUrl = 'https://tollbit.' + host + path;
-
-
-     // Safe body extraction to prevent runtime errors on GET/HEAD inside Snippets
-     const hasBody = ['POST', 'PUT', 'PATCH'].includes(request.method);
-
-
-     const proxiedResponse = await fetch(new Request(tollbitUrl, {
-       method: request.method,
-       headers: request.headers,
-       body: hasBody ? request.body : null,
-       redirect: 'manual'
-     }));
-
-
-     const responseHeaders = new Headers(proxiedResponse.headers);
-     responseHeaders.set('Cache-Control', 'no-store');
-
-
-     return new Response(proxiedResponse.body, {
-       status: proxiedResponse.status,
-       statusText: proxiedResponse.statusText,
-       headers: responseHeaders
-     });
-   }
-
-
-   // Let non-bot requests pass through to your regular origin
-   return fetch(request);
- },
-};
-```
-
-Before saving and deploying this Snippet, click on the "Snippet rule" button on the upper right and select "All incoming requests".
-
-
-<Image src="https://files.readme.io/3aa20f5a697cdf913c2b93e0b6af029e89c7d1a7b61b2d2e8ce9912f436a0454-Screenshot_2026-03-04_at_10.39.05_AM.png" align="center" />
-
-
-Now, you should be able to click Deploy, and this Snippet will immediately begin rewriting requests with these user agents to your `tollbit` subdomain.
-
-<Callout icon="🚧" theme="warn">
-  ### Note
-
-  This Snippet **will intercept** and **rewrite** traffic requests from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
-
-  The ordering of snippets matter if you have multiple snippets. They will evaluate in the order they are listed in the dashboard.
-</Callout>
-
-#### CloudFlare Workers
-
-This section is for customers who have advanced functionality with their current request interception flow, or for customers who do not have access to Snippets.&#x20;
-
-Follow the steps (within the CloudFlare Analytics section above) until you have created a new worker or opened your existing worker.&#x20;
-
-If creating a new worker, name this worker something to help you keep track of it's function (such as `bot-rewrite-worker`). Once you've created this worker or identified your current one, click into edit code and do the following to set up your rewrite.
-
-<Callout icon="📘" theme="info">
-  ### Note
-
-  If you have already created a CloudFlare worker for log forwarding, **DO NOT** create a new worker. Use your existing worker when following these instructions. This is because you cannot have two CloudFlare workers on the same route, and if you do, only one will be receive requests.
-</Callout>
-
-**If you have set up log forwarding via Workers**, copy and _replace_ your `worker.js` file with this code instead. Make sure that you keep your TollBit token copied over into the code (line 33).
+**If you want both Analytics and Agent Site**, use this combined Worker. It forwards logs and routes bots in a single script, so bot traffic is logged with the status actually served. Replace your `worker.js` with this code, keeping your TollBit token (line 33).
 
 ```js
 // this is a non-exhaustive list of agents that we recommend you get started with first
@@ -586,7 +615,7 @@ addEventListener('fetch', (event) => {
 
 This code will immediately let through anyone with a known browser, and check all other requests against a list that we will periodically update with known bad user agents.
 
-**If you have not set up log forwarding via Workers and just want to forward bot traffic**, put the code in your `worker.js` file. Note this will also be the code to deploy if you have enabled TollBit Analytics via CF LogPush.
+**If you only want to forward bot traffic** and are not using TollBit Analytics, put the following simpler code in your `worker.js` file instead.
 
 ```js
 // this is a non-exhaustive list of agents that we recommend you get started with first
@@ -661,30 +690,5 @@ Once the worker is saved, click Activate and you should be all set.
 
   This Worker **will intercept** and potentially **rewrite** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
-
-#### CloudFlare Enterprise and Bot Management
-
-If you are on Enterprise and are using Bot Management, you should have access to the bot score in the header of the request. You can replace the `checkIfBotRequest` function in the previous worker scripts to use something similar to the following, and you can set the `BOT_SCORE_THRESHOLD` to determine how strict your rewrite is. CloudFlare <Anchor target="_blank" href="https://developers.cloudflare.com/bots/concepts/bot-score/#bot-groupings">lists what each score range means</Anchor>.
-
-```js
-const checkIfBotRequest = (request) => {
-  const userAgent = request.headers.get('User-Agent') || '';
-
-  // Check for known AI agents
-  for (let i = 0; i < botList.length; i++) {
-    if (userAgent.toLowerCase().includes(botList[i].toLowerCase())) {
-      return true;
-    }
-  }
-
-  // Check bot score
-  const botScore = request.cf?.botManagement?.score;
-  if (botScore !== undefined && botScore < BOT_SCORE_THRESHOLD) {
-    return true;
-  }
-
-  return false;
-};
-```
 
 <br />
