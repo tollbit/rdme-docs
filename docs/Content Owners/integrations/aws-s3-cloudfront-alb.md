@@ -656,13 +656,9 @@ If your behavior already uses a custom origin request policy, you can keep it as
 
 Under **Function associations**, on the **Viewer request** row, set the function type to **CloudFront Function** and select the function you published.
 
-**Allowed HTTP methods**
+![](https://files.readme.io/f6908ebd2f8bbc378e979d59b217e26af560c3c97f79cfc04c196dd0a224628c-Screenshot_2026-09-09_at_5.40.54_PM.png)
 
-If you use TollBit's MCP or A2A endpoints, **Allowed HTTP methods** must include `POST`.
-
-**Save**
-
-Click **Save changes**. If your site has other behaviors that bots may request through, repeat this for each of them.
+<br />
 
 <Callout icon="🚧" theme="warn">
   ### Note
