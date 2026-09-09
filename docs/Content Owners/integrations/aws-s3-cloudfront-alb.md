@@ -582,6 +582,8 @@ This step keeps a human from being served a bot response, and a bot from being s
 
 Go to **CloudFront → Policies → Cache** and create a cache policy. You can also edit your existing one, as long as it is not an AWS managed policy, since those cannot be edited.
 
+If your behavior currently uses an AWS managed policy such as `CachingOptimized`, a new policy does not inherit its settings. Copy them over before adding the header, in particular **Compression support** for Gzip and Brotli and the **Default** and **Maximum TTL** values. Otherwise your site loses compression and its caching behavior changes when you switch policies.
+
 - Under **Headers**, choose _Include the following headers_ and add `x-amzn-waf-bot`, along with any viewer headers your caching already relies on, such as `CloudFront-Viewer-Country`.
 - Set **Minimum TTL** to `0`.
 - Leave query strings and cookies matching whatever your distribution uses today.
@@ -626,7 +628,7 @@ function handler(event) {
 
 This function does not proxy the request. When the WAF header is present it tells CloudFront to fetch from your Agent Site origin instead of your own, which lets response headers, cookies, and large pages pass through untouched. Everything else about the request, including the path, query string, method, and `User-Agent`, is forwarded as-is.
 
-You can check the function in the **Test** tab before publishing. Choose the **Viewer request** event type, add a request header named `x-amzn-waf-bot` with the value `true`, and run the test. The output should show the origin changed to your Agent Site origin.
+You can check the function in the **Test** tab before publishing. Choose the **Viewer request** event type, add a request header named `x-amzn-waf-bot` with the value `true`, and run the test. The test only confirms that the code runs without error. It does not show the origin change, so do not expect to see your Agent Site origin in the output.
 
 Click **Publish**, then **Publish function**. A function has to be published before it can be attached to a distribution.
 
@@ -902,6 +904,8 @@ AWS prefixes WAF custom request headers with `x-amzn-waf-`, so a header named `b
 This step keeps a human from being served a bot response, and a bot from being served a human response. The integration will not work correctly without it.
 
 Go to **CloudFront → Policies → Cache** and create a cache policy. You can also edit your existing one, as long as it is not an AWS managed policy, since those cannot be edited.
+
+If your behavior currently uses an AWS managed policy such as `CachingOptimized`, a new policy does not inherit its settings. Copy them over before adding the header, in particular **Compression support** for Gzip and Brotli and the **Default** and **Maximum TTL** values. Otherwise your site loses compression and its caching behavior changes when you switch policies.
 
 - Under **Headers**, choose _Include the following headers_ and add `x-amzn-waf-bot`, along with any viewer headers your caching already relies on, such as `CloudFront-Viewer-Country`.
 - Set **Minimum TTL** to `0`.
