@@ -8,7 +8,7 @@ metadata:
 ---
 # Steps for Analytics
 
-### Forwarding Logs with ALB
+## Forwarding Logs with ALB
 
 To forward logs from an ALB, follow these steps outlined in the <Anchor target="_blank" href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html">AWS docs</Anchor>.
 
@@ -47,7 +47,7 @@ To finalize your setup, we will need access to the directory in your S3 bucket w
   If your bucket has ACLs, follow the instructions [here](/docs/other#buckets-with-acls-access-control-lists).
 </Callout>
 
-### Forwarding Logs with Cloudfront
+## Forwarding Logs with Cloudfront
 
 To forward logs from Cloudfront follow these steps:
 
@@ -90,7 +90,7 @@ Once you have started forwarding your logs to an S3 bucket, and granted TollBit 
 
 # Steps for Agent Site
 
-### AWS WAF + CloudFront Function Route To Agent Site (Recommended)
+## AWS WAF + CloudFront Function Route To Agent Site (Recommended)
 
 This is the recommended way to route bots to your Agent Site when your site is behind CloudFront. It uses a CloudFront Function on the **Viewer request** event to switch the origin for bot requests, so CloudFront fetches the page from your Agent Site directly. There is no Lambda to deploy and also works with CloudFront VPC origins, which do not support Lambda\@Edge on origin events.
 
@@ -674,7 +674,7 @@ Under **Function associations**, on the **Viewer request** row, set the function
 
 Open the function, edit the code on the **Build** tab, click **Save changes**, and then **Publish**. Distributions pick up the published version automatically. There are no version numbers to update on the behavior.
 
-### AWS WAF + CloudFront + Lambda\@Edge Viewer Request Agent Site
+## AWS WAF + CloudFront + Lambda\@Edge Viewer Request Agent Site
 
 <Callout icon="📘" theme="info">
   ### When To Use This
@@ -874,7 +874,7 @@ If you need to update your lambda, you can follow these steps.
 
 <br />
 
-### AWS WAF + CloudFront + Lambda\@Edge Origin Route To Agent Site
+## AWS WAF + CloudFront + Lambda\@Edge Origin Route To Agent Site
 
 This is an alternate to the setups above. It routes detected bots to your Agent Site in the same way, but attaches the Lambda to the **Origin request** event instead of **Viewer request**, and uses CloudFront's cache key to keep bot and human responses separate.
 
@@ -1131,7 +1131,7 @@ Go through the rest of the creation flow and ensure that this rule evaluates wit
   This will start rerouting requests hitting your ALB. Ensure that you've tested this thoroughly before deploying to your production website.
 </Callout>
 
-### Just Lambda + CloudFront Route To Agent Site (No WAF)
+## Just Lambda + CloudFront Route To Agent Site (No WAF)
 
 If you'd like to set this up without WAF managing the bot detection and want to only use Lambda and CloudFront, use the following Lambda instead. This will do the bot user agent check directly within the Lambda.
 
