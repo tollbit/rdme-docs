@@ -92,13 +92,14 @@ Once you have started forwarding your logs to an S3 bucket, and granted TollBit 
 
 ### AWS WAF + CloudFront Function Route To Agent Site (Recommended)
 
-This is the recommended way to route bots to your Agent Site when your site is behind CloudFront. It uses a CloudFront Function on the **Viewer request** event to switch the origin for bot requests, so CloudFront fetches the page from your Agent Site directly. There is no Lambda to deploy, no us-east-1 requirement, no execution role, and no limit on the size of the pages that can be returned. It also works with CloudFront VPC origins, which do not support Lambda\@Edge on origin events.
+This is the recommended way to route bots to your Agent Site when your site is behind CloudFront. It uses a CloudFront Function on the **Viewer request** event to switch the origin for bot requests, so CloudFront fetches the page from your Agent Site directly. There is no Lambda to deploy and also works with CloudFront VPC origins, which do not support Lambda\@Edge on origin events.
 
 <Callout icon="🚧" theme="warn">
   ### Note
 
   A CloudFront behavior can only have one CloudFront Function on each event. If you previously set up Agent Site via redirection with a CloudFront Function, this function replaces it. Remove the redirect function from the behavior when you attach this one.
 </Callout>
+
 #### Set up Your WAF
 
 First, go to the WAF & Shield and create a new Web ACL. Ensure that the ACL being created is for CloudFront distributions. Add your existing CloudFront distribution to this ACL under the "Associated AWS resources" section of the page.
@@ -545,14 +546,14 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
 }
 ```
 
-This will detect the top known AI bots. Next, for the action, be sure to choose "Allow" and to add a custom header. Ours is called `bot`, but feel free to make this anything unique.
+This will detect the top known AI bots. Next, for the action, be sure to choose "Allow" and to add a custom header. Ours is called `bot`, and is what we'll use as the example for the rest of the documentation.
 
 ![Waf Action](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/waf-action.png)
 
 <br />
 <br />
 
-#### Add Your Agent Site as an Origin
+#### Add Your Agent Site as an Origin to CloudFront
 
 Go to **Distribution → Origins** and click **Create origin**:
 
@@ -571,6 +572,10 @@ Leave everything else at its defaults. Your behaviors keep pointing at your exis
   If your distribution serves more than one website, use the **Origin request** Lambda\@Edge setup further down instead. It can work out the right Agent Site for each site at request time.
 </Callout>
 
+![](https://files.readme.io/532e4e44278930323522054b17fe0e95c90f8e8967c59039f1a8a69571b6bc92-Screenshot_2026-09-09_at_5.40.20_PM.png)
+
+<br />
+
 #### Update Your Cache Policy
 
 This step keeps a human from being served a bot response, and a bot from being served a human response. The integration will not work correctly without it.
@@ -583,7 +588,7 @@ Go to **CloudFront → Policies → Cache** and create a cache policy. You can a
 
 ![](https://files.readme.io/889235133f0c602796571ba8c5bfe42c38442d5a08873f0717d98ce6e019edc6-Screenshot_2026-08-07_at_9.20.53_AM.png)
 
-AWS prefixes WAF custom request headers with `x-amzn-waf-`, so the header named `bot` above arrives as `x-amzn-waf-bot`. Note the `n` in `amzn`.
+AWS prefixes WAF custom request headers with `x-amzn-waf-`, so the header named `bot` above arrives as `x-amzn-waf-bot`.
 
 <Callout icon="🚧" theme="warn">
   ### Note
@@ -603,7 +608,7 @@ If your distribution already uses a custom origin request policy, you can keep i
   This setting applies to all traffic through the behavior, not just bots. Your regular origin will receive requests with its own domain as the `Host` rather than your public domain. Most origins accept this. If yours routes on your public domain and requires `AllViewer`, use the **Origin request** Lambda\@Edge setup further down instead, which sets `Host` itself. `AllViewer` does not work with this setup.
 </Callout>
 
-![](https://files.readme.io/b3c6c6405c850073af7345b9ce6a10d0a6f2ff90f25f5cd3f6499fa1ac98adda-Screenshot_2026-08-07_at_8.21.14_AM.png)
+![](https://files.readme.io/d2e899f597e53aed03c97e14b88f86a5748e84eee40cf9e105cd8eca5b6495e1-Screenshot_2026-09-09_at_5.40.42_PM.png)
 
 #### Create the CloudFront Function
 
@@ -661,34 +666,9 @@ If you use TollBit's MCP or A2A endpoints, the behavior's **Allowed HTTP methods
   If you are migrating from one of the Lambda\@Edge setups below, remove the old **Viewer request** or **Origin request** Lambda association from the behavior in the same save. Leaving both attached will route the request twice.
 </Callout>
 
-#### Order of Operations
-
-Apply the cache policy, the origin request policy, and the function association in a single save of the behavior.
-
-If you have to apply them separately, update the cache policy and origin request policy first, wait for the distribution to show **Deployed**, and attach the function afterwards. If you attach the function first, there is a window where `x-amzn-waf-bot` is not yet part of the cache key. During that window, Agent Site responses can be cached and then served to human visitors. If you update the policies first, the worst case is that a bot receives a cached human page until the entry expires on your normal TTL.
-
-No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and will age out on their own.
-
-#### Test Your Setup
-
-Wait until the distribution shows **Deployed**. Then make two requests to the same page, in this order, with the same `Accept-Encoding` header on both:
-
-```text
-curl -sD - -o /dev/null -H 'Accept-Encoding: gzip, deflate, br' https://www.example.com/some-article
-curl -sD - -o /dev/null -H 'Accept-Encoding: gzip, deflate, br' -A 'GPTBot' https://www.example.com/some-article
-```
-
-The first request should return a response from your own origin. The second should show `via: 2.0 Caddy` in the response headers, and either a `200` with your Agent Site page or a `402`. Both mean the request reached your Agent Site. A `402` is TollBit declining a crawler that is not licensed for that page.
-
-The order matters. A bot request that goes to your Agent Site on a page nobody has requested before proves very little. A bot request that still reaches your Agent Site after a human has just loaded the same page proves the cache key is working.
-
-If the second request instead returns your own page with `x-cache: Hit from cloudfront`, a bot may have requested that page during deployment and cached your page under the bot cache key. Try a page that a bot is unlikely to have requested in the last day, or create an invalidation for that one path.
-
 #### Updating Your Function
 
 Open the function, edit the code on the **Build** tab, click **Save changes**, and then **Publish**. Distributions pick up the published version automatically. There are no version numbers to update on the behavior.
-
-<br />
 
 ### AWS WAF + CloudFront Route To Agent Site
 
