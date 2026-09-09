@@ -1043,7 +1043,7 @@ The order matters. If you attach the Lambda first, there is a window where `x-am
 
 No invalidation is needed. Adding `x-amzn-waf-bot` to your cache policy changes the cache key for every object, so entries cached before the change are no longer matched and will age out on their own. Try to keep the gap between the two steps short, as anything cached in between will expire on your normal TTL.
 
-### ALB + Lambda Route to Agent Site
+## ALB + Lambda Route to Agent Site
 
 If you do not have CloudFront set up, but instead are having inbound request hit your Application Load Balancer directly, you should be able to set up Lambda with your ALB to set up Agent Site routing.
 
