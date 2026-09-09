@@ -596,20 +596,6 @@ AWS prefixes WAF custom request headers with `x-amzn-waf-`, so the header named 
   Minimum TTL must be `0`. With a non-zero Minimum TTL, CloudFront caches Agent Site responses even though they are returned with `no-store`.
 </Callout>
 
-#### Update Your Origin Request Policy
-
-The behavior needs the AWS managed origin request policy `AllViewerExceptHostHeader`. It forwards every viewer header, including `User-Agent`, and lets CloudFront set `Host` to the origin's own domain. Both matter: without `User-Agent`, your Agent Site cannot tell which crawler it is serving, and without `Host` set to your TollBit subdomain, it cannot tell which site the request is for.
-
-If your distribution already uses a custom origin request policy, you can keep it as long as it forwards `User-Agent` and does not forward `Host`.
-
-<Callout icon="🚧" theme="warn">
-  ### Note
-
-  This setting applies to all traffic through the behavior, not just bots. Your regular origin will receive requests with its own domain as the `Host` rather than your public domain. Most origins accept this. If yours routes on your public domain and requires `AllViewer`, use the **Origin request** Lambda\@Edge setup further down instead, which sets `Host` itself. `AllViewer` does not work with this setup.
-</Callout>
-
-![](https://files.readme.io/d2e899f597e53aed03c97e14b88f86a5748e84eee40cf9e105cd8eca5b6495e1-Screenshot_2026-09-09_at_5.40.42_PM.png)
-
 #### Create the CloudFront Function
 
 Go to **CloudFront → Functions** and click **Create function**. You can call it something straightforward like "**tollbit_agent_site**". Choose the **cloudfront-js-2.0** runtime. The older 1.0 runtime cannot change the origin.
@@ -644,19 +630,39 @@ You can check the function in the **Test** tab before publishing. Choose the **V
 
 Click **Publish**, then **Publish function**. A function has to be published before it can be attached to a distribution.
 
-#### Associate the Function
+#### Update Your Behavior
 
-Go to **Distribution → Behaviors** and edit the behavior that regular traffic routes through. If you have multiple, check the one that regular traffic routes through. On the edit page:
+Go to **Distribution → Behaviors** and edit the behavior that regular traffic routes through. If you have multiple, check the one that regular traffic routes through. Make all of the following changes on this one edit page and save once at the end. Saving them one at a time leaves your distribution half configured in between.
 
-- Under **Cache key and origin requests**, select the cache policy you created above and the `AllViewerExceptHostHeader` origin request policy.
-- Under **Function associations**, on the **Viewer request** row, set the function type to **CloudFront Function** and select your function.
-- Click **Save changes**.
+**Cache policy**
 
-Make all three changes in the same save. See Order of Operations below for why.
+Under **Cache key and origin requests**, choose _Cache policy and origin request policy_ and select the cache policy you created above.
 
-If your site has other behaviors that bots may request through, repeat this for each of them.
+**Origin request policy**
 
-If you use TollBit's MCP or A2A endpoints, the behavior's **Allowed HTTP methods** must include `POST`.
+On the same panel, set **Origin request policy** to the AWS managed policy `AllViewerExceptHostHeader`. It forwards every viewer header, including `User-Agent`, and lets CloudFront set `Host` to the origin's own domain. Both matter: without `User-Agent`, your Agent Site cannot tell which crawler it is serving, and without `Host` set to your TollBit subdomain, it cannot tell which site the request is for.
+
+If your behavior already uses a custom origin request policy, you can keep it as long as it forwards `User-Agent` and does not forward `Host`.
+
+<Callout icon="🚧" theme="warn">
+  ### Note
+
+  This setting applies to all traffic through the behavior, not just bots. Your regular origin will receive requests with its own domain as the `Host` rather than your public domain. Most origins accept this. If yours routes on your public domain and requires `AllViewer`, use the **Origin request** Lambda\@Edge setup further down instead, which sets `Host` itself. `AllViewer` does not work with this setup.
+</Callout>
+
+![](https://files.readme.io/d2e899f597e53aed03c97e14b88f86a5748e84eee40cf9e105cd8eca5b6495e1-Screenshot_2026-09-09_at_5.40.42_PM.png)
+
+**Function association**
+
+Under **Function associations**, on the **Viewer request** row, set the function type to **CloudFront Function** and select the function you published.
+
+**Allowed HTTP methods**
+
+If you use TollBit's MCP or A2A endpoints, **Allowed HTTP methods** must include `POST`.
+
+**Save**
+
+Click **Save changes**. If your site has other behaviors that bots may request through, repeat this for each of them.
 
 <Callout icon="🚧" theme="warn">
   ### Note
