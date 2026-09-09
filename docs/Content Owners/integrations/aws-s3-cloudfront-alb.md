@@ -672,15 +672,7 @@ Under **Function associations**, on the **Viewer request** row, set the function
 
 Open the function, edit the code on the **Build** tab, click **Save changes**, and then **Publish**. Distributions pick up the published version automatically. There are no version numbers to update on the behavior.
 
-### AWS WAF + CloudFront Route To Agent Site
-
-Agent Site can be set up with AWS Lambda\@Edge.&#x20;
-
-<Callout icon="🚧" theme="warn">
-  ### Note
-
-  If you have set up Agent Site via redirection previously, you will need to disable the WAF and Cloudfront Function after this is created to ensure correct rewrite/proxy flow.
-</Callout>
+### AWS WAF + CloudFront + Lambda\@Edge Viewer Request Agent Site
 
 <Callout icon="📘" theme="info">
   ### When To Use This
@@ -880,7 +872,7 @@ If you need to update your lambda, you can follow these steps.
 
 <br />
 
-### AWS WAF + CloudFront Route To Agent Site (Origin Request)
+### AWS WAF + CloudFront + Lambda\@Edge Origin Route To Agent Site
 
 This is an alternate to the setups above. It routes detected bots to your Agent Site in the same way, but attaches the Lambda to the **Origin request** event instead of **Viewer request**, and uses CloudFront's cache key to keep bot and human responses separate.
 
