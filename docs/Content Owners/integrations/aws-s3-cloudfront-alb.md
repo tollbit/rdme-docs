@@ -558,7 +558,7 @@ This will detect the top known AI bots. Next, for the action, be sure to choose 
 Go to **Distribution → Origins** and click **Create origin**:
 
 - **Origin domain**: your site's TollBit subdomain, for example `tollbit.example.com`
-- **Name**: `tollbit-origin`. The function below refers to the origin by this name. If you choose a different name, change the function to match.
+- **Name**: `tollbit-origin`. The function below refers to the origin by this name. Note that the default name of the origin is your `tollbit` subdomain, so make sure to update this.
 - **Protocol**: HTTPS only
 - **Minimum origin SSL protocol**: TLSv1.2
 
@@ -614,11 +614,11 @@ const BOT_ORIGIN_ID = 'tollbit-origin';
 
 function handler(event) {
   var request = event.request;
-  var flag = request.headers[BOT_HEADER];
+  var botRequestHeader = request.headers[BOT_HEADER];
 
   // The WAF rule inserts this header only on a bot match. Anything other than
   // an exact "true", including the header being absent, is treated as a human.
-  if (flag && flag.value === 'true') {
+  if (botRequestHeader && botRequestHeader.value === 'true') {
     cf.selectRequestOriginById(BOT_ORIGIN_ID);
   }
 
