@@ -705,6 +705,8 @@ Agent Site can be set up with AWS Lambda\@Edge.&#x20;
 
   The CloudFront Function setup above is the recommended way to route to Agent Site. Use this Lambda\@Edge setup instead if you want requests to fall back to your own origin when the Agent Site is unreachable. This function proxies the request itself and returns your origin's page if the proxy fails.
 
+  Do not use this setup if your caching relies on CloudFront viewer headers such as `CloudFront-Viewer-Country`, `CloudFront-Viewer-City`, or the device type headers. CloudFront adds those headers _after_ the viewer request event, so bot requests proxied by this function never receive them. The CloudFront Function setup and the Origin request setup both handle those headers normally.
+
   If you already have this setup deployed and working, there is no need to migrate.
 </Callout>
 
@@ -907,7 +909,6 @@ This is an alternate to the setups above. It routes detected bots to your Agent 
 
   - Your origin requires the `AllViewer` origin request policy, because it routes on your public domain. This function sets `Host` for the Agent Site request itself, so either origin request policy works.
   - Your distribution serves more than one website. See the multi-domain note below.
-  - Your cache policy relies on CloudFront viewer headers such as `CloudFront-Viewer-Country`, `CloudFront-Viewer-City`, or the device type headers, and you would otherwise use the Viewer request Lambda\@Edge setup. CloudFront adds those headers _after_ the viewer request event, so they are not available to a Viewer request Lambda\@Edge function.
 
   This setup cannot be used with a CloudFront VPC origin. CloudFront does not allow Lambda\@Edge on origin events for VPC origins. Use the CloudFront Function setup instead.
 </Callout>
