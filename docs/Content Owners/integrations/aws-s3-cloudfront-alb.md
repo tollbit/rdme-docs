@@ -491,6 +491,40 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "shapbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "shap-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "timpibot",
                         "FieldToMatch": {
                             "SingleHeader": {
@@ -1114,7 +1148,7 @@ We can create a Listener rule under your default ALB Listener to inspect incomin
 
 (?i).*(cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer).*
 
-(?i).*(oai-adsbot|oai-searchbot|omgili|perplexity|timpibot|youbot).*
+(?i).*(oai-adsbot|oai-searchbot|omgili|perplexity|shapbot|shap-user|timpibot|youbot).*
 ```
 
 ![](https://files.readme.io/d8801c2453b079b88dfa213da752192e0823f147f3aeb0e16f1893a75b0130a3-Screenshot_2026-08-12_at_1.50.37_PM.png)
@@ -1143,7 +1177,7 @@ import https from 'https';
     'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
     'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'GPTBot',
     'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot', 'OAI-SearchBot',
-    'omgili', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+    'omgili', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
   ];
 
   const TOLLBIT_UA_REGEX = new RegExp(TOLLBIT_USER_AGENTS.join('|'), 'i');

@@ -50,4 +50,4 @@ You can configure the edge integration within the Arc Delivery UI. Please follow
 
 **Note**: the Override list text entry is there if you **don't** want to allow any of the following AI agents to be sent to the TollBit subdomain. Please use commas to separate multiple user agents. The default list includes the following bots that you can override / not send to agent site:
 
-_chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user_
+_chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user, shapbot, shap-user_
