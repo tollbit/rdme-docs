@@ -98,7 +98,7 @@ const botList = [
  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',
  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',
- 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+ 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
 ];
 
 
@@ -433,6 +433,8 @@ const botList = [
   'OAI-SearchBot',
   'Perplexity-User',
   'PerplexityBot',
+  'ShapBot',
+  'Shap-User',
   'Timpibot',
   'YouBot'
 ]
@@ -643,6 +645,8 @@ const botList = [
   'OAI-SearchBot',
   'Perplexity-User',
   'PerplexityBot',
+  'ShapBot',
+  'Shap-User',
   'Timpibot',
   'YouBot'
   ]

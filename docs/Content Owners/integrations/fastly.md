@@ -159,7 +159,7 @@ In your left nav of your cloned configuration, go to VCL snippets. If you havenâ
 For the recv snippet, paste in the following snippet. Ensure that the backend name is the same that youâ€™ve set before. If you applied our recommended edit, it will be **F_tollbit_origin** (line 2 below). Edit the user agent list to control which bots are forwarded.
 
 ```json
-if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|timpibot|youbot") {
+if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|shapbot|shap-user|timpibot|youbot") {
   set req.backend = F_tollbit_origin;
   set req.http.Fastly-Orig-Host = req.http.host;
   if (std.prefixof(req.http.host, "www.")) {

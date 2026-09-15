@@ -41,7 +41,7 @@ Then you can add rules for the bots you want to forward off to the TollBit Bot P
 recommend the following list:
 
 ```
-chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user
+chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user, shapbot, shap-user
 ```
 
 You can add or remove from this as befits your bot strategy. We can also keep these lowercased, since in the rules we are comparing the lowercased values.

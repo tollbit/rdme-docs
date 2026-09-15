@@ -95,7 +95,7 @@ At a high level, you would go to Property Manager and create a new Conditional O
 **Forward Rewrite Cloudlet**<br />Create a new forward rewrite policy by following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/create-forward-rewrite-policy">here</Anchor>. Then create a forward rewrite rule following the docs <Anchor target="_blank" href="https://techdocs.akamai.com/cloudlets/docs/add-forward-rewrite-rule">here</Anchor>. For the match type, you want to match on if the request header’s User-Agent header contains one of the following user agents (case insensitive):
 
 ```
-'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'Timpibot', 'YouBot'
+'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',  'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'Exabot',  'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
 ```
 
 Ensure that the rewrite points to the new `tollbit` subdomain origin you added, while preserving the original URL path and query strings.
