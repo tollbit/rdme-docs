@@ -30,8 +30,6 @@ Before doing this, ensure that your origin server accepts HTTPS requests; most s
 <br />
 
 <Callout icon="📘" theme="info">
-  ###
-
   The code snippets here are for a clean CloudFlare environment. If you have existing snippets or workers that are processing requests from your domain, you will need to integrate these scripts into your existing environment.
 </Callout>
 
@@ -72,7 +70,7 @@ If your logs are already being sent to an S3 bucket, add the following IAM polic
 
 Once you have done that, reach out to [team@tollbit.com](mailto:team@tollbit.com) and provide the path to your logs in your bucket and we will be able to quickly enable TollBit analytics for your site.
 
-### Steps for Agent Site
+## Steps for Agent Site
 
 Make sure you've completed the SSL / TLS prerequisite above first.
 
@@ -188,8 +186,6 @@ On these plans there is no LogPush, so analytics is forwarded by a Worker. Snipp
 **Create new Worker**
 
 <Callout icon="📘" theme="info">
-  ###
-
   You must be proxying traffic through CloudFlare in order have the worker seconds your logs over to us. Most websites are already doing this, but if you are not certain, you can check by going into your site's DNS page and ensuring that your main site's DNS settings have proxy status as `Proxied`.
 
   ![Cloudflare Proxied](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-proxied.png)
@@ -376,8 +372,6 @@ Click on "Account Home" on the left pane and select the website that you would l
 Once you are ready, click "Save", and you are all set!
 
 <Callout icon="📘" theme="info">
-  ###
-
   If your main site does not use the `www` subdomain and all traffic to `www` gets redirected to your main site (`www.example.com` gets redirected to `example.com`), you will need to set your worker route to just `<your_site.com>/*`.
 </Callout>
 
@@ -393,7 +387,7 @@ Your route page will then look something like the following.
 
 If you aren't sure which route to disable, consider running the worker on your full site and then using the top pages chart in our analytics platform to understand any routes you wish to filter out.
 
-### Steps for Agent Site
+## Steps for Agent Site
 
 Make sure you've completed the SSL / TLS prerequisite above first.
 
@@ -690,9 +684,5 @@ const botList = [
 Once the worker is saved, click Activate and you should be all set.
 
 <Callout icon="🚧" theme="warn">
-  ###
-
   This Worker **will intercept** and potentially **rewrite** traffic from your site to your `tollbit` subdomain. It is crucial to make sure that you are certain of this change and QA it thoroughly to ensure that it is not blocking human traffic or good bot traffic (Google, etc) before elevating it across your entire website.
 </Callout>
-
-<br />
