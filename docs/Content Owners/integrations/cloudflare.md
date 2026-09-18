@@ -15,9 +15,9 @@ The right setup depends on your CloudFlare plan, because it determines how you c
 
 Find your plan below and follow that section. If you only want Agent Site and are not using TollBit Analytics, either path's Agent Site steps will work on their own.
 
-# Before You Set Up Agent Site
+# Pre-Requisites
 
-Regardless of plan, before setting up Agent Site you'll need to set up SSL / TLS encryption mode.
+Regardless of plan, before setting up TollBit you'll need to set up SSL / TLS encryption mode.
 
 **Setting up SSL / TLS**
 
