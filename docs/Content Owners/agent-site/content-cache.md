@@ -22,6 +22,8 @@ Once you add open access, you can configure open access by either selecting a co
 
 <br />
 
+Once the path is saved, you can test your request with a simple curl command. All open access paths with the specified user agents will return a status code 200 via agent site.
+
 <Callout icon="📘" theme="info">
   ### What about robots.txt?
 
