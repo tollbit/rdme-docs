@@ -22,7 +22,11 @@ Once you add open access, you can configure open access by either selecting a co
 
 <br />
 
-<br />
+<Callout icon="📘" theme="info">
+  ### What about robots.txt?
+
+  It is recommended that you align **Open Access** paths with your allow list on robots.txt file. Open Access can entail specific user agents, file paths, and/or a combination of the two.
+</Callout>
 
 **Caching**
 
