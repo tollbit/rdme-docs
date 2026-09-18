@@ -19,7 +19,7 @@ By default, all forwarded bots will see a message like the following:
 }
 ```
 
-<br />
+The status code returned alongside this message is a 402 (payment required).
 
 For bots that have a valid TollBit token (see Developers docs), they will be able to request the content through the subdomain.&#x20;
 
