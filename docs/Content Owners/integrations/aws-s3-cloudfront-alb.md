@@ -1,6 +1,6 @@
 ---
 title: AWS (S3, CloudFront, ALB)
-excerpt: Learn how to implementate TollBit with Amazon S3, ALB, and/or CloudFront.
+excerpt: Learn how to implementat TollBit with Amazon S3, ALB, and/or CloudFront.
 deprecated: false
 hidden: false
 metadata:
@@ -106,7 +106,7 @@ First, go to the WAF & Shield and create a new Web ACL. Ensure that the ACL bein
 
 ![Aws Acl Configuration](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/aws-acl-configuration.png)
 
-Once you've created the ACL, you can choose any rules you'd like to enable bot detection. AWS Marketplace has managed bot detection rules that you can add to your ACL. We will provide our own WAF rule as well. To use our WAF rule, select the option for using your own rules and rule groups, and use the JSON editor. Copy and paste the following rule:
+Once you've created the ACL, you can choose any rules you'd like to enable bot detection. AWS Marketplace has managed bot detection rules that you can add to your ACL. We will provide our own WAF rule as well. To use our WAF rule, select the option for using your own rules and rule groups, and use the JSON editor. Note that the rule here has it at priority 0, which means that it will evaluate before other WAF rules. If you have existing WAF rules, please update the priority to when it makes sense to evaluate this in your stack.
 
 ```json
 {
