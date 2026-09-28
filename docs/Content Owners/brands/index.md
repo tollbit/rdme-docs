@@ -12,7 +12,7 @@ Each guide is complete on its own, so everything you need for a setup is on one 
 
 ## Guides
 
-- [AWS CloudFront for Brands](aws-cloudfront-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Amazon CloudFront.
 - [Akamai for Brands](akamai-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Akamai.
 - [Cloudflare for Brands](cloudflare-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Cloudflare, using a single Worker, with Logpush as an analytics option on the Enterprise plan.
 - [Fastly for Brands](fastly-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Fastly, using dynamic VCL snippets.
+- [AWS CloudFront for Brands](aws-cloudfront-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Amazon CloudFront.
