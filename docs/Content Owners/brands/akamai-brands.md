@@ -39,12 +39,10 @@ If you are unsure whether your configuration blocks us, contact [team@tollbit.co
 
 Send us your Akamai logs with DataStream 2. There are two ways to set it up, and which one you use depends on how your sites are arranged in Akamai properties.
 
-| Your Akamai setup | How to send logs |
-| :--- | :--- |
-| Each site has its own property | Option 1: stream directly to TollBit |
+| Your Akamai setup                  | How to send logs                                                |
+| :--------------------------------- | :-------------------------------------------------------------- |
+| Each site has its own property     | Option 1: stream directly to TollBit                            |
 | One property serves multiple sites | Option 2: stream to an Amazon S3 bucket that TollBit reads from |
-
-If you have a mix of both, use Option 2 for all of your properties.
 
 #### Data Parameters
 
@@ -220,8 +218,6 @@ Ensure that the rewrite points to the `tollbit` subdomain origin you created abo
   ### Pro Tip
 
   Cloudlets Policy Manager evaluates rules from top to bottom, and picks the first rule that matches. If you have other Cloudlets with rules that also intercept requests, they may match before the rule you just added.
-
-
 </Callout>
 
 Once you've tested this appropriately, you can activate and deploy.
