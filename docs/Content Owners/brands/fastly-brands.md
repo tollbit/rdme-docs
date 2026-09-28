@@ -13,11 +13,11 @@ This guide covers setting up TollBit for a site served through Fastly: streaming
 | What you create | Name | Used for |
 | :--- | :--- | :--- |
 | Host | `tollbit_origin` | Agent Site |
-| Host | `tollbit_fallback_origin` | Routing visitors from cited content |
+| Host | `tollbit_fallback_origin` | Visitor routing |
 | HTTPS logging endpoint | Any, e.g. `tollbit-prod` | Analytics |
 | Dynamic VCL snippet, type `recv` | `tollbit_recv_dynamic_snippet` | Agent Site |
-| Dynamic VCL snippet, type `recv` | `tollbit_fallback_recv_snippet` | Routing visitors from cited content |
-| Dynamic VCL snippet, type `deliver` | `tollbit_fallback_deliver_snippet` | Routing visitors from cited content |
+| Dynamic VCL snippet, type `recv` | `tollbit_fallback_recv_snippet` | Visitor routing |
+| Dynamic VCL snippet, type `deliver` | `tollbit_fallback_deliver_snippet` | Visitor routing |
 
 # Before You Start
 
@@ -97,39 +97,61 @@ Open **Advanced options** and set **Custom header name** to `TollbitKey`. Set **
   If the `TollbitKey` header is missing or wrong, your logs are rejected and no analytics data appears. If your analytics charts stay empty, check this header first.
 </Callout>
 
-# Steps for Agent Site
+# Steps for Agent Site and Visitor Routing
 
-AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. A dynamic VCL snippet matches the `User-Agent` header and sends those requests through the `tollbit_origin` host.
+Agent Site and routing visitors from cited content are set up together. Both use the same two screens in Fastly, **Origins** and **VCL snippets**, so you add both hosts in one visit and all three snippets in the next.
 
-#### Add the Agent Site Host
+#### How It Works
 
-Your `tollbit` subdomain is set up as part of onboarding your site to the TollBit platform, so complete that first. In your draft version, go to **Origins** in the sidebar and create a new host, using your `tollbit` subdomain (e.g. `tollbit.example.com`) as the address.
+**Agent Site.** AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. A snippet matches the `User-Agent` header and sends those requests through the `tollbit_origin` host.
 
-You may see a warning that this host is unused. That is expected. The snippet below is what sends requests to it.
+**Routing visitors from cited content.** Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
+
+Visitor routing only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
+
+1. A visitor requests a URL and your origin responds with a `404`.
+2. Fastly sends the same request, with the same path and query string, to `fallback.tollbit.com` through the `tollbit_fallback_origin` host. Your site's hostname is sent in the `X-Tollbit-Host` header, which tells TollBit which site the URL belongs to. Requests without it receive a `400`.
+3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
+4. If TollBit responds with a `404`, times out, or fails in any way, Fastly requests the URL from your origin again and your origin's own error page is served.
+
+TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents that were routed to your Agent Site are excluded.
+
+#### Add the Hosts
+
+Your `tollbit` subdomain is set up as part of onboarding your site to the TollBit platform, so complete that first. In your draft version, go to **Origins** in the sidebar and create two hosts, one with your `tollbit` subdomain as the address and one with `fallback.tollbit.com`.
 
 ![](https://files.readme.io/1590d22a507a3fbd4af45aee2e88356de590545284a199a607ed83849baf61f9-image6.png)
 
-Once it has been added, click the pencil icon next to the host to edit it:
+You may see a warning that these hosts are unused. That is expected. The snippets in the next step are what send requests to them.
 
-- **Name**: exactly `tollbit_origin`. The snippets refer to it by this name.
-- **TLS**: enabled, on port `443`.
-- **Auto load balance**: `No`, so that only the snippet sends requests to this host.
+Once a host has been added, click the pencil icon next to it to edit it. Set the following on each host, then scroll down and click **Update** to save. The names must match exactly, because the snippets refer to the hosts by name.
 
-Scroll down and click **Update** to save.
+| Setting | Agent Site host | Lookup host |
+| :--- | :--- | :--- |
+| Address | Your TollBit subdomain, e.g. `tollbit.example.com` | `fallback.tollbit.com` |
+| Name | `tollbit_origin` | `tollbit_fallback_origin` |
+| TLS | Enabled, port `443` | Enabled, port `443` |
+| Certificate hostname and SNI hostname | Your TollBit subdomain | `fallback.tollbit.com` |
+| Auto load balance | `No` | `No` |
+| First byte timeout | Default | `2000` milliseconds |
+
+Auto load balance is set to `No` so that only the snippets send requests to these hosts. The shorter timeout on the lookup host keeps a slow lookup from holding up your own error page.
 
 ![](https://files.readme.io/0cfa040e63a3b941f453e5810ed05c842579e955a1d77af966e089893a14cbb1-image1.png)
 
-#### Add the Agent Site Snippet
+#### Add the VCL Snippets
 
-Go to **VCL snippets** in the sidebar and create a snippet:
+Go to **VCL snippets** in the sidebar and create the three snippets below. Set the type of each one to **Dynamic**, and use these names and placements:
 
-- **Name**: `tollbit_recv_dynamic_snippet`
-- **Type**: **Dynamic**
-- **Placement**: within subroutine, `recv`
+| Name | Placement | Used for |
+| :--- | :--- | :--- |
+| `tollbit_recv_dynamic_snippet` | Within subroutine, `recv` | Agent Site |
+| `tollbit_fallback_recv_snippet` | Within subroutine, `recv` | Visitor routing |
+| `tollbit_fallback_deliver_snippet` | Within subroutine, `deliver` | Visitor routing |
 
 ![](https://files.readme.io/39bc1086ee50031cf99b86bb1ba70e4cde335bf3c219f9a3c6b635a154ecb39c-Screenshot_2026-07-23_at_5.30.14_PM.png)
 
-Paste in the following VCL:
+**`tollbit_recv_dynamic_snippet`**
 
 ```vcl
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|shapbot|shap-user|timpibot|youbot") {
@@ -146,35 +168,7 @@ if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|
 
 Edit the user agent list to control which AI agents are routed to your Agent Site.
 
-# Routing Visitors from Cited Content
-
-Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
-
-This only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
-
-#### How It Works
-
-1. A visitor requests a URL and your origin responds with a `404`.
-2. Fastly sends the same request, with the same path and query string, to `fallback.tollbit.com`. Your site's hostname is sent in the `X-Tollbit-Host` header, which tells TollBit which site the URL belongs to. Requests without it receive a `400`.
-3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
-4. If TollBit responds with a `404`, times out, or fails in any way, Fastly requests the URL from your origin again and your origin's own error page is served.
-
-TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents that were routed to your Agent Site are excluded.
-
-#### Add the Lookup Host
-
-In your draft version, go to **Origins** and create a second host with `fallback.tollbit.com` as the address. Then edit it:
-
-- **Name**: exactly `tollbit_fallback_origin`. The snippets refer to it by this name.
-- **TLS**: enabled, on port `443`, with `fallback.tollbit.com` as the certificate hostname and SNI hostname.
-- **Auto load balance**: `No`, so that only the snippets send requests to this host.
-- **First byte timeout**: `2000` milliseconds, so that a slow lookup does not hold up your own error page.
-
-#### Add the Lookup Snippets
-
-Go to **VCL snippets** and create two more snippets. Both are **Dynamic**.
-
-The first is named `tollbit_fallback_recv_snippet`, placed within subroutine `recv`:
+**`tollbit_fallback_recv_snippet`**
 
 ```vcl
 if (req.restarts == 0) {
@@ -195,7 +189,7 @@ if (req.http.X-Tollbit-Fallback-Host && req.http.X-Tollbit-Skip-Fallback) {
 }
 ```
 
-The second is named `tollbit_fallback_deliver_snippet`, placed within subroutine `deliver`:
+**`tollbit_fallback_deliver_snippet`**
 
 ```vcl
 # Origin 404 on a GET/HEAD: restart and let the recv snippet retry it against
@@ -214,7 +208,7 @@ if (resp.status >= 400 && req.restarts == 1 && req.http.X-Tollbit-Fallback-Host 
 }
 ```
 
-The `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` headers are only used inside Fastly to keep track of the lookup. They are removed from incoming requests, so a visitor cannot set them, and they are not sent to your origin's visitors.
+The `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` headers are only used inside Fastly to keep track of the lookup. They are removed from incoming requests, so a visitor cannot set them, and they are not included in responses to visitors.
 
 #### Caching
 

@@ -286,7 +286,7 @@ async function fetchFromAgentSite(request) {
 // Visitors: your site has no page for this URL, so ask TollBit whether a
 // destination is configured for it. Returns a redirect, or null to leave your
 // site's own response untouched. Any error or timeout returns null.
-async function lookupCitedContent(request) {
+async function notFoundFallback(request) {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), LOOKUP_TIMEOUT_MS)
 
@@ -326,7 +326,7 @@ async function handleRequest(event) {
     response = await fetch(request)
 
     if (response.status === 404 && (request.method === 'GET' || request.method === 'HEAD')) {
-      const redirect = await lookupCitedContent(request)
+      const redirect = await notFoundFallback(request)
       if (redirect) {
         response = redirect
       }
