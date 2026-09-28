@@ -220,15 +220,9 @@ Ensure that the rewrite points to the `tollbit` subdomain origin you created abo
   ### Pro Tip
 
   Cloudlets Policy Manager evaluates rules from top to bottom, and picks the first rule that matches. If you have other Cloudlets with rules that also intercept requests, they may match before the rule you just added.
+
+
 </Callout>
-
-#### Verifying the Setup
-
-Every response served by TollBit includes the response header `X-Edge-State: active`. To verify, request a page on your site with one of the user agents above and confirm that header is present:
-
-```shell
-curl -sI -A "GPTBot" https://example.com/some-article | grep -i x-edge-state
-```
 
 Once you've tested this appropriately, you can activate and deploy.
 
