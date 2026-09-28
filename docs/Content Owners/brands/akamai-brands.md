@@ -37,25 +37,18 @@ If you are unsure whether your configuration blocks us, contact [team@tollbit.co
 
 # Steps for Analytics
 
-Send us your Akamai logs by using DataStream 2 to deliver them to an Amazon S3 bucket that TollBit reads from. One stream can deliver logs for all of your properties and markets to a single bucket, and onboarding a new market later does not need a new stream.
+Send us your Akamai logs with DataStream 2. There are two ways to set it up, and which one you use depends on how your sites are arranged in Akamai properties.
 
-If you already stream DataStream 2 logs to S3, you may be able to reuse that stream. It must use the JSON log format and include the data parameters listed below. If it doesn't, create a new stream as described here.
+| Your Akamai setup | How to send logs |
+| :--- | :--- |
+| Each site has its own property | Option 1: stream directly to TollBit |
+| One property serves multiple sites | Option 2: stream to an Amazon S3 bucket that TollBit reads from |
 
-#### 1. Create or choose an S3 bucket
+If you have a mix of both, use Option 2 for all of your properties.
 
-Create a bucket for the logs, or choose an existing one. We recommend a dedicated bucket, or at least a dedicated folder, so that TollBit only has access to the logs meant for us.
+#### Data Parameters
 
-#### 2. Create the stream
-
-In <Anchor target="_blank" href="https://control.akamai.com/">Akamai Control Center</Anchor>, <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">create a stream</Anchor> and add every property you are onboarding with TollBit. Then:
-
-- **Data parameters and format**: include the fields listed under Data parameters below, and set the log format to JSON.
-- **Destination**: follow Akamai's <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-amazon-s3">Amazon S3 destination instructions</Anchor>. Akamai needs an access key for an IAM user or role that has `s3:PutObject`, `s3:GetObject`, and `s3:ListBucket` on the bucket.
-- **Folder path**: use dynamic variables so logs land in dated subfolders, as described under Folder path below.
-
-**Data parameters**
-
-When <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">choosing data parameters</Anchor>, include at least the fields shown in the following sample log JSON. The client IP (`cliIP`) is optional, but including it gives you better analytics. Also, please make sure your log format is JSON.
+Both options use the same data parameters. When <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/choose-data-parameters">choosing data parameters</Anchor> for your stream, include at least the fields shown in the following sample log JSON. The client IP (`cliIP`) is optional, but including it gives you better analytics. Also, please make sure your log format is JSON.
 
 ```json
 {
@@ -71,6 +64,45 @@ When <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/
   "referer": "https%3A%2F%2Ftest.referrer.net%2Fen-US%2Fdocs%2FWeb%2Ftest"
 }
 ```
+
+## Option 1: Stream Directly to TollBit
+
+Use this option when each site has its own property.
+
+#### 1. Create the stream
+
+In <Anchor target="_blank" href="https://control.akamai.com/">Akamai Control Center</Anchor>, <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">create a stream</Anchor> for each property you are onboarding with TollBit. Include the fields listed under Data Parameters above, and set the log format to JSON.
+
+#### 2. Stream to the TollBit endpoint
+
+For the destination, follow Akamai's <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-custom-https">custom HTTPS endpoint instructions</Anchor> with these settings:
+
+- **Endpoint URL**: `https://log.tollbit.com/log/akamai`
+- **Authentication**: `None`. Authentication is handled by the custom header below.
+- **Content type**: `application/json`
+- **Custom header**: name `TollbitKey`, with the value set to the secret key from your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor>.
+
+#### 3. Activate the stream
+
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">Review and activate the stream</Anchor>, and <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/enable-datastream-behavior">enable the DataStream behavior</Anchor> in the property.
+
+## Option 2: Stream to Amazon S3
+
+Use this option when one property serves multiple sites. One stream can deliver logs for all of your properties and markets to a single bucket, and onboarding a new market later does not need a new stream.
+
+If you already stream DataStream 2 logs to S3, you may be able to reuse that stream. It must use the JSON log format and include the fields listed under Data Parameters above. If it doesn't, create a new stream as described here.
+
+#### 1. Create or choose an S3 bucket
+
+Create a bucket for the logs, or choose an existing one. We recommend a dedicated bucket, or at least a dedicated folder, so that TollBit only has access to the logs meant for us.
+
+#### 2. Create the stream
+
+In <Anchor target="_blank" href="https://control.akamai.com/">Akamai Control Center</Anchor>, <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">create a stream</Anchor> and add every property you are onboarding with TollBit. Then:
+
+- **Data parameters and format**: include the fields listed under Data Parameters above, and set the log format to JSON.
+- **Destination**: follow Akamai's <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/stream-amazon-s3">Amazon S3 destination instructions</Anchor>. Akamai needs an access key for an IAM user or role that has `s3:PutObject`, `s3:GetObject`, and `s3:ListBucket` on the bucket.
+- **Folder path**: use dynamic variables so logs land in dated subfolders, as described below.
 
 **Folder path: dated subfolders**
 
