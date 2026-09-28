@@ -53,14 +53,20 @@ If you are unsure whether your configuration blocks us, contact [team@tollbit.co
 
 There are two ways to send your logs to TollBit. Choose one.
 
-| | Logpush | Worker |
-| :--- | :--- | :--- |
-| Cloudflare plan | Enterprise only | Any plan |
-| How logs reach TollBit | Cloudflare delivers them to a storage bucket that TollBit reads from | The Worker forwards them to TollBit directly |
-| What is logged | Every request to your site | Requests on the routes the Worker is attached to |
-| Setting in the Worker code | `FORWARD_LOGS = false` | `FORWARD_LOGS = true` |
+|                            | Logpush                                                              | Worker                                           |
+| :------------------------- | :------------------------------------------------------------------- | :----------------------------------------------- |
+| Cloudflare plan            | Enterprise only                                                      | Any plan                                         |
+| How logs reach TollBit     | Cloudflare delivers them to a storage bucket that TollBit reads from | The Worker forwards them to TollBit directly     |
+| What is logged             | Every request to your site                                           | Requests on the routes the Worker is attached to |
+| Setting in the Worker code | `FORWARD_LOGS = false`                                               | `FORWARD_LOGS = true`                            |
 
-Use only one of the two. If Logpush is set up and the Worker also forwards logs, your traffic is counted twice.
+<br />
+
+<Callout icon="🚧" theme="warn">
+  ### Use only one analytics setup method
+
+  If Logpush is set up and the Worker also forwards logs, your traffic is counted twice.
+</Callout>
 
 #### Option 1: Logpush (Enterprise)
 
@@ -440,14 +446,6 @@ TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from 
 Agent Site responses are returned with `Cache-Control: no-store`. Redirect responses from TollBit include `Cache-Control: public, max-age=300`, which the Worker passes on, so a visitor's browser may reuse a redirect for up to five minutes. Keep this in mind when testing so a cached response is not mistaken for a misconfiguration.
 
 # Verifying the Setup
-
-#### Agent Site
-
-Every response served by TollBit includes the response header `X-Edge-State: active`. Request a page on your site with one of the user agents in the list and confirm that header is present:
-
-```shell
-curl -sI -A "GPTBot" https://www.example.com/some-article | grep -i x-edge-state
-```
 
 #### Routing Visitors from Cited Content
 
