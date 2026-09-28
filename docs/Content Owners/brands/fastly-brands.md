@@ -10,13 +10,13 @@ metadata:
 ---
 This guide covers setting up TollBit for a site served through Fastly: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Everything is created in your own Fastly service: two hosts, one logging endpoint, and three dynamic VCL snippets. It replaces the publisher-oriented Fastly instructions for your integration.
 
-| What you create | Name | Used for |
-| :--- | :--- | :--- |
-| Host | `tollbit_origin` | Agent Site |
-| Host | `tollbit_fallback_origin` | Visitor routing |
-| HTTPS logging endpoint | Any, e.g. `tollbit-prod` | Analytics |
-| Dynamic VCL snippet, type `recv` | `tollbit_recv_dynamic_snippet` | Agent Site |
-| Dynamic VCL snippet, type `recv` | `tollbit_fallback_recv_snippet` | Visitor routing |
+| What you create                     | Name                               | Used for        |
+| :---------------------------------- | :--------------------------------- | :-------------- |
+| Host                                | `tollbit_origin`                   | Agent Site      |
+| Host                                | `tollbit_fallback_origin`          | Visitor routing |
+| HTTPS logging endpoint              | Any, e.g. `tollbit-prod`           | Analytics       |
+| Dynamic VCL snippet, type `recv`    | `tollbit_recv_dynamic_snippet`     | Agent Site      |
+| Dynamic VCL snippet, type `recv`    | `tollbit_fallback_recv_snippet`    | Visitor routing |
 | Dynamic VCL snippet, type `deliver` | `tollbit_fallback_deliver_snippet` | Visitor routing |
 
 # Before You Start
@@ -126,14 +126,14 @@ You may see a warning that these hosts are unused. That is expected. The snippet
 
 Once a host has been added, click the pencil icon next to it to edit it. Set the following on each host, then scroll down and click **Update** to save. The names must match exactly, because the snippets refer to the hosts by name.
 
-| Setting | Agent Site host | Lookup host |
-| :--- | :--- | :--- |
-| Address | Your TollBit subdomain, e.g. `tollbit.example.com` | `fallback.tollbit.com` |
-| Name | `tollbit_origin` | `tollbit_fallback_origin` |
-| TLS | Enabled, port `443` | Enabled, port `443` |
-| Certificate hostname and SNI hostname | Your TollBit subdomain | `fallback.tollbit.com` |
-| Auto load balance | `No` | `No` |
-| First byte timeout | Default | `2000` milliseconds |
+| Setting                               | Agent Site host                                    | Lookup host               |
+| :------------------------------------ | :------------------------------------------------- | :------------------------ |
+| Address                               | Your TollBit subdomain, e.g. `tollbit.example.com` | `fallback.tollbit.com`    |
+| Name                                  | `tollbit_origin`                                   | `tollbit_fallback_origin` |
+| TLS                                   | Enabled, port `443`                                | Enabled, port `443`       |
+| Certificate hostname and SNI hostname | Your TollBit subdomain                             | `fallback.tollbit.com`    |
+| Auto load balance                     | `No`                                               | `No`                      |
+| First byte timeout                    | Default                                            | `2000` milliseconds       |
 
 Auto load balance is set to `No` so that only the snippets send requests to these hosts. The shorter timeout on the lookup host keeps a slow lookup from holding up your own error page.
 
@@ -143,15 +143,15 @@ Auto load balance is set to `No` so that only the snippets send requests to thes
 
 Go to **VCL snippets** in the sidebar and create the three snippets below. Set the type of each one to **Dynamic**, and use these names and placements:
 
-| Name | Placement | Used for |
-| :--- | :--- | :--- |
-| `tollbit_recv_dynamic_snippet` | Within subroutine, `recv` | Agent Site |
-| `tollbit_fallback_recv_snippet` | Within subroutine, `recv` | Visitor routing |
+| Name                               | Placement                    | Used for        |
+| :--------------------------------- | :--------------------------- | :-------------- |
+| `tollbit_recv_dynamic_snippet`     | Within subroutine, `recv`    | Agent Site      |
+| `tollbit_fallback_recv_snippet`    | Within subroutine, `recv`    | Visitor routing |
 | `tollbit_fallback_deliver_snippet` | Within subroutine, `deliver` | Visitor routing |
 
 ![](https://files.readme.io/39bc1086ee50031cf99b86bb1ba70e4cde335bf3c219f9a3c6b635a154ecb39c-Screenshot_2026-07-23_at_5.30.14_PM.png)
 
-**`tollbit_recv_dynamic_snippet`**
+`tollbit_recv_dynamic_snippet`
 
 ```vcl
 if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|shapbot|shap-user|timpibot|youbot") {
@@ -168,7 +168,7 @@ if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|
 
 Edit the user agent list to control which AI agents are routed to your Agent Site.
 
-**`tollbit_fallback_recv_snippet`**
+`tollbit_fallback_recv_snippet`
 
 ```vcl
 if (req.restarts == 0) {
@@ -189,7 +189,7 @@ if (req.http.X-Tollbit-Fallback-Host && req.http.X-Tollbit-Skip-Fallback) {
 }
 ```
 
-**`tollbit_fallback_deliver_snippet`**
+`tollbit_fallback_deliver_snippet`
 
 ```vcl
 # Origin 404 on a GET/HEAD: restart and let the recv snippet retry it against
@@ -227,14 +227,6 @@ Once the hosts, the logging endpoint, and the three snippets are in your draft v
 </Callout>
 
 # Verifying the Setup
-
-#### Agent Site
-
-Every response served by TollBit includes the response header `X-Edge-State: active`. Request a page on your site with one of the user agents in the list and confirm that header is present:
-
-```shell
-curl -sI -A "GPTBot" https://www.example.com/some-article | grep -i x-edge-state
-```
 
 #### Routing Visitors from Cited Content
 
