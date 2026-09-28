@@ -8,7 +8,7 @@ hidden: true
 metadata:
   robots: noindex
 ---
-This guide covers setting up TollBit for a site served through Cloudflare: sending logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Agent Site and visitor routing are handled by a single Cloudflare Worker, which works the same way on every Cloudflare plan. Analytics comes either from that same Worker or, on the Enterprise plan, from Logpush. It replaces the publisher-oriented Cloudflare instructions for your integration.
+This guide covers setting up TollBit for a site served through Cloudflare: sending logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Agent Site and visitor routing are handled by a single Cloudflare Worker, which works the same way on every Cloudflare plan. Analytics comes either from that same Worker or, on the Enterprise plan, from Logpush.
 
 # Before You Start
 
@@ -68,7 +68,7 @@ There are two ways to send your logs to TollBit. Choose one.
   If Logpush is set up and the Worker also forwards logs, your traffic is counted twice.
 </Callout>
 
-#### Option 1: Logpush (Enterprise)
+## Option 1: Logpush (Enterprise)
 
 On the Enterprise plan you have access to Cloudflare's <Anchor target="_blank" href="https://developers.cloudflare.com/logs/about/">Logpush</Anchor> feature, which delivers HTTP request logs for your site to an S3, R2 or GCS bucket. If you already push logs to one of these, we can ingest them from where they are stored.
 
@@ -106,7 +106,7 @@ Then send [team@tollbit.com](mailto:team@tollbit.com) the bucket name and the pa
 
 When you add the Worker code below, set `FORWARD_LOGS` to `false`.
 
-#### Option 2: Worker
+## Option 2: Worker
 
 The Worker below forwards logs to TollBit by default, so there is nothing to set up here. When you add the Worker code, replace `YOUR_SECRET_KEY_HERE` with the secret key from your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor>.
 
@@ -189,8 +189,8 @@ const tollbitLogEndpoint = 'https://log.tollbit.com/log'
 const tollbitToken = 'YOUR_SECRET_KEY_HERE'
 
 // Routing visitors from cited content
-const tollbitLookupOrigin = 'https://fallback.tollbit.com'
-const LOOKUP_TIMEOUT_MS = 2000
+const tollbitFallbackOrigin = 'https://fallback.tollbit.com'
+const FALLBACK_TIMEOUT_MS = 2000
 
 const sleep = (ms) => {
   return new Promise((resolve) => {
@@ -288,25 +288,25 @@ async function fetchFromAgentSite(request) {
 // site's own response untouched. Any error or timeout returns null.
 async function notFoundFallback(request) {
   const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), LOOKUP_TIMEOUT_MS)
+  const timer = setTimeout(() => controller.abort(), FALLBACK_TIMEOUT_MS)
 
   try {
     const url = new URL(request.url)
-    const lookup = await fetch(tollbitLookupOrigin + url.pathname + url.search, {
+    const fallback = await fetch(tollbitFallbackOrigin + url.pathname + url.search, {
       method: request.method,
       headers: { 'X-Tollbit-Host': url.hostname },
       redirect: 'manual',
       signal: controller.signal
     })
 
-    const location = lookup.headers.get('Location')
-    if (lookup.status >= 300 && lookup.status < 400 && location) {
+    const location = fallback.headers.get('Location')
+    if (fallback.status >= 300 && fallback.status < 400 && location) {
       const headers = new Headers({ Location: location })
-      const cacheControl = lookup.headers.get('Cache-Control')
+      const cacheControl = fallback.headers.get('Cache-Control')
       if (cacheControl) {
         headers.set('Cache-Control', cacheControl)
       }
-      return new Response(null, { status: lookup.status, headers })
+      return new Response(null, { status: fallback.status, headers })
     }
     return null
   } catch (err) {
@@ -414,7 +414,7 @@ If your site serves its static assets from a common path, such as `example.com/a
 
 ![Cloudflare Worker Route Disable](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/cloudflare-worker-route-disable.png)
 
-Requests on a route without the Worker are not routed to your Agent Site or looked up for cited content, so only exclude paths that serve static files. If the Worker forwards your logs, those requests are also left out of your analytics, which works best with requests that correspond to page views. Logpush records them either way.
+Requests on a route without the Worker are not routed to your Agent Site and do not get visitor routing, so only exclude paths that serve static files. If the Worker forwards your logs, those requests are also left out of your analytics, which works best with requests that correspond to page views. Logpush records them either way.
 
 # What the Worker Does
 
@@ -435,7 +435,7 @@ Content published through the Agent Site CMS lives on your `tollbit` subdomain a
 This only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
 
 1. A visitor requests a URL and your origin responds with a `404`.
-2. The Worker asks TollBit whether anything is configured for that URL. The lookup is sent to `fallback.tollbit.com`, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header.
+2. The Worker asks TollBit whether anything is configured for that URL. The request is sent to the TollBit fallback origin, `fallback.tollbit.com`, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header.
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The Worker returns that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, takes longer than two seconds, or fails in any way, the response is left untouched and your origin's own error page is served.
 
@@ -448,6 +448,8 @@ Agent Site responses are returned with `Cache-Control: no-store`. Redirect respo
 # Verifying the Setup
 
 #### Routing Visitors from Cited Content
+
+Make these requests as a regular visitor, not with the user agent of an AI agent. Requests from AI agents are served from your Agent Site instead, so they do not receive the redirect. The commands below use curl's own user agent, which counts as a visitor.
 
 Request an agent-only URL that has a configured destination and confirm you receive the redirect. Then request a URL your site has no page for, such as a made-up path, and confirm your site's normal error page is served with a `404` status.
 

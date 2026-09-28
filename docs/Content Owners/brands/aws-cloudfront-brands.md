@@ -8,7 +8,33 @@ hidden: true
 metadata:
   robots: noindex
 ---
-This guide covers setting up TollBit for a site served through Amazon CloudFront: streaming logs to our platform for analytics, and setting up Agent Site. It replaces the publisher-oriented CloudFront instructions for your integration. If you have already completed steps from those docs, the notes below call out what stays the same and what changes.
+This guide covers setting up TollBit for a site served through Amazon CloudFront: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content.
+
+# Before You Start
+
+#### Allow TollBit's IP Addresses
+
+<Callout icon="🚧" theme="warn">
+  ### Required
+
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+</Callout>
+
+TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:
+
+```text
+52.22.183.94
+3.220.109.109
+```
+
+Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
+
+Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
+
+- **AWS WAF**: the rules in your Web ACL, including IP set rules, rate-based rules, and managed rule groups such as Bot Control.
+- **Any firewall or WAF in front of your origin servers**, including security groups and any protection outside of AWS.
+
+If you are unsure whether your configuration blocks us, contact [team@tollbit.com](mailto:team@tollbit.com) and we will confirm from our side.
 
 # Steps for Analytics
 
@@ -61,7 +87,7 @@ In **WAF & Shield**, create a Web ACL for CloudFront distributions and associate
 
 ![Aws Acl Configuration](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/aws-acl-configuration.png)
 
-Then add our agent detection rule. Select the option for using your own rules and rule groups, and paste the following into the JSON editor. This step is the same for brands and publishers, so if you already created the rule, no change is needed.
+Then add our agent detection rule. Select the option for using your own rules and rule groups, and paste the following into the JSON editor.
 
 ```json
 {
@@ -543,9 +569,9 @@ The rule matches the `User-Agent` header against known AI agents such as `GPTBot
 
 Your `tollbit` subdomain is set up as part of onboarding your site to the TollBit platform, so complete that first. Then go to **Distribution → Origins** and create two origins. CloudFront names an origin after its domain by default, so make sure to set the names shown here; the function refers to them.
 
-The `fallback.tollbit.com` origin requires the two custom headers shown in the table, added under **Add custom header** in the origin's settings. CloudFront attaches them only to requests it sends to that origin. TollBit uses `X-Tollbit-Host` to tell which site a URL belongs to, and rejects requests without it.
+The fallback origin, `fallback.tollbit.com`, requires the two custom headers shown in the table, added under **Add custom header** in the origin's settings. CloudFront attaches them only to requests it sends to that origin. TollBit uses `X-Tollbit-Host` to tell which site a URL belongs to, and rejects requests without it.
 
-| Setting | Agent Site origin | Cited-content lookup origin |
+| Setting | Agent Site origin | Fallback origin |
 | :--- | :--- | :--- |
 | Origin domain | Your TollBit subdomain, e.g. `tollbit.example.com` | `fallback.tollbit.com` |
 | Name | `tollbit-origin` | `tollbit-fallback` |
@@ -555,7 +581,7 @@ The `fallback.tollbit.com` origin requires the two custom headers shown in the t
 | Connection timeout | Default | `2` seconds |
 | Response timeout | Default | `3` seconds |
 
-Also note the **Name** of your existing site origin. The function below calls it `site-origin`; change the constant to match yours. Your behaviors keep pointing at your existing origin. The second origin is used by Routing Visitors from Cited Content, described later in this guide.
+Also note the **Name** of your existing site origin. The function below calls it `site-origin`; change the constant to match yours. Your behaviors keep pointing at your existing origin. The fallback origin is used for routing visitors from cited content, described later in this guide.
 
 #### Update Your Cache Policy
 
@@ -567,11 +593,9 @@ This step keeps a visitor from being served an agent's response and an agent fro
 
 If your behavior currently uses an AWS managed policy such as `CachingOptimized`, a new policy does not inherit its settings. Copy them over first, in particular Gzip and Brotli compression and the Default and Maximum TTL values.
 
-If you followed the publisher docs, the only change here is adding `x-tollbit-fallback-probe`.
-
 #### Create the CloudFront Function
 
-Go to **CloudFront → Functions**, create a function (for example `tollbit_agent_site`) with the **cloudfront-js-2.0** runtime, and paste the code below. The older 1.0 runtime cannot change the origin. If you created the function from the publisher docs, replace its code with this version.
+Go to **CloudFront → Functions**, create a function (for example `tollbit_agent_site`) with the **cloudfront-js-2.0** runtime, and paste the code below. The older 1.0 runtime cannot change the origin.
 
 ```javascript
 import cf from 'cloudfront';
@@ -596,7 +620,7 @@ function handler(event) {
   }
 
   // TollBit fetching your site's own error page. Serve it straight from your
-  // origin so the lookup can never trigger another lookup. The header is part
+  // origin so the fallback can never trigger another fallback. The header is part
   // of the cache key, so its value is fixed to keep it to one cache entry.
   if (request.headers[PROBE_HEADER]) {
     request.headers[PROBE_HEADER] = { value: '1' };
@@ -641,7 +665,7 @@ It only applies to URLs that your site has no page for, so existing pages and no
 #### How It Works
 
 1. A visitor requests a URL and your origin responds with a `404`.
-2. CloudFront sends the same request, with the same path and query string, to `fallback.tollbit.com`. The `X-Tollbit-Host` header on that origin tells TollBit which site the URL belongs to. Requests without it receive a `400`.
+2. CloudFront sends the same request, with the same path and query string, to the TollBit fallback origin, `fallback.tollbit.com`. The `X-Tollbit-Host` header on that origin tells TollBit which site the URL belongs to. Requests without it receive a `400`.
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
 4. If nothing is configured, TollBit requests the same URL from your site, marked with the `X-Tollbit-Fallback-Probe` header, and returns your site's own `404` page to the visitor. The function serves that marked request directly from your origin, so it cannot loop.
 
@@ -653,10 +677,12 @@ Redirect responses from TollBit include `Cache-Control: public, max-age=300`, an
 
 #### Verifying the Setup
 
+Make these requests as a regular visitor, not with the user agent of an AI agent. Requests from AI agents are served from your Agent Site instead, so they do not receive the redirect. The commands below use curl's own user agent, which counts as a visitor.
+
 Request an agent-only URL that has a configured destination and confirm you receive the redirect. Then request a URL your site has no page for, such as a made-up path, and confirm your site's normal error page is served with a `404` status.
 
 ```shell
-# Expect a 302 and a Location header
+# Expect a redirect status and a Location header
 curl -sI https://www.example.com/agent-only-page
 
 # Expect 404, with your site's own error page as the body

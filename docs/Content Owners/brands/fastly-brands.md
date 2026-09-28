@@ -8,7 +8,7 @@ hidden: true
 metadata:
   robots: noindex
 ---
-This guide covers setting up TollBit for a site served through Fastly: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Everything is created in your own Fastly service: two hosts, one logging endpoint, and three dynamic VCL snippets. It replaces the publisher-oriented Fastly instructions for your integration.
+This guide covers setting up TollBit for a site served through Fastly: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Everything is created in your own Fastly service: two hosts, one logging endpoint, and three dynamic VCL snippets.
 
 | What you create                     | Name                               | Used for        |
 | :---------------------------------- | :--------------------------------- | :-------------- |
@@ -110,7 +110,7 @@ Agent Site and routing visitors from cited content are set up together. Both use
 Visitor routing only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
 
 1. A visitor requests a URL and your origin responds with a `404`.
-2. Fastly sends the same request, with the same path and query string, to `fallback.tollbit.com` through the `tollbit_fallback_origin` host. Your site's hostname is sent in the `X-Tollbit-Host` header, which tells TollBit which site the URL belongs to. Requests without it receive a `400`.
+2. Fastly sends the same request, with the same path and query string, to the TollBit fallback origin, `fallback.tollbit.com`, through the `tollbit_fallback_origin` host. Your site's hostname is sent in the `X-Tollbit-Host` header, which tells TollBit which site the URL belongs to. Requests without it receive a `400`.
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, Fastly requests the URL from your origin again and your origin's own error page is served.
 
@@ -126,7 +126,7 @@ You may see a warning that these hosts are unused. That is expected. The snippet
 
 Once a host has been added, click the pencil icon next to it to edit it. Set the following on each host, then scroll down and click **Update** to save. The names must match exactly, because the snippets refer to the hosts by name.
 
-| Setting                               | Agent Site host                                    | Lookup host               |
+| Setting | Agent Site origin | Fallback origin |
 | :------------------------------------ | :------------------------------------------------- | :------------------------ |
 | Address                               | Your TollBit subdomain, e.g. `tollbit.example.com` | `fallback.tollbit.com`    |
 | Name                                  | `tollbit_origin`                                   | `tollbit_fallback_origin` |
@@ -135,7 +135,7 @@ Once a host has been added, click the pencil icon next to it to edit it. Set the
 | Auto load balance                     | `No`                                               | `No`                      |
 | First byte timeout                    | Default                                            | `2000` milliseconds       |
 
-Auto load balance is set to `No` so that only the snippets send requests to these hosts. The shorter timeout on the lookup host keeps a slow lookup from holding up your own error page.
+Auto load balance is set to `No` so that only the snippets send requests to these hosts. The shorter timeout on the fallback origin keeps a slow response from TollBit from holding up your own error page.
 
 ![](https://files.readme.io/0cfa040e63a3b941f453e5810ed05c842579e955a1d77af966e089893a14cbb1-image1.png)
 
@@ -208,11 +208,11 @@ if (resp.status >= 400 && req.restarts == 1 && req.http.X-Tollbit-Fallback-Host 
 }
 ```
 
-The `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` headers are only used inside Fastly to keep track of the lookup. They are removed from incoming requests, so a visitor cannot set them, and they are not included in responses to visitors.
+The snippets use the `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` request headers to keep track of the retry. They are removed from incoming requests, so a visitor cannot set them, and they are never included in responses to visitors.
 
 #### Caching
 
-Lookups are sent with `pass`, so Fastly does not cache TollBit's responses. Redirect responses from TollBit include `Cache-Control: public, max-age=300`, so a visitor's browser may reuse a redirect for up to five minutes. Keep this in mind when testing so a cached response is not mistaken for a misconfiguration.
+Requests to the fallback origin are sent with `pass`, so Fastly does not cache TollBit's responses. Redirect responses from TollBit include `Cache-Control: public, max-age=300`, so a visitor's browser may reuse a redirect for up to five minutes. Keep this in mind when testing so a cached response is not mistaken for a misconfiguration.
 
 # Activate
 
@@ -229,6 +229,8 @@ Once the hosts, the logging endpoint, and the three snippets are in your draft v
 # Verifying the Setup
 
 #### Routing Visitors from Cited Content
+
+Make these requests as a regular visitor, not with the user agent of an AI agent. Requests from AI agents are served from your Agent Site instead, so they do not receive the redirect. The commands below use curl's own user agent, which counts as a visitor.
 
 Request an agent-only URL that has a configured destination and confirm you receive the redirect. Then request a URL your site has no page for, such as a made-up path, and confirm your site's normal error page is served with a `404` status.
 

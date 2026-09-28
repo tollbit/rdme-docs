@@ -8,9 +8,11 @@ hidden: true
 metadata:
   robots: noindex
 ---
-We provide a way for all Akamai customers to share logs with our platform, and to set up Agent Site.
+This guide covers setting up TollBit for a site served through Akamai: sending logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content.
 
-# Before You Start: Allow TollBit's IP Addresses
+# Before You Start
+
+#### Allow TollBit's IP Addresses
 
 <Callout icon="🚧" theme="warn">
   ### Required
@@ -69,7 +71,7 @@ Use this option when each site has its own property.
 
 #### 1. Create the stream
 
-In <Anchor target="_blank" href="https://control.akamai.com/">Akamai Control Center</Anchor>, <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">create a stream</Anchor> for each property you are onboarding with TollBit. Include the fields listed under Data Parameters above, and set the log format to JSON.
+In <Anchor target="_blank" href="https://control.akamai.com/">Akamai Control Center</Anchor>, <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/create-stream">create a stream</Anchor> and add the properties you are onboarding with TollBit. Include the fields listed under Data Parameters above, and set the log format to JSON.
 
 #### 2. Stream to the TollBit endpoint
 
@@ -78,15 +80,17 @@ For the destination, follow Akamai's <Anchor target="_blank" href="https://techd
 - **Endpoint URL**: `https://log.tollbit.com/log/akamai`
 - **Authentication**: `None`. Authentication is handled by the custom header below.
 - **Content type**: `application/json`
-- **Custom header**: name `TollbitKey`, with the value set to the secret key from your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor>.
+- **Custom header**: name `TollbitKey`, with the value set to your organization's secret key from your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor>.
+
+The secret key belongs to your TollBit organization, so one stream covers the properties of one organization. If you have more than one organization, create a stream for each, with that organization's properties and secret key.
 
 #### 3. Activate the stream
 
-<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">Review and activate the stream</Anchor>, and <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/enable-datastream-behavior">enable the DataStream behavior</Anchor> in the property.
+<Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/review-activate-stream">Review and activate the stream</Anchor>, and <Anchor target="_blank" href="https://techdocs.akamai.com/datastream2/docs/enable-datastream-behavior">enable the DataStream behavior</Anchor> in each property included in the stream.
 
 ## Option 2: Stream to Amazon S3
 
-Use this option when one property serves multiple sites. One stream can deliver logs for all of your properties and markets to a single bucket, and onboarding a new market later does not need a new stream.
+Use this option when one property serves multiple sites. One stream can deliver logs for all of your properties to a single bucket, and onboarding another property later does not need a new stream.
 
 If you already stream DataStream 2 logs to S3, you may be able to reuse that stream. It must use the JSON log format and include the fields listed under Data Parameters above. If it doesn't, create a new stream as described here.
 
@@ -156,7 +160,7 @@ If the bucket is encrypted with a customer-managed KMS key, the key policy must 
 Email [team@tollbit.com](mailto:team@tollbit.com) with:
 
 - The bucket name, its region, and the folder path (e.g. `logs/{%Y/%m/%d}`)
-- The hostnames in the stream, and which market each one belongs to
+- The hostnames in the stream. If you have more than one TollBit organization, include which organization each hostname belongs to.
 
 We will confirm once logs are being ingested.
 
@@ -167,7 +171,7 @@ Akamai lets you set up rewrite rules at the edge using Cloudlets. Please see the
 <Callout icon="📘" theme="info">
   ### Test on Staging First
 
-  Both the Forward Rewrite Cloudlet and the Visitor Routing setup below change how requests are routed at the edge. Where possible, activate and test each change on Akamai's Staging network before activating to Production, so you can confirm the behavior with test requests before it affects live visitors.
+  Both the Forward Rewrite Cloudlet and the visitor routing setup below change how requests are routed at the edge. Where possible, activate and test each change on Akamai's Staging network before activating to Production, so you can confirm the behavior with test requests before it affects live visitors.
 </Callout>
 
 #### Cloudlets Setup
@@ -220,7 +224,7 @@ Ensure that the rewrite points to the `tollbit` subdomain origin you created abo
   Cloudlets Policy Manager evaluates rules from top to bottom, and picks the first rule that matches. If you have other Cloudlets with rules that also intercept requests, they may match before the rule you just added.
 </Callout>
 
-Once you've tested this appropriately, you can activate and deploy.
+Once the rule is in place, activate the policy, on Akamai's Staging network first where possible.
 
 # Routing Visitors from Cited Content
 
@@ -231,36 +235,38 @@ This only applies to URLs that your site has no page for, so existing pages and 
 #### How It Works
 
 1. A visitor requests a URL and your origin responds with a `404`.
-2. An EdgeWorker asks TollBit whether anything is configured for that URL. The lookup is sent, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header, to a lookup hostname you own that forwards to `fallback.tollbit.com`.
+2. An EdgeWorker asks TollBit whether anything is configured for that URL. The request is sent, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header, to a fallback hostname you own that forwards to the TollBit fallback origin, `fallback.tollbit.com`.
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The EdgeWorker turns the `404` into that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, the response is left untouched and your origin's own error page is served.
 
 TollBit is only consulted for `404` responses to `GET` and `HEAD` requests that reach your origin, so no other request does extra work.
 
-#### Lookup Hostname
+#### Fallback Hostname
 
-Akamai only allows an EdgeWorker to make requests to hostnames served by Akamai, so the lookup goes to a hostname you own that is set up on Akamai for this purpose. Any hostname works, for example `tollbit-lookup.example.com`. Give it its own property, with an edge hostname and certificate, whose <Anchor target="_blank" href="https://techdocs.akamai.com/property-mgr/docs/origin-server">Origin Server</Anchor> is `fallback.tollbit.com` over HTTPS with **Forward Host Header** set to **Origin Hostname**. No other behaviors are needed: the `X-Tollbit-Host` header set by the EdgeWorker is passed through to TollBit, which uses it to tell which site the URL belongs to. Requests without it receive a `400`.
+Akamai only allows an EdgeWorker to make requests to hostnames served by Akamai, so the request goes to a hostname you own that is set up on Akamai for this purpose. Any hostname works, for example `tollbit-fallback.example.com`. Give it its own property, with an edge hostname and certificate, whose <Anchor target="_blank" href="https://techdocs.akamai.com/property-mgr/docs/origin-server">Origin Server</Anchor> is `fallback.tollbit.com` over HTTPS with **Forward Host Header** set to **Origin Hostname**. No other behaviors are needed: the `X-Tollbit-Host` header set by the EdgeWorker is passed through to TollBit, which uses it to tell which site the URL belongs to. Requests without it receive a `400`.
 
-Because the lookups are handled by a separate property, they never touch your main site's property, so they do not appear in its DataStream logs or interact with its other behaviors.
+Because these requests are handled by a separate property, they never touch your main site's property, so they do not appear in its DataStream logs or interact with its other behaviors.
 
 #### EdgeWorker Setup
 
 You will need to write and deploy an EdgeWorker on your main property that runs on the origin response and does the following:
 
 - Acts only when the origin response is a `404` to a `GET` or `HEAD` request.
-- Makes one sub-request to the same path and query string on your lookup hostname, adding the `X-Tollbit-Host` header with your site's hostname (without a port), with a short timeout (one to two seconds).
+- Makes one sub-request to the same path and query string on your fallback hostname, adding the `X-Tollbit-Host` header with your site's hostname (without a port), with a short timeout (one to two seconds).
 - If the sub-request returns a redirect, sets the same redirect status and `Location` header on the response.
 - On any other result, including a timeout or error, leaves the response untouched.
 
 See Akamai's <Anchor target="_blank" href="https://techdocs.akamai.com/edgeworkers/docs">EdgeWorkers documentation</Anchor> for creating and activating an EdgeWorker. In your main property, add a rule matching Request Method `GET` or `HEAD` with the <Anchor target="_blank" href="https://techdocs.akamai.com/edgeworkers/docs/add-the-edgeworkers-behavior">EdgeWorkers behavior</Anchor> for it.
 
-Activate the lookup property, the EdgeWorker, and the main property version on Staging, verify as described below, then activate them on Production.
+Activate the fallback property, the EdgeWorker, and the main property version on Staging, verify as described below, then activate them on Production.
 
 #### Caching
 
-Redirect responses from TollBit include `Cache-Control: public, max-age=300`, and `404` responses for URLs with nothing configured include `max-age=30`. How long Akamai holds these depends on the lookup property's caching rules. Separately, if <Anchor target="_blank" href="https://techdocs.akamai.com/property-mgr/docs/cache-http-err-responses">Cache HTTP Error Responses</Anchor> is enabled on your main property, a `404` and the redirect derived from it may be cached under your site's URL for that setting's TTL. Keep this in mind when testing so a cached response is not mistaken for a misconfiguration.
+Redirect responses from TollBit include `Cache-Control: public, max-age=300`, and `404` responses for URLs with nothing configured include `max-age=30`. How long Akamai holds these depends on the fallback property's caching rules. Separately, if <Anchor target="_blank" href="https://techdocs.akamai.com/property-mgr/docs/cache-http-err-responses">Cache HTTP Error Responses</Anchor> is enabled on your main property, a `404` and the redirect derived from it may be cached under your site's URL for that setting's TTL. Keep this in mind when testing so a cached response is not mistaken for a misconfiguration.
 
 #### Verifying the Setup
+
+Make these requests as a regular visitor, not with the user agent of an AI agent. Requests from AI agents are served from your Agent Site instead, so they do not receive the redirect.
 
 Request an agent-only URL that has a configured destination and confirm you receive the redirect. Then request a URL your site has no page for (e.g. a made-up path) and confirm your site's normal error page is served. Test on Staging first, then repeat on Production once activated.
 
