@@ -110,7 +110,7 @@ When you add the Worker code below, set `FORWARD_LOGS` to `false`.
 
 The Worker below forwards logs to TollBit by default, so there is nothing to set up here. When you add the Worker code, replace `YOUR_SECRET_KEY_HERE` with the secret key from your <Anchor target="_blank" href="https://app.tollbit.com">TollBit portal</Anchor>.
 
-# Set Up the Worker
+# Set Up the Agent Site Worker
 
 <Callout icon="📘" theme="info">
   ### Test Before Production
