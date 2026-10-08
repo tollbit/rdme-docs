@@ -94,8 +94,8 @@ Once you're on the snippets page, click the Create Snippet button. This will tak
 const botList = [
  'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
  'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
- 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'Exabot',
- 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot',
+ 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'DuckAssistBot',  'ExaBot', 'Exabot',
+ 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'Mistral-AI', 'OAI-AdsBot',
  'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
 ];
 
@@ -405,33 +405,10 @@ On these plans, Agent Site runs in a Worker. Which script you deploy depends on 
 // this is a non-exhaustive list of agents that we recommend you get started with first
 // Add any other agents you would like to forward into this list.
 const botList = [
-  'Amazonbot',
-  'Amzn-SearchBot',
-  'anthropic-ai',
-  'Bytespider',
-  'CCBot',
-  'ChatGPT-User',
-  'claude-code',
-  'Claude-SearchBot',
-  'Claude-User',
-  'Claude-Web',
-  'ClaudeBot',
-  'cohere-ai',
-  'Diffbot',
-  'ExaBot',
-  'Exabot',
-  'GPTBot',
-  'meta-externalagent',
-  'Meta-Webindexer',
-  'OAI-AdsBot',
-  'OAI-SearchBot',
-  'Perplexity-User',
-  'PerplexityBot',
-  'ShapBot',
-  'Shap-User',
-  'Timpibot',
-  'YouBot'
-]
+ 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
+ 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
+ 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'DuckAssistBot',  'ExaBot', 'Exabot','GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'Mistral-AI', 'OAI-AdsBot','OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
+];
 
 const CF_APP_VERSION = '1.0.0'
 
