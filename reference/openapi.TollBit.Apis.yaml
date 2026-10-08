@@ -293,6 +293,14 @@ paths:
           required: true
           schema:
             type: string
+        - name: customLicenseId
+          in: query
+          required: false
+          description: Custom license IDs to include in the response; standard licenses are always returned.
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: The request has succeeded.
@@ -667,6 +675,11 @@ components:
           type: array
           items:
             type: string
+        customLicenseIds:
+          type: array
+          items:
+            type: string
+          description: Custom license IDs to include in the response; standard licenses are always returned.
     BatchRateLicenseResponse:
       type: object
       required:
@@ -725,6 +738,8 @@ components:
         published:
           type: string
         modified:
+          type: string
+        language:
           type: string
     ContentRate:
       type: object
