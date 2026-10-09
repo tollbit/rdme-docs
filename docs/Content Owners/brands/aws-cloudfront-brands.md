@@ -654,6 +654,8 @@ Go to **Distribution → Behaviors** and edit the behavior your regular traffic 
   ### Note
 
   The origin request policy applies to all traffic through the behavior, so your own origin also receives its own domain as `Host` rather than your public hostname. Most origins accept this.
+
+  It also forwards visitors' cookies to your origin. If your origin doesn't need them, use a custom policy with cookies set to none.
 </Callout>
 
 # Routing Visitors from Cited Content

@@ -678,6 +678,8 @@ Under **Cache key and origin requests**, choose _Cache policy and origin request
 
 On the same panel, set **Origin request policy** to the AWS managed policy `AllViewerExceptHostHeader`. It forwards every viewer header, including `User-Agent`, and lets CloudFront set `Host` to the origin's own domain. Both matter: without `User-Agent`, your Agent Site cannot tell which crawler it is serving, and without `Host` set to your TollBit subdomain, it cannot tell which site the request is for.
 
+It also forwards visitors' cookies to your origin. If your origin doesn't need them, use a custom policy with cookies set to none.
+
 If your behavior already uses a custom origin request policy, you can keep it as long as it forwards `User-Agent` and does not forward `Host`.
 
 <Callout icon="🚧" theme="warn">
