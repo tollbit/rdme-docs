@@ -66,6 +66,8 @@ ns4.edge.tollbit.com
   Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
 </Callout>
 
+Onboarding a large number of domains? Contact [team@tollbit.com](mailto:team@tollbit.com) and we can help you plan the DNS changes.
+
 <br />
 
 ## Allow TollBit's IP Addresses
@@ -94,28 +96,3 @@ Make sure these addresses are allowed through every security layer that could bl
 - **Any firewall or WAF in front of your origin servers**, outside of your CDN.
 
 If you are unsure whether your configuration blocks us, contact [team@tollbit.com](mailto:team@tollbit.com) and we will confirm from our side.
-
-## Bulk Updating DNS Records
-
-This guide covers how to update TXT and NS records across multiple sites using the DNS management tools your team already uses. Whether you're rolling out new SPF/DKIM/DMARC records, changing nameservers, or making platform-wide DNS changes, each registry handles bulk operations differently — use the links below to find the right workflow for your provider.
-
-For any bulk update (10+ sites), we recommend using each provider's API or CLI tooling rather than their dashboard, which typically requires editing domains one at a time. Always back up existing records and lower your TTL before making changes.
-
-**DNS Provider References**
-
-- **GoDaddy** — Manage DNS records via the dashboard or REST API;
-
-  &#x20;<Anchor target="_blank" href="https://www.godaddy.com/help/manage-dns-records-680">DNS Management Help </Anchor>| <Anchor target="_blank" href="https://developer.godaddy.com/doc/endpoint/domains#/">API Docs</Anchor>
-- **Amazon Route 53&#x20;**— AWS's DNS service supports bulk changes via JSON change-batches applied through the AWS CLI or SDK.
-
-  &#x20;<Anchor target="_blank" href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/">Developer Guide</Anchor> | <Anchor target="_blank" href="https://docs.aws.amazon.com/cli/latest/reference/route53/">CLI Reference</Anchor>
-- **Cloudflare** — Offers a REST API, Terraform provider, and the flarectl CLI for scripted bulk DNS record management.
-
-  &#x20;<Anchor target="_blank" href="https://developers.cloudflare.com/api/resources/dns/subresources/records/">DNS API Docs </Anchor>| <Anchor target="_blank" href="https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record">Terraform Provider</Anchor>
-- **Azure DNS** — Microsoft's cloud DNS integrates with Azure CLI and PowerShell for scripted bulk record management across zones.
-
-  &#x20;<Anchor target="_blank" href="https://learn.microsoft.com/en-us/azure/dns/">Azure DNS Docs</Anchor> | <Anchor target="_blank" href="https://learn.microsoft.com/en-us/cli/azure/network/dns">CLI Reference</Anchor>
-- **Namecheap** — API access (with IP whitelisting) supports bulk changes via setHosts, which replaces all records for a domain at once.
-
-  &#x20;<Anchor target="_blank" href="https://www.namecheap.com/support/api/methods/domains-dns/set-hosts/">API Docs</Anchor> | <Anchor target="_blank" href="https://www.namecheap.com/support/knowledgebase/category/10/dns/">DNS Help</Anchor>
-- **Google Domains / Squarespace** — Domain management moved to Squarespace in 2023; DNS records are managed per-domain through the Squarespace dashboard with no bulk API available.

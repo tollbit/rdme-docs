@@ -82,7 +82,7 @@ For any bulk update (10+ sites), we recommend using each provider's API or CLI t
   &#x20;<Anchor target="_blank" href="https://learn.microsoft.com/en-us/azure/dns/">Azure DNS Docs</Anchor> | <Anchor target="_blank" href="https://learn.microsoft.com/en-us/cli/azure/network/dns">CLI Reference</Anchor>
 - **Namecheap** — API access (with IP whitelisting) supports bulk changes via setHosts, which replaces all records for a domain at once.
 
-  &#x20;<Anchor target="_blank" href="https://www.namecheap.com/support/api/methods/domains-dns/set-hosts/">API Docs</Anchor> | <Anchor target="_blank" href="https://www.namecheap.com/support/knowledgebase/category/10/dns/">DNS Help</Anchor>
+  &#x20;<Anchor target="_blank" href="https://www.namecheap.com/support/api/methods/domains-dns/set-hosts/">API Docs</Anchor> | <Anchor target="_blank" href="https://www.namecheap.com/support/knowledgebase/subcategory/2237/host-records-setup/">DNS Help</Anchor>
 - **Google Domains / Squarespace** — Domain management moved to Squarespace in 2023; DNS records are managed per-domain through the Squarespace dashboard with no bulk API available.
 
 <br />
