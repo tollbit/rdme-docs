@@ -10,15 +10,6 @@ metadata:
 ---
 This guide covers setting up TollBit for a site served through Fastly: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Everything is created in your own Fastly service: two hosts, one logging endpoint, and three dynamic VCL snippets.
 
-| What you create                     | Name                               | Used for        |
-| :---------------------------------- | :--------------------------------- | :-------------- |
-| Host                                | `tollbit_origin`                   | Agent Site      |
-| Host                                | `tollbit_fallback_origin`          | Visitor routing |
-| HTTPS logging endpoint              | Any, e.g. `tollbit-prod`           | Analytics       |
-| Dynamic VCL snippet, type `recv`    | `tollbit_recv_dynamic_snippet`     | Agent Site      |
-| Dynamic VCL snippet, type `recv`    | `tollbit_fallback_recv_snippet`    | Visitor routing |
-| Dynamic VCL snippet, type `deliver` | `tollbit_fallback_deliver_snippet` | Visitor routing |
-
 # Before You Start
 
 #### Add and Verify Your Property
