@@ -104,6 +104,8 @@ TollBit sends these requests from a fixed set of static IP addresses, published 
 
 Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
 
+Our requests use the user agent `tollbot/1.0`, so you may see it show up in your logs.
+
 Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
 
 - **Your CDN's WAF and firewall rules**: IP allow and block lists, managed rules, and rate limiting.
