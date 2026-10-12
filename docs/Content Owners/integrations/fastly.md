@@ -16,6 +16,32 @@ Set those up first, then choose how bot blocking is managed:
 - TollBit Managed: you give TollBit a scoped API token, and bot blocking is controlled from the TollBit dashboard. TollBit only rewrites the content of a dynamic VCL snippet you own — it never creates objects, clones versions, or activates configurations, so it fits cleanly into Terraform and other infrastructure-as-code workflows.
 - User Managed: you write and maintain the snippet content yourself, and TollBit needs no API access to your Fastly account.
 
+## Allow TollBit's IP Addresses
+
+<Callout icon="🚧" theme="warn">
+  ### Required
+
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+</Callout>
+
+TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:
+
+```text
+52.22.183.94
+3.220.109.109
+```
+
+Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
+
+Our requests use the user agent `tollbot/1.0`, so you may see it show up in your logs.
+
+Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
+
+- **Fastly**: ACLs, rate limiting, the Next-Gen WAF, and any custom VCL that blocks or challenges requests.
+- **Any firewall or WAF in front of your origin servers**, outside of Fastly.
+
+If you are unsure whether your configuration blocks us, contact [team@tollbit.com](mailto:team@tollbit.com) and we will confirm from our side.
+
 ## Set up the TollBit Origin
 
 Go to the Deliver tab and select the domain you wish to integrate. On the right side of the screen, click the Edit configuration button and choose to clone your current active version.

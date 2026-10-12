@@ -10,16 +10,11 @@ metadata:
 ---
 This guide covers setting up TollBit for a site served through Fastly: streaming logs to our platform for analytics, setting up Agent Site, and routing visitors from cited content. Everything is created in your own Fastly service: two hosts, one logging endpoint, and three dynamic VCL snippets.
 
-| What you create                     | Name                               | Used for        |
-| :---------------------------------- | :--------------------------------- | :-------------- |
-| Host                                | `tollbit_origin`                   | Agent Site      |
-| Host                                | `tollbit_fallback_origin`          | Visitor routing |
-| HTTPS logging endpoint              | Any, e.g. `tollbit-prod`           | Analytics       |
-| Dynamic VCL snippet, type `recv`    | `tollbit_recv_dynamic_snippet`     | Agent Site      |
-| Dynamic VCL snippet, type `recv`    | `tollbit_fallback_recv_snippet`    | Visitor routing |
-| Dynamic VCL snippet, type `deliver` | `tollbit_fallback_deliver_snippet` | Visitor routing |
-
 # Before You Start
+
+#### Add and Verify Your Property
+
+Before you begin this guide, add your property in the TollBit dashboard and verify that you own the domain. Follow the steps in [Adding Your Property](adding-your-property) to create the TXT record and set up the `tollbit` subdomain in your DNS.
 
 #### Allow TollBit's IP Addresses
 
@@ -37,6 +32,8 @@ TollBit sends these requests from a fixed set of static IP addresses, published 
 ```
 
 Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
+
+Our requests use the user agent `tollbot/1.0`, so you may see it show up in your logs.
 
 Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
 
