@@ -13,7 +13,7 @@ We provide a way for all Akamai customers to stream logs to our platform, as wel
 <Callout icon="🚧" theme="warn">
   ### Required
 
-  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site. If our requests are blocked, challenged, or rate-limited, your Agent Site will not work correctly.
 </Callout>
 
 TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:

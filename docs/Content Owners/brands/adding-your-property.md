@@ -75,7 +75,7 @@ Onboarding a large number of domains? Contact [team@tollbit.com](mailto:team@tol
 <Callout icon="🚧" theme="warn">
   ### Required
 
-  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, neither of these will work correctly.
 </Callout>
 
 TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:
