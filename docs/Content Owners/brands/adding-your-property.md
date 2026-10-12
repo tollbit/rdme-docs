@@ -1,6 +1,8 @@
 ---
 title: Adding Your Property
-excerpt: Learn how to add and verify your property before setting up Analytics & Agent Site.
+excerpt: >-
+  Learn how to add and verify your property before setting up Analytics & Agent
+  Site.
 deprecated: false
 hidden: true
 metadata:
@@ -9,14 +11,16 @@ metadata:
 When you first log in to your org, you will be taken to the property overview page. If you don't have any properties configured, you will see this form that you can use to create your property. Create your property by giving it a name and inputting the domain name, i.e. `example.com` for your property.
 
 
-<Image src="https://files.readme.io/d87c20bacea844167e1d608f6685203cbbce252086314ed6ba4070d624f34792-Screenshot_2026-02-24_at_5.28.32_PM.png" align="center" />
+<Image src="https://files.readme.io/a73da5f14ad9893cfd61fc26f39602792a3dd640d607023113315518b226ba67-Screenshot_2026-10-12_at_10.46.13_AM.png" align="center" />
 
 
 Once you've added your property, we will automatically fetch your sitemap through your `robots.txt` to determine your site's layout.
 
-> 📘 Pro Tip
->
-> We recommend brands maintain a `robots.txt` file and a sitemap that is kept up to date. However, this is not required to onboard onto TollBit.
+<Callout icon="📘" theme="info">
+  ### Pro Tip
+
+  We recommend brands maintain a `robots.txt` file and a sitemap that is kept up to date. However, this is not required to onboard onto TollBit.
+</Callout>
 
 <br />
 
@@ -56,9 +60,11 @@ ns3.edge.tollbit.com
 ns4.edge.tollbit.com
 ```
 
-> 📘 Pro Tip
->
-> Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
+<Callout icon="📘" theme="info">
+  ### Pro Tip
+
+  Depending on your DNS provider, there may be a short period between saving your DNS updates and when the changes are visible to TollBit. This is normal and we give you the ability to continue with the onboarding process while you wait for these changes to propagate
+</Callout>
 
 <br />
 
@@ -74,13 +80,13 @@ For any bulk update (10+ sites), we recommend using each provider's API or CLI t
 
 - **GoDaddy** — Manage DNS records via the dashboard or REST API;
 
-  &#x20;<Anchor target="_blank" href="https://www.godaddy.com/help/manage-dns-records-680">DNS Management Help&#x20;</Anchor>| <Anchor target="_blank" href="https://developer.godaddy.com/doc/endpoint/domains#/">API Docs</Anchor>
+  &#x20;<Anchor target="_blank" href="https://www.godaddy.com/help/manage-dns-records-680">DNS Management Help </Anchor>| <Anchor target="_blank" href="https://developer.godaddy.com/doc/endpoint/domains#/">API Docs</Anchor>
 - **Amazon Route 53&#x20;**— AWS's DNS service supports bulk changes via JSON change-batches applied through the AWS CLI or SDK.
 
   &#x20;<Anchor target="_blank" href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/">Developer Guide</Anchor> | <Anchor target="_blank" href="https://docs.aws.amazon.com/cli/latest/reference/route53/">CLI Reference</Anchor>
 - **Cloudflare** — Offers a REST API, Terraform provider, and the flarectl CLI for scripted bulk DNS record management.
 
-  &#x20;<Anchor target="_blank" href="https://developers.cloudflare.com/api/resources/dns/subresources/records/">DNS API Docs&#x20;</Anchor>| <Anchor target="_blank" href="https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record">Terraform Provider</Anchor>
+  &#x20;<Anchor target="_blank" href="https://developers.cloudflare.com/api/resources/dns/subresources/records/">DNS API Docs </Anchor>| <Anchor target="_blank" href="https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record">Terraform Provider</Anchor>
 - **Azure DNS** — Microsoft's cloud DNS integrates with Azure CLI and PowerShell for scripted bulk record management across zones.
 
   &#x20;<Anchor target="_blank" href="https://learn.microsoft.com/en-us/azure/dns/">Azure DNS Docs</Anchor> | <Anchor target="_blank" href="https://learn.microsoft.com/en-us/cli/azure/network/dns">CLI Reference</Anchor>
