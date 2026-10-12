@@ -12,6 +12,10 @@ This guide covers setting up TollBit for a site served through Amazon CloudFront
 
 # Before You Start
 
+#### Add and Verify Your Property
+
+Before you begin this guide, add your property in the TollBit dashboard and verify that you own the domain. Follow the steps in [Adding Your Property](adding-your-property) to create the TXT record and set up the `tollbit` subdomain in your DNS.
+
 #### Allow TollBit's IP Addresses
 
 <Callout icon="🚧" theme="warn">

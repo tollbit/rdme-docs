@@ -12,6 +12,10 @@ This guide covers setting up TollBit for a site served through Cloudflare: sendi
 
 # Before You Start
 
+#### Add and Verify Your Property
+
+Before you begin this guide, add your property in the TollBit dashboard and verify that you own the domain. Follow the steps in [Adding Your Property](adding-your-property) to create the TXT record and set up the `tollbit` subdomain in your DNS.
+
 #### Proxy Your Site Through Cloudflare
 
 The Worker only runs on traffic that is proxied through Cloudflare. On your site's DNS page, make sure the records for your site have the proxy status `Proxied`.

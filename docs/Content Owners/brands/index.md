@@ -12,6 +12,7 @@ Each guide is complete on its own, so everything you need for a setup is on one 
 
 ## Guides
 
+- [Adding Your Property](adding-your-property). Required for every brand. Add your property in the TollBit dashboard and verify domain ownership through DNS before following a platform guide.
 - [Akamai for Brands](akamai-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Akamai.
 - [Cloudflare for Brands](cloudflare-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Cloudflare, using a single Worker, with Logpush as an analytics option on the Enterprise plan.
 - [Fastly for Brands](fastly-brands). Analytics, Agent Site, and visitor routing from cited content for sites served through Fastly, using dynamic VCL snippets.
