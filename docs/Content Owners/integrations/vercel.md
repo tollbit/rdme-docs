@@ -2,6 +2,31 @@
 title: Vercel
 excerpt: Learn how to integrate TollBit with Vercel.
 ---
+# Allow TollBit's IP Addresses
+
+<Callout icon="🚧" theme="warn">
+  ### Required
+
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+</Callout>
+
+TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:
+
+```text
+52.22.183.94
+3.220.109.109
+```
+
+Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
+
+Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
+
+- **Your CDN's WAF and firewall rules**: IP allow and block lists, managed rules, and rate limiting.
+- **Bot protection**, if enabled: make sure requests from these IPs are not blocked, challenged, or served alternate content.
+- **Any firewall or WAF in front of your origin servers**, outside of your CDN.
+
+If you are unsure whether your configuration blocks us, contact [team@tollbit.com](mailto:team@tollbit.com) and we will confirm from our side.
+
 # Steps for Analytics
 
 To forward logs from Vercel, follow the instructions for <Anchor target="_blank" href="https://vercel.com/docs/observability/log-drains/configure-log-drains">Log Drains here</Anchor>.

@@ -97,18 +97,27 @@ For any bulk update (10+ sites), we recommend using each provider's API or CLI t
 
 <br />
 
-## Whitelist TollBot user agent
+## Allow TollBit's IP Addresses
 
-##
+<Callout icon="🚧" theme="warn">
+  ### Required
 
-Once your property is verified, TollBit recommends whitelisting the TollBot user agent. This allows the platform to run periodic reviews to understand site structure and content changes over time. The fetched site map can then be indexed for analytics and content delivery to LLMs.
+  TollBit must be able to reach your sites. We request your pages to set up your Agent Site, to show you accurate analytics, and to power the Agent CMS view of your content. If our requests are blocked, challenged, or rate-limited, none of these will work correctly.
+</Callout>
 
-Our user agent will be called "tollbot", stylized as "tollbot/1.0". Please whitelist this user agent. You can also find our IPs here: [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt).
+TollBit sends these requests from a fixed set of static IP addresses, published at [https://tollbit.com/static-ips.txt](https://tollbit.com/static-ips.txt). At the time of writing, the list is:
 
-<br />
+```text
+52.22.183.94
+3.220.109.109
+```
 
-_Note that the syncs are setup initially once a site is onboarded, and then nightly afterwards to ensure we have an up to date structural understanding of the site. There may also be periodic requests to a small number of main pages or feeds to understand what changed._
+Always use the published list as the source of truth, and check it again if TollBit tells you it has changed.
 
-<br />
+Make sure these addresses are allowed through every security layer that could block or challenge our requests. This applies to every hostname you onboard with us:
 
-<br />
+- **Your CDN's WAF and firewall rules**: IP allow and block lists, managed rules, and rate limiting.
+- **Bot protection**, if enabled: make sure requests from these IPs are not blocked, challenged, or served alternate content.
+- **Any firewall or WAF in front of your origin servers**, outside of your CDN.
+
+If you are unsure whether your configuration blocks us, contact [team@tollbit.com](mailto:team@tollbit.com) and we will confirm from our side.
