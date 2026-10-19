@@ -48,7 +48,7 @@ To redirect bots to your `tollbit` subdomain you can use <Anchor target="_blank"
 Create a new rule. Set the rule to look at the User Agent and selected `Matches expression`. Copy the following regex as the expression to match. Feel free to modify to remove or block different bots.
 
 ```
-(ChatGPT-User|PerplexityBot|GPTBot|anthropic-ai|CCBot|Claude-Web|ClaudeBot|Claude-User|Claude-SearchBot|cohere-ai|YouBot|Diffbot|OAI-SearchBot|meta-externalagent|Timpibot|Amazonbot|Bytespider|Perplexity-User|ShapBot|Shap-User)
+(AgentNativeSearchBot|AI2Bot|AionBot|AIWebIndex|Amazonbot|Amzn-SearchBot|Amzn-User|anthropic-ai|AteveSearchSourceUrlDiscovery|AzureAI-SearchBot|Bravebot|Bytespider|CCBot|ChatGPT-User|claude-code|Claude-SearchBot|Claude-User|Claude-Web|Claude/|ClaudeBot|CloudflareBrowserRenderingCrawler|cohere-ai|Comet/|Cursor/|DesearchBot|Devin/|Diffbot|DuckAssistBot|Exabot|ExaSearchBot|ExaUser|Fellou|Gensparkbot|GitHubCopilotRuntime|goose/|GPTBot|grok-agent|GrokBot|Hermes-Agent|iaskspider|ibou-search|IbouBot|IsonSearchBot|Keenable|Kimi-SearchBot|KimiBot|Lightpanda|LinkupBot|Manus-User|meta-externalagent|meta-externalfetcher|meta-webindexer|MistralAI-User|MojeekBot|MySearchBot|OAI-AdsBot|OAI-SearchBot|OpenClaw|Perplexity-User|Perplexity/|PerplexityBot|rednote-websearch-bot|Reflectionbot|Shap-User|ShapBot|SofyaBot|TalarionSearchBot|Timpibot|YouBot)
 ```
 
 Set the rule to redirect to your `tollbit` subdomain by changing the `Then` option to `Redirect` and copy in your `tollbit` subdomain. The rule should look like this when you're finished

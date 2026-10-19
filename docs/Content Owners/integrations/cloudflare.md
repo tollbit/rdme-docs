@@ -119,11 +119,20 @@ Once you're on the snippets page, click the Create Snippet button. This will tak
 
 ```javascript
 const botList = [
- 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
- 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
- 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'DuckAssistBot',  'ExaBot', 'Exabot',
- 'GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'Mistral-AI', 'OAI-AdsBot',
- 'OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
+ 'AgentNativeSearchBot', 'AI2Bot', 'AionBot', 'AIWebIndex', 'Amazonbot',
+ 'Amzn-SearchBot', 'Amzn-User', 'anthropic-ai', 'AteveSearchSourceUrlDiscovery',
+ 'AzureAI-SearchBot', 'Bravebot', 'Bytespider', 'CCBot', 'ChatGPT-User',
+ 'claude-code', 'Claude-SearchBot', 'Claude-User', 'Claude-Web', 'Claude/',
+ 'ClaudeBot', 'CloudflareBrowserRenderingCrawler', 'cohere-ai', 'Comet/',
+ 'Cursor/', 'DesearchBot', 'Devin/', 'Diffbot', 'DuckAssistBot', 'Exabot',
+ 'ExaSearchBot', 'ExaUser', 'Fellou', 'Gensparkbot', 'GitHubCopilotRuntime',
+ 'goose/', 'GPTBot', 'grok-agent', 'GrokBot', 'Hermes-Agent', 'iaskspider',
+ 'ibou-search', 'IbouBot', 'IsonSearchBot', 'Keenable', 'Kimi-SearchBot',
+ 'KimiBot', 'Lightpanda', 'LinkupBot', 'Manus-User', 'meta-externalagent',
+ 'meta-externalfetcher', 'meta-webindexer', 'MistralAI-User', 'MojeekBot',
+ 'MySearchBot', 'OAI-AdsBot', 'OAI-SearchBot', 'OpenClaw', 'Perplexity-User',
+ 'Perplexity/', 'PerplexityBot', 'rednote-websearch-bot', 'Reflectionbot',
+ 'Shap-User', 'ShapBot', 'SofyaBot', 'TalarionSearchBot', 'Timpibot', 'YouBot'
 ];
 
 
@@ -432,9 +441,20 @@ On these plans, Agent Site runs in a Worker. Which script you deploy depends on 
 // this is a non-exhaustive list of agents that we recommend you get started with first
 // Add any other agents you would like to forward into this list.
 const botList = [
- 'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
- 'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
- 'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'DuckAssistBot',  'ExaBot', 'Exabot','GPTBot', 'meta-externalagent', 'Meta-Webindexer', 'Mistral-AI', 'OAI-AdsBot','OAI-SearchBot', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
+ 'AgentNativeSearchBot', 'AI2Bot', 'AionBot', 'AIWebIndex', 'Amazonbot',
+ 'Amzn-SearchBot', 'Amzn-User', 'anthropic-ai', 'AteveSearchSourceUrlDiscovery',
+ 'AzureAI-SearchBot', 'Bravebot', 'Bytespider', 'CCBot', 'ChatGPT-User',
+ 'claude-code', 'Claude-SearchBot', 'Claude-User', 'Claude-Web', 'Claude/',
+ 'ClaudeBot', 'CloudflareBrowserRenderingCrawler', 'cohere-ai', 'Comet/',
+ 'Cursor/', 'DesearchBot', 'Devin/', 'Diffbot', 'DuckAssistBot', 'Exabot',
+ 'ExaSearchBot', 'ExaUser', 'Fellou', 'Gensparkbot', 'GitHubCopilotRuntime',
+ 'goose/', 'GPTBot', 'grok-agent', 'GrokBot', 'Hermes-Agent', 'iaskspider',
+ 'ibou-search', 'IbouBot', 'IsonSearchBot', 'Keenable', 'Kimi-SearchBot',
+ 'KimiBot', 'Lightpanda', 'LinkupBot', 'Manus-User', 'meta-externalagent',
+ 'meta-externalfetcher', 'meta-webindexer', 'MistralAI-User', 'MojeekBot',
+ 'MySearchBot', 'OAI-AdsBot', 'OAI-SearchBot', 'OpenClaw', 'Perplexity-User',
+ 'Perplexity/', 'PerplexityBot', 'rednote-websearch-bot', 'Reflectionbot',
+ 'Shap-User', 'ShapBot', 'SofyaBot', 'TalarionSearchBot', 'Timpibot', 'YouBot'
 ];
 
 const CF_APP_VERSION = '1.0.0'
@@ -621,9 +641,17 @@ This code will immediately let through anyone with a known browser, and check al
 // this is a non-exhaustive list of agents that we recommend you get started with first
 // Add any other agents you would like to forward into this list.
 const botList = [
+  'AgentNativeSearchBot',
+  'AI2Bot',
+  'AionBot',
+  'AIWebIndex',
   'Amazonbot',
   'Amzn-SearchBot',
+  'Amzn-User',
   'anthropic-ai',
+  'AteveSearchSourceUrlDiscovery',
+  'AzureAI-SearchBot',
+  'Bravebot',
   'Bytespider',
   'CCBot',
   'ChatGPT-User',
@@ -631,20 +659,55 @@ const botList = [
   'Claude-SearchBot',
   'Claude-User',
   'Claude-Web',
+  'Claude/',
   'ClaudeBot',
+  'CloudflareBrowserRenderingCrawler',
   'cohere-ai',
+  'Comet/',
+  'Cursor/',
+  'DesearchBot',
+  'Devin/',
   'Diffbot',
-  'ExaBot',
+  'DuckAssistBot',
   'Exabot',
+  'ExaSearchBot',
+  'ExaUser',
+  'Fellou',
+  'Gensparkbot',
+  'GitHubCopilotRuntime',
+  'goose/',
   'GPTBot',
+  'grok-agent',
+  'GrokBot',
+  'Hermes-Agent',
+  'iaskspider',
+  'ibou-search',
+  'IbouBot',
+  'IsonSearchBot',
+  'Keenable',
+  'Kimi-SearchBot',
+  'KimiBot',
+  'Lightpanda',
+  'LinkupBot',
+  'Manus-User',
   'meta-externalagent',
-  'Meta-Webindexer',
+  'meta-externalfetcher',
+  'meta-webindexer',
+  'MistralAI-User',
+  'MojeekBot',
+  'MySearchBot',
   'OAI-AdsBot',
   'OAI-SearchBot',
+  'OpenClaw',
   'Perplexity-User',
+  'Perplexity/',
   'PerplexityBot',
-  'ShapBot',
+  'rednote-websearch-bot',
+  'Reflectionbot',
   'Shap-User',
+  'ShapBot',
+  'SofyaBot',
+  'TalarionSearchBot',
   'Timpibot',
   'YouBot'
   ]

@@ -143,6 +143,74 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
             "Statements": [
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "agentnativesearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "ai2bot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "aionbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "aiwebindex",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "amazonbot",
                         "FieldToMatch": {
                             "SingleHeader": {
@@ -177,7 +245,75 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "amzn-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "anthropic-ai",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "atevesearchsourceurldiscovery",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "azureai-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "bravebot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -313,7 +449,41 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "claude/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "claudebot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "cloudflarebrowserrenderingcrawler",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -347,7 +517,92 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "comet/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "cursor/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "desearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "devin/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "diffbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "duckassistbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -381,7 +636,330 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "exasearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "exauser",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "fellou",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "gensparkbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "githubcopilotruntime",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "goose/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "gptbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "grok-agent",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "grokbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "hermes-agent",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "iaskspider",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "ibou-search",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "iboubot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "isonsearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "keenable",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "kimi-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "kimibot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "lightpanda",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "linkupbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "manus-user",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -415,7 +993,75 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "meta-externalfetcher",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "meta-webindexer",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mistralai-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mojeekbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mysearchbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -466,7 +1112,7 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
-                        "SearchString": "omgili",
+                        "SearchString": "openclaw",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -500,7 +1146,75 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "perplexity/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "perplexitybot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "rednote-websearch-bot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "reflectionbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "shap-user",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -534,7 +1248,24 @@ Once you've created the ACL, you can choose any rules you'd like to enable bot d
                 },
                 {
                     "ByteMatchStatement": {
-                        "SearchString": "shap-user",
+                        "SearchString": "sofyabot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "talarionsearchbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -1169,14 +1900,24 @@ Next, create a target group for this Lambda by going to the EC2 Console -> Targe
 
 #### Create an ALB Listener Rule
 
-We can create a Listener rule under your default ALB Listener to inspect incoming user agents and route bot user agents to the lambda. This takes the place of the WAF in the above integrations. Go into the Listener and create a new rule. Create a condition using Regex matching for the header `user-agent`. For the values, add the following as three values (we need to do this because each condition only has a 128 character limit).
+We can create a Listener rule under your default ALB Listener to inspect incoming user agents and route bot user agents to the lambda. This takes the place of the WAF in the above integrations. Go into the Listener and create a new rule. Create a condition using Regex matching for the header `user-agent`. Each condition value has a 128 character limit and each rule allows at most five values, so the list below is split into eight values across two rules. Add the first five values to this rule, then create a second rule with the same condition type, action and a priority right after it, and add the remaining three values to it.
 
 ```text
-(?i).*(amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude).*
+(?i).*(agentnativesearchbot|ai2bot|aionbot|aiwebindex|amazonbot|amzn-searchbot|amzn-user|anthropic-ai).*
 
-(?i).*(cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer).*
+(?i).*(atevesearchsourceurldiscovery|azureai-searchbot|bravebot|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot).*
 
-(?i).*(oai-adsbot|oai-searchbot|omgili|perplexity|shapbot|shap-user|timpibot|youbot).*
+(?i).*(claude-user|claude-web|claude/|claudebot|cloudflarebrowserrenderingcrawler|cohere-ai|comet/|cursor/|desearchbot|devin/).*
+
+(?i).*(diffbot|duckassistbot|exabot|exasearchbot|exauser|fellou|gensparkbot|githubcopilotruntime|goose/|gptbot|grok-agent).*
+
+(?i).*(grokbot|hermes-agent|iaskspider|ibou-search|iboubot|isonsearchbot|keenable|kimi-searchbot|kimibot|lightpanda|linkupbot).*
+
+(?i).*(manus-user|meta-externalagent|meta-externalfetcher|meta-webindexer|mistralai-user|mojeekbot|mysearchbot|oai-adsbot).*
+
+(?i).*(oai-searchbot|openclaw|perplexity-user|perplexity/|perplexitybot|rednote-websearch-bot|reflectionbot|shap-user|shapbot).*
+
+(?i).*(sofyabot|talarionsearchbot|timpibot|youbot).*
 ```
 
 ![](https://files.readme.io/d8801c2453b079b88dfa213da752192e0823f147f3aeb0e16f1893a75b0130a3-Screenshot_2026-08-12_at_1.50.37_PM.png)
@@ -1201,11 +1942,22 @@ If you'd like to set this up without WAF managing the bot detection and want to 
 import https from 'https';
 
   const TOLLBIT_USER_AGENTS = [
-    'Amazonbot', 'Amzn-SearchBot', 'anthropic-ai', 'Bytespider', 'CCBot',
-    'ChatGPT-User', 'claude-code', 'Claude-SearchBot', 'Claude-User',
-    'Claude-Web', 'ClaudeBot', 'cohere-ai', 'Diffbot', 'ExaBot', 'GPTBot',
-    'meta-externalagent', 'Meta-Webindexer', 'OAI-AdsBot', 'OAI-SearchBot',
-    'omgili', 'Perplexity-User', 'PerplexityBot', 'ShapBot', 'Shap-User', 'Timpibot', 'YouBot'
+    'AgentNativeSearchBot', 'AI2Bot', 'AionBot', 'AIWebIndex', 'Amazonbot',
+    'Amzn-SearchBot', 'Amzn-User', 'anthropic-ai',
+    'AteveSearchSourceUrlDiscovery', 'AzureAI-SearchBot', 'Bravebot',
+    'Bytespider', 'CCBot', 'ChatGPT-User', 'claude-code', 'Claude-SearchBot',
+    'Claude-User', 'Claude-Web', 'Claude/', 'ClaudeBot',
+    'CloudflareBrowserRenderingCrawler', 'cohere-ai', 'Comet/', 'Cursor/',
+    'DesearchBot', 'Devin/', 'Diffbot', 'DuckAssistBot', 'Exabot',
+    'ExaSearchBot', 'ExaUser', 'Fellou', 'Gensparkbot', 'GitHubCopilotRuntime',
+    'goose/', 'GPTBot', 'grok-agent', 'GrokBot', 'Hermes-Agent', 'iaskspider',
+    'ibou-search', 'IbouBot', 'IsonSearchBot', 'Keenable', 'Kimi-SearchBot',
+    'KimiBot', 'Lightpanda', 'LinkupBot', 'Manus-User', 'meta-externalagent',
+    'meta-externalfetcher', 'meta-webindexer', 'MistralAI-User', 'MojeekBot',
+    'MySearchBot', 'OAI-AdsBot', 'OAI-SearchBot', 'OpenClaw', 'Perplexity-User',
+    'Perplexity/', 'PerplexityBot', 'rednote-websearch-bot', 'Reflectionbot',
+    'Shap-User', 'ShapBot', 'SofyaBot', 'TalarionSearchBot', 'Timpibot',
+    'YouBot'
   ];
 
   const TOLLBIT_UA_REGEX = new RegExp(TOLLBIT_USER_AGENTS.join('|'), 'i');
