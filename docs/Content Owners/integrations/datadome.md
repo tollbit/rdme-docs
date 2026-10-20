@@ -46,3 +46,10 @@ Under Access Controls > AI agents, you can configure each agent from the default
 ![Integrations Datadome Service 2](https://raw.githubusercontent.com/tollbit/rdme-docs/v1.0/public/integrations-datadome-service-2.png)
 
 <br />
+
+We recommend passing along the following user agents, categorized below by intent:
+
+- **AI Search**: oai-searchbot, claude-searchbot, perplexitybot, amzn-searchbot, azureai-searchbot, meta-webindexer, youbot, bravebot, exasearchbot, exabot, linkupbot, kimi-searchbot, rednote-websearch-bot, iaskspider, desearchbot, gensparkbot, keenable, mojeekbot, ibou-search, iboubot, grokbot, agentnativesearchbot, aiwebindex, atevesearchsourceurldiscovery, isonsearchbot, mysearchbot, talarionsearchbot, aionbot, sofyabot, oai-adsbot
+- **RAG**: chatgpt-user, claude-user, perplexity-user, mistralai-user, meta-externalfetcher, amzn-user, exauser, shap-user, cohere-ai, duckassistbot
+- **Advanced Agents**: claude-code, cursor/, devin/, githubcopilotruntime, goose/, openclaw, hermes-agent, comet/, fellou, manus-user, grok-agent, lightpanda, cloudflarebrowserrenderingcrawler, claude/, perplexity/,
+- **Training**: gptbot, claudebot, anthropic-ai, claude-web, ccbot, bytespider, meta-externalagent, amazonbot, ai2bot, diffbot, timpibot, reflectionbot, kimibot, shapbot
