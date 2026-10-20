@@ -68,7 +68,7 @@ Then you can add rules for the bots you want to forward off to the TollBit Bot P
 recommend the following list:
 
 ```
-chatgpt-user, perplexitybot, gptbot, anthropic-ai, ccbot, claude-web, claudebot, cohere-ai, youbot, diffbot, oai-searchbot, meta-externalagent, timpibot, amazonbot, bytespider, perplexity-user, shapbot, shap-user
+agentnativesearchbot, ai2bot, aionbot, aiwebindex, amazonbot, amzn-searchbot, amzn-user, anthropic-ai, atevesearchsourceurldiscovery, azureai-searchbot, bravebot, bytespider, ccbot, chatgpt-user, claude-code, claude-searchbot, claude-user, claude-web, claude/, claudebot, cloudflarebrowserrenderingcrawler, cohere-ai, comet/, cursor/, desearchbot, devin/, diffbot, duckassistbot, exabot, exasearchbot, exauser, fellou, gensparkbot, githubcopilotruntime, goose/, gptbot, grok-agent, grokbot, hermes-agent, iaskspider, ibou-search, iboubot, isonsearchbot, keenable, kimi-searchbot, kimibot, lightpanda, linkupbot, manus-user, meta-externalagent, meta-externalfetcher, meta-webindexer, mistralai-user, mojeekbot, mysearchbot, oai-adsbot, oai-searchbot, openclaw, perplexity-user, perplexity/, perplexitybot, rednote-websearch-bot, reflectionbot, shap-user, shapbot, sofyabot, talarionsearchbot, timpibot, youbot
 ```
 
 You can add or remove from this as befits your bot strategy. We can also keep these lowercased, since in the rules we are comparing the lowercased values.

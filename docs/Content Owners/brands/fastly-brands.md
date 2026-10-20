@@ -151,7 +151,7 @@ Go to **VCL snippets** in the sidebar and create the three snippets below. Set t
 `tollbit_recv_dynamic_snippet`
 
 ```vcl
-if (req.http.user-agent ~ "(?i)amazonbot|amzn-searchbot|anthropic-ai|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claudebot|cohere-ai|diffbot|exabot|gptbot|meta-externalagent|meta-webindexer|oai-adsbot|oai-searchbot|perplexity-user|perplexitybot|shapbot|shap-user|timpibot|youbot") {
+if (req.http.user-agent ~ "(?i)agentnativesearchbot|ai2bot|aionbot|aiwebindex|amazonbot|amzn-searchbot|amzn-user|anthropic-ai|atevesearchsourceurldiscovery|azureai-searchbot|bravebot|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claude/|claudebot|cloudflarebrowserrenderingcrawler|cohere-ai|comet/|cursor/|desearchbot|devin/|diffbot|duckassistbot|exabot|exasearchbot|exauser|fellou|gensparkbot|githubcopilotruntime|goose/|gptbot|grok-agent|grokbot|hermes-agent|iaskspider|ibou-search|iboubot|isonsearchbot|keenable|kimi-searchbot|kimibot|lightpanda|linkupbot|manus-user|meta-externalagent|meta-externalfetcher|meta-webindexer|mistralai-user|mojeekbot|mysearchbot|oai-adsbot|oai-searchbot|openclaw|perplexity-user|perplexity/|perplexitybot|rednote-websearch-bot|reflectionbot|shap-user|shapbot|sofyabot|talarionsearchbot|timpibot|youbot") {
   set req.backend = F_tollbit_origin;
   set req.http.Fastly-Orig-Host = req.http.host;
   if (std.prefixof(req.http.host, "www.")) {

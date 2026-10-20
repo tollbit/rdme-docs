@@ -104,6 +104,74 @@ Then add our agent detection rule. Select the option for using your own rules an
             "Statements": [
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "agentnativesearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "ai2bot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "aionbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "aiwebindex",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "amazonbot",
                         "FieldToMatch": {
                             "SingleHeader": {
@@ -138,7 +206,75 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "amzn-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "anthropic-ai",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "atevesearchsourceurldiscovery",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "azureai-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "bravebot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -274,7 +410,41 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "claude/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "claudebot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "cloudflarebrowserrenderingcrawler",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -308,7 +478,92 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "comet/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "cursor/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "desearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "devin/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "diffbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "duckassistbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -342,7 +597,330 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "exasearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "exauser",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "fellou",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "gensparkbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "githubcopilotruntime",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "goose/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "gptbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "grok-agent",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "grokbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "hermes-agent",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "iaskspider",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "ibou-search",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "iboubot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "isonsearchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "keenable",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "kimi-searchbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "kimibot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "lightpanda",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "linkupbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "manus-user",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -376,7 +954,75 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "meta-externalfetcher",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "meta-webindexer",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mistralai-user",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mojeekbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "mysearchbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -427,7 +1073,7 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
-                        "SearchString": "omgili",
+                        "SearchString": "openclaw",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -461,7 +1107,75 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
+                        "SearchString": "perplexity/",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
                         "SearchString": "perplexitybot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "rednote-websearch-bot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "reflectionbot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "shap-user",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
@@ -495,7 +1209,24 @@ Then add our agent detection rule. Select the option for using your own rules an
                 },
                 {
                     "ByteMatchStatement": {
-                        "SearchString": "shap-user",
+                        "SearchString": "sofyabot",
+                        "FieldToMatch": {
+                            "SingleHeader": {
+                                "Name": "user-agent"
+                            }
+                        },
+                        "TextTransformations": [
+                            {
+                                "Priority": 0,
+                                "Type": "LOWERCASE"
+                            }
+                        ],
+                        "PositionalConstraint": "CONTAINS"
+                    }
+                },
+                {
+                    "ByteMatchStatement": {
+                        "SearchString": "talarionsearchbot",
                         "FieldToMatch": {
                             "SingleHeader": {
                                 "Name": "user-agent"
