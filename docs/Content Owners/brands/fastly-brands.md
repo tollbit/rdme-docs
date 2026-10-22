@@ -102,6 +102,8 @@ Agent Site and routing visitors from cited content are set up together. Both use
 
 **Agent Site.** AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. A snippet matches the `User-Agent` header and sends those requests through the `tollbit_origin` host.
 
+If your Agent Site cannot serve a `GET` or `HEAD` request, Fastly serves it from your origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `5xx` status, takes longer than ten seconds to respond, or cannot be reached. Other requests from AI agents, such as `POST`, are always sent to your Agent Site.
+
 **Routing visitors from cited content.** Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
 
 Visitor routing only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
@@ -130,9 +132,9 @@ Once a host has been added, click the pencil icon next to it to edit it. Set the
 | TLS                                   | Enabled, port `443`                                | Enabled, port `443`       |
 | Certificate hostname and SNI hostname | Your TollBit subdomain                             | `fallback.tollbit.com`    |
 | Auto load balance                     | `No`                                               | `No`                      |
-| First byte timeout                    | Default                                            | `2000` milliseconds       |
+| First byte timeout                    | `10000` milliseconds                               | `2000` milliseconds       |
 
-Auto load balance is set to `No` so that only the snippets send requests to these hosts. The shorter timeout on the fallback origin keeps a slow response from TollBit from holding up your own error page.
+Auto load balance is set to `No` so that only the snippets send requests to these hosts. The timeout on the Agent Site origin decides how long Fastly waits for your Agent Site before serving the request from your own origin instead. The shorter timeout on the fallback origin keeps a slow response from TollBit from holding up your own error page.
 
 ![](https://files.readme.io/0cfa040e63a3b941f453e5810ed05c842579e955a1d77af966e089893a14cbb1-image1.png)
 
@@ -144,14 +146,22 @@ Go to **VCL snippets** in the sidebar and create the three snippets below. Set t
 | :--------------------------------- | :--------------------------- | :-------------- |
 | `tollbit_recv_dynamic_snippet`     | Within subroutine, `recv`    | Agent Site      |
 | `tollbit_fallback_recv_snippet`    | Within subroutine, `recv`    | Visitor routing |
-| `tollbit_fallback_deliver_snippet` | Within subroutine, `deliver` | Visitor routing |
+| `tollbit_fallback_deliver_snippet` | Within subroutine, `deliver` | Agent Site and visitor routing |
 
 ![](https://files.readme.io/39bc1086ee50031cf99b86bb1ba70e4cde335bf3c219f9a3c6b635a154ecb39c-Screenshot_2026-07-23_at_5.30.14_PM.png)
 
 `tollbit_recv_dynamic_snippet`
 
 ```vcl
-if (req.http.user-agent ~ "(?i)agentnativesearchbot|ai2bot|aionbot|aiwebindex|amazonbot|amzn-searchbot|amzn-user|anthropic-ai|atevesearchsourceurldiscovery|azureai-searchbot|bravebot|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claude/|claudebot|cloudflarebrowserrenderingcrawler|cohere-ai|comet/|cursor/|desearchbot|devin/|diffbot|duckassistbot|exabot|exasearchbot|exauser|fellou|gensparkbot|githubcopilotruntime|goose/|gptbot|grok-agent|grokbot|hermes-agent|iaskspider|ibou-search|iboubot|isonsearchbot|keenable|kimi-searchbot|kimibot|lightpanda|linkupbot|manus-user|meta-externalagent|meta-externalfetcher|meta-webindexer|mistralai-user|mojeekbot|mysearchbot|oai-adsbot|oai-searchbot|openclaw|perplexity-user|perplexity/|perplexitybot|rednote-websearch-bot|reflectionbot|shap-user|shapbot|sofyabot|talarionsearchbot|timpibot|youbot") {
+if (req.restarts == 0) {
+  unset req.http.X-Tollbit-Agent-Failover-Host;
+}
+
+# Your Agent Site could not serve this request: restore your site's hostname so
+# the request is served by your origin.
+if (req.http.X-Tollbit-Agent-Failover-Host) {
+  set req.http.host = req.http.X-Tollbit-Agent-Failover-Host;
+} elsif (req.http.user-agent ~ "(?i)agentnativesearchbot|ai2bot|aionbot|aiwebindex|amazonbot|amzn-searchbot|amzn-user|anthropic-ai|atevesearchsourceurldiscovery|azureai-searchbot|bravebot|bytespider|ccbot|chatgpt-user|claude-code|claude-searchbot|claude-user|claude-web|claude/|claudebot|cloudflarebrowserrenderingcrawler|cohere-ai|comet/|cursor/|desearchbot|devin/|diffbot|duckassistbot|exabot|exasearchbot|exauser|fellou|gensparkbot|githubcopilotruntime|goose/|gptbot|grok-agent|grokbot|hermes-agent|iaskspider|ibou-search|iboubot|isonsearchbot|keenable|kimi-searchbot|kimibot|lightpanda|linkupbot|manus-user|meta-externalagent|meta-externalfetcher|meta-webindexer|mistralai-user|mojeekbot|mysearchbot|oai-adsbot|oai-searchbot|openclaw|perplexity-user|perplexity/|perplexitybot|rednote-websearch-bot|reflectionbot|shap-user|shapbot|sofyabot|talarionsearchbot|timpibot|youbot") {
   set req.backend = F_tollbit_origin;
   set req.http.Fastly-Orig-Host = req.http.host;
   if (std.prefixof(req.http.host, "www.")) {
@@ -189,6 +199,13 @@ if (req.http.X-Tollbit-Fallback-Host && req.http.X-Tollbit-Skip-Fallback) {
 `tollbit_fallback_deliver_snippet`
 
 ```vcl
+# Agent Site errored (5xx) or could not be reached on a GET/HEAD: restart and
+# let the recv snippet send it to your origin instead.
+if (resp.status >= 500 && req.restarts == 0 && (req.method == "GET" || req.method == "HEAD") && req.backend == F_tollbit_origin) {
+  set req.http.X-Tollbit-Agent-Failover-Host = req.http.Fastly-Orig-Host;
+  restart;
+}
+
 # Origin 404 on a GET/HEAD: restart and let the recv snippet retry it against
 # the TollBit fallback. Bot traffic already forwarded to the tollbit origin
 # is excluded.
@@ -205,7 +222,7 @@ if (resp.status >= 400 && req.restarts == 1 && req.http.X-Tollbit-Fallback-Host 
 }
 ```
 
-The snippets use the `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` request headers to keep track of the retry. They are removed from incoming requests, so a visitor cannot set them, and they are never included in responses to visitors.
+The snippets use the `X-Tollbit-Agent-Failover-Host`, `X-Tollbit-Fallback-Host` and `X-Tollbit-Skip-Fallback` request headers to keep track of retries. They are removed from incoming requests, so a visitor cannot set them, and they are never included in responses to visitors.
 
 #### Caching
 

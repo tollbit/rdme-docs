@@ -1314,11 +1314,13 @@ The fallback origin, `fallback.tollbit.com`, requires the two custom headers sho
 | Name | `tollbit-origin` | `tollbit-fallback` |
 | Protocol | HTTPS only, TLSv1.2 | HTTPS only, TLSv1.2 |
 | Custom headers | None | `X-Tollbit-Host`: your site's hostname, e.g. `www.example.com`<br />`X-Tollbit-Fallback-Mode`: `passthrough` |
-| Connection attempts | Default | `1` |
-| Connection timeout | Default | `2` seconds |
-| Response timeout | Default | `3` seconds |
+| Connection attempts | `1` | `1` |
+| Connection timeout | `2` seconds | `2` seconds |
+| Response timeout | `10` seconds | `3` seconds |
 
 Also note the **Name** of your existing site origin. The function below calls it `site-origin`; change the constant to match yours. Your behaviors keep pointing at your existing origin. The fallback origin is used for routing visitors from cited content, described later in this guide.
+
+The timeouts on the Agent Site origin decide how quickly CloudFront gives up on your Agent Site and serves the request from your own origin instead, described in If Your Agent Site Is Unavailable below. With CloudFront's defaults, that can take more than 30 seconds.
 
 #### Update Your Cache Policy
 
@@ -1352,7 +1354,16 @@ function handler(event) {
   // The WAF rule inserts this header only on a bot match. Anything other than
   // an exact "true", including the header being absent, is treated as a human.
   if (botRequestHeader && botRequestHeader.value === 'true') {
-    cf.selectRequestOriginById(BOT_ORIGIN_ID);
+    // If your Agent Site errors or times out, CloudFront serves GET and HEAD
+    // requests from your origin instead.
+    if (request.method === 'GET' || request.method === 'HEAD') {
+      cf.createRequestOriginGroup({
+        originIds: [{ originId: BOT_ORIGIN_ID }, { originId: SITE_ORIGIN_ID }],
+        failoverCriteria: { statusCodes: [500, 502, 503, 504] }
+      });
+    } else {
+      cf.selectRequestOriginById(BOT_ORIGIN_ID);
+    }
     return request;
   }
 
@@ -1394,6 +1405,12 @@ Go to **Distribution → Behaviors** and edit the behavior your regular traffic 
 
   It also forwards visitors' cookies to your origin. If your origin doesn't need them, use a custom policy with cookies set to none.
 </Callout>
+
+#### If Your Agent Site Is Unavailable
+
+If your Agent Site cannot serve a `GET` or `HEAD` request from an AI agent, CloudFront fetches it from your own origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `500`, `502`, `503` or `504`, or when CloudFront cannot connect to it or does not get a response within the timeouts set on the `tollbit-origin` origin. Other requests from AI agents, such as `POST`, are always sent to your Agent Site, because CloudFront only fails over `GET`, `HEAD` and `OPTIONS` requests.
+
+A response your origin serves in place of the Agent Site is cached under the same cache key as Agent Site responses, for as long as your origin's caching headers and your cache policy allow. Once your Agent Site is available again, AI agents may keep receiving that cached response until it expires.
 
 # Routing Visitors from Cited Content
 

@@ -276,6 +276,17 @@ Ensure that the rewrite points to the `tollbit` subdomain origin you created abo
 
 Once the rule is in place, activate the policy, on Akamai's Staging network first where possible.
 
+#### If Your Agent Site Is Unavailable
+
+We recommend setting up your property so that if your Agent Site cannot serve a request from an AI agent, Akamai serves it from your own origin instead. How you do this depends on the rest of your property, but the result should be:
+
+- `GET` and `HEAD` requests from AI agents that receive a `5xx` from your Agent Site, or that time out or cannot connect, are served from your existing origin.
+- Other requests from AI agents, such as `POST`, are not retried.
+- A slow or unreachable Agent Site fails over within a few seconds, not after Akamai's default timeouts.
+- Visitor routing, set up below, is not affected.
+
+Test any change on Staging before activating it to Production, and contact [team@tollbit.com](mailto:team@tollbit.com) if you would like help with your configuration.
+
 # Routing Visitors from Cited Content
 
 Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
