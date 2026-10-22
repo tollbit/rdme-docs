@@ -37,7 +37,7 @@ For instance, publishers can set pricing by categories (e.g., sports, politics),
 Once the bot presents a valid TollBit token, we authorize the request and fetch the content from your site securely. Today, this happens via our internal reverse proxy:
 
 - The request is sent to `api.tollbit.com/GetContent`
-- We scrape the page (on your behalf) and return the content in clean Markdown, not raw HTML
+- We fetch the page (on your behalf) and return clean, structured content instead of the raw page
 - This allows agents to consume structured, legible content without ads, scripts, or layout junk
 
 ## Do publishers typically provide customized or stripped-down versions of their content specifically for AI bots?
