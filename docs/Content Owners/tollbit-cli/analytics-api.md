@@ -94,7 +94,7 @@ Once your agent is connected, ask questions the way you'd ask a colleague. The a
 <Callout icon="far fa-circle-info" theme="info">
   ### Pro Tip
 
-  The more specific the question (time range, site, bot, section), the more accurate and faster the answer. If an answer looks off, ask the agent to show the SQL it ran.
+  The more specific the question (time range, site, bot, section), the more detail you're receive back. If an answer looks off, ask the agent to show the SQL it ran.
 </Callout>
 
 <br />
