@@ -91,12 +91,6 @@ Once your agent is connected, ask questions the way you'd ask a colleague. The a
 | Comparisons          | Compare AI training bots vs. AI search bots by request volume this quarter.               |
 | Verification         | How much Googlebot traffic came from verified Google IP addresses?                        |
 
-<Callout icon="far fa-circle-info" theme="info">
-  ### Pro Tip
-
-  The more specific the question (time range, site, bot, section), the more detail you're receive back. If an answer looks off, ask the agent to show the SQL it ran.
-</Callout>
-
 #### **Note on TollBit Intelligence:**&#x20;
 
 If you have Tollbit Intelligence enabled, you can query about entity and topic information via Plain English as well.&#x20;
@@ -136,6 +130,16 @@ If you have Tollbit Intelligence enabled, you can query about entity and topic i
     </tr>
   </tbody>
 </Table>
+
+<br />
+
+<Callout icon="far fa-circle-info" theme="info">
+  ### Pro Tip
+
+  The more specific the question (time range, site, bot, section), the more detail you're receive back. If an answer looks off, ask the agent to show the SQL it ran.
+</Callout>
+
+####
 
 ## Via SQL&#x20;
 
