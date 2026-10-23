@@ -14,7 +14,7 @@ Access: request it at [team@tollbit.com](mailto:team@tollbit.com). Once enabled,
 
 This guide covers requesting access, installing the TollBit CLI and connecting it to your organization. If it's already done on your local environemnt, please proceed to the next section.&#x20;
 
-### **Step One: Request Access**
+### **Request Access**
 
 Each API is enabled separately for each organization.
 
@@ -24,7 +24,7 @@ Each API is enabled separately for each organization.
    ◦ Search API
 3. Make sure you can sign in to the TollBit dashboard. You'll approve the CLI's access in your browser while signed in. The CLI runs on macOS, Linux and Windows.
 
-### **Step Two: Choose Set up Method**
+### **Choose Set up Method**
 
 **Option A: With your AI agent (recommended)**
 
