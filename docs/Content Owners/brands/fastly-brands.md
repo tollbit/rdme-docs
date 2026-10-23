@@ -168,6 +168,9 @@ Go to **VCL snippets** in the sidebar and create the three snippets below. Set t
 ```vcl
 if (req.restarts == 0) {
   unset req.http.X-Tollbit-Agent-Failover-Host;
+  unset req.http.X-Tollbit-Host;
+  unset req.http.X-Tollbit-Fallback-Host;
+  unset req.http.X-Tollbit-Skip-Fallback;
 }
 
 # Your Agent Site could not serve this request: restore your site's hostname so

@@ -1423,7 +1423,7 @@ Go to **Distribution → Behaviors** and edit the behavior your regular traffic 
 
 If your Agent Site cannot serve a `GET` or `HEAD` request from an AI agent, CloudFront fetches it from your own origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `500`, `502`, `503` or `504`, or when CloudFront cannot connect to it or does not get a response within the timeouts set on the `tollbit-origin` origin. Other requests from AI agents, such as `POST`, are always sent to your Agent Site, because CloudFront only fails over `GET`, `HEAD` and `OPTIONS` requests.
 
-A response your origin serves in place of the Agent Site is cached under the same cache key as Agent Site responses, for as long as your origin's caching headers and your cache policy allow. Once your Agent Site is available again, AI agents may keep receiving that cached response until it expires.
+A response your origin serves in place of the Agent Site is cached under the same cache key as Agent Site responses, for as long as your origin's caching headers and your cache policy allow. Once your Agent Site is available again, AI agents keep receiving that cached response for that URL until it expires, and those requests do not reach your Agent Site. If your origin does not send `Cache-Control` headers, the Default TTL in your cache policy applies, which is 24 hours in AWS managed policies such as `CachingOptimized`. If that is longer than you want, have your origin send `Cache-Control` headers for its pages, or lower the Default TTL in your cache policy.
 
 # Routing Visitors from Cited Content
 

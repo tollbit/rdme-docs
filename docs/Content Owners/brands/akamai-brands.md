@@ -313,7 +313,7 @@ This only applies to URLs that your site has no page for, so existing pages and 
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The EdgeWorker turns the `404` into that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, the response is left untouched and your origin's own error page is served.
 
-TollBit is only consulted for `404` responses to `GET` and `HEAD` requests that reach your origin, so no other request does extra work.
+TollBit is only consulted for `404` responses from your origin to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents, which are routed to your Agent Site, are excluded.
 
 #### Fallback Hostname
 
@@ -325,7 +325,7 @@ Because these requests are handled by a separate property, they never touch your
 
 You will need to write and deploy an EdgeWorker on your main property that runs on the origin response and does the following:
 
-- Acts only when the origin response is a `404` to a `GET` or `HEAD` request.
+- Acts only when the origin response is a `404` to a `GET` or `HEAD` request, and skips requests from AI agents that match the user agent list above.
 - Makes one sub-request to the same path and query string on your fallback hostname, adding the `X-Tollbit-Host` header with your site's hostname (without a port), with a short timeout (one to two seconds).
 - If the sub-request returns a redirect, sets the same redirect status and `Location` header on the response.
 - On any other result, including a timeout or error, leaves the response untouched.

@@ -352,7 +352,7 @@ async function fetchFromAgentSite(request) {
     if (canFailover) {
       return null
     }
-    throw err
+    return new Response(null, { status: 502 })
   } finally {
     clearTimeout(timer)
   }
@@ -516,7 +516,7 @@ With `FORWARD_LOGS` set to `false`, the Worker sends nothing to TollBit. Logpush
 
 AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. The Worker matches the `User-Agent` header against the list at the top of the code, without regard to case, and fetches the same path and query string from your `tollbit` subdomain. For `www.example.com` and `example.com`, that is `tollbit.example.com`.
 
-If your Agent Site cannot serve a `GET` or `HEAD` request, the Worker serves it from your origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `5xx` status, including the `52x` and `530` errors Cloudflare returns when it cannot reach the Agent Site, or takes longer than ten seconds to respond. Other requests from AI agents, such as `POST`, are always sent to your Agent Site. If the Worker forwards your logs, these requests are logged with the status your origin returned.
+If your Agent Site cannot serve a `GET` or `HEAD` request, the Worker serves it from your origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `5xx` status, including the `52x` and `530` errors Cloudflare returns when it cannot reach the Agent Site, or takes longer than ten seconds to respond. Other requests from AI agents, such as `POST`, are always sent to your Agent Site, and receive a `502` if it cannot be reached. If the Worker forwards your logs, these requests are logged with the status your origin returned.
 
 #### Routing Visitors from Cited Content
 
