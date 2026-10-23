@@ -2,7 +2,7 @@
 title: Brands
 excerpt: Onboarding guides written specifically for brands setting up TollBit.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: noindex
 ---
