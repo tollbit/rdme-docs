@@ -19,10 +19,9 @@ This guide covers requesting access, installing the TollBit CLI and connecting i
 Each API is enabled separately for each organization.
 
 1. Email [team@tollbit.com](mailto:team@tollbit.com) and say which APIs you'd like enabled: Analytics API, Search API, or both.
-2. Once access is enabled, you'll see each API in your TollBit dashboard under CLI:
-   ◦ Analytics API
-   ◦ Search API
-3. Make sure you can sign in to the TollBit dashboard. You'll approve the CLI's access in your browser while signed in. The CLI runs on macOS, Linux and Windows.
+2. Make sure you can sign in to the TollBit dashboard. You'll approve the CLI's access in your browser while signed in. The CLI runs on macOS, Linux and Windows.
+
+The TollBit team will notify you once the access is enabled, and you can proceed to setting up the CLI with your preferred method below.
 
 ### **Choose Set up Method**
 
