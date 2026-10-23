@@ -1,7 +1,7 @@
 ---
 title: Search API (Not Complete)
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
