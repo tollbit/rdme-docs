@@ -4,7 +4,7 @@ excerpt: >-
   Learn how to add and verify your property before setting up Analytics & Agent
   Site.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: noindex
 ---
