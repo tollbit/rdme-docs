@@ -2,7 +2,7 @@
 title: TollBit CLI
 excerpt: Connecting TollBit accounts to tools you already use
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
