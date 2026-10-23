@@ -119,6 +119,19 @@ The Worker below forwards logs to TollBit by default, so there is nothing to set
 # Set Up the Agent Site Worker
 
 <Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The Worker code below is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
+<Callout icon="📘" theme="info">
   ### Test Before Production
 
   The Worker changes how requests are routed at the edge. Where possible, attach it to a staging hostname first, or to a route that covers a small part of your site, and confirm the results with the test requests in Verifying the Setup before attaching it to the route that serves your live traffic.

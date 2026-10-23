@@ -82,6 +82,19 @@ Then send [team@tollbit.com](mailto:team@tollbit.com) the bucket name, the direc
 AI agents that request your site are routed to your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. AWS WAF identifies the agents, and a CloudFront Function on the Viewer request event switches the origin for those requests. There is no Lambda to deploy.
 
 <Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The setup below, including the WAF rule, origins and CloudFront Function, is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
+<Callout icon="📘" theme="info">
   ### Test Before Production
 
   The steps below change how requests are routed at the edge. Where possible, apply them to a staging distribution first, or to a single low-traffic behavior, and confirm the results with the test requests in Verifying the Setup before applying them to the behavior that serves your live traffic.

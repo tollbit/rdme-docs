@@ -98,6 +98,19 @@ Open **Advanced options** and set **Custom header name** to `TollbitKey`. Set **
 
 Agent Site and routing visitors from cited content are set up together. Both use the same two screens in Fastly, **Origins** and **VCL snippets**, so you add both hosts in one visit and all three snippets in the next.
 
+<Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The setup below, including the hosts and VCL snippets, is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
 #### How It Works
 
 **Agent Site.** AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. A snippet matches the `User-Agent` header and sends those requests through the `tollbit_origin` host.

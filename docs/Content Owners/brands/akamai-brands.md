@@ -175,6 +175,19 @@ We will confirm once logs are being ingested.
 Akamai lets you set up rewrite rules at the edge using Cloudlets. Please see the steps outlined below.
 
 <Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The setup below is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
+<Callout icon="📘" theme="info">
   ### Test on Staging First
 
   Both the Forward Rewrite Cloudlet and the visitor routing setup below change how requests are routed at the edge. Where possible, activate and test each change on Akamai's Staging network before activating to Production, so you can confirm the behavior with test requests before it affects live visitors.
