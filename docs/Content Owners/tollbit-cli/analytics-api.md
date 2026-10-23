@@ -100,7 +100,9 @@ Once your agent is connected, ask questions the way you'd ask a colleague. The a
 
 ## Via SQL&#x20;
 
-If you would like to query your data directly through your CLI, you can choose to query your data directly via SQL. Here are some example queries based on the schema the CLI provides. Note, if you would like to see the full schema, run **tollbit analytics schema** or check out the next section.&#x20;
+If you would like to query your data directly through your CLI, you can choose to query your data directly via SQL.&#x20;
+
+Below are some example queries based on the schema the CLI provides. Note, if you would like to see the full schema, run **tollbit analytics schema** or check out the next section.&#x20;
 
 <Table>
   <thead>
@@ -160,7 +162,7 @@ If you would like to query your data directly through your CLI, you can choose t
 
 # Technical API Details
 
-In order to make the most of the Analytics API, it's best to get familiar with the types of commands and the full table schema available to you.
+In order to make the most of the Analytics API, it's best to get familiar with the types of commands and the full table schema available within the CLI.
 
 ## Commands
 
