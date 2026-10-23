@@ -27,7 +27,7 @@ For bots that have a valid TollBit token (see Developers docs), they will be abl
 
 We format content to most effectively integrate within AI applications and into LLM contexts. This feature comes out of the box when using TollBit. All sites onboarded with TollBit will work with this functionality.
 
-The formatting process makes no changes to the original content. We simply clean the content for you to be perfectly ready for your data pipeline. Specifically, the data comes back as a markdown representation of the original web page. The `main` field of the `content` response will likely contain the actual content of the article without any clutter of navigational components or social media links. Should you want to use those fields, you may get them from the `header` and `footer` fields if we were able to parse them out.
+The formatting process makes no changes to the original content. We simply clean the content for you to be perfectly ready for your data pipeline. The `main` field of the `content` response will likely contain the actual content of the article without any clutter of navigational components or social media links. Should you want to use those fields, you may get them from the `header` and `footer` fields if we were able to parse them out.
 
 Finally, the `metadata` field may contain additional information that isn't part of the original content, but can provide additional context around the content. This could include raw data, follow up link, or additional topics for the end user to explore.
 

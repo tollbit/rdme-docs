@@ -175,6 +175,19 @@ We will confirm once logs are being ingested.
 Akamai lets you set up rewrite rules at the edge using Cloudlets. Please see the steps outlined below.
 
 <Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The setup below is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
+<Callout icon="📘" theme="info">
   ### Test on Staging First
 
   Both the Forward Rewrite Cloudlet and the visitor routing setup below change how requests are routed at the edge. Where possible, activate and test each change on Akamai's Staging network before activating to Production, so you can confirm the behavior with test requests before it affects live visitors.
@@ -276,6 +289,17 @@ Ensure that the rewrite points to the `tollbit` subdomain origin you created abo
 
 Once the rule is in place, activate the policy, on Akamai's Staging network first where possible.
 
+#### If Your Agent Site Is Unavailable
+
+We recommend setting up your property so that if your Agent Site cannot serve a request from an AI agent, Akamai serves it from your own origin instead. How you do this depends on the rest of your property, but the result should be:
+
+- `GET` and `HEAD` requests from AI agents that receive a `5xx` from your Agent Site, or that time out or cannot connect, are served from your existing origin.
+- Other requests from AI agents, such as `POST`, are not retried.
+- A slow or unreachable Agent Site fails over within a few seconds, not after Akamai's default timeouts.
+- Visitor routing, set up below, is not affected.
+
+Test any change on Staging before activating it to Production, and contact [team@tollbit.com](mailto:team@tollbit.com) if you would like help with your configuration.
+
 # Routing Visitors from Cited Content
 
 Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
@@ -289,7 +313,7 @@ This only applies to URLs that your site has no page for, so existing pages and 
 3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The EdgeWorker turns the `404` into that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, the response is left untouched and your origin's own error page is served.
 
-TollBit is only consulted for `404` responses to `GET` and `HEAD` requests that reach your origin, so no other request does extra work.
+TollBit is only consulted for `404` responses from your origin to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents, which are routed to your Agent Site, are excluded.
 
 #### Fallback Hostname
 
@@ -301,7 +325,7 @@ Because these requests are handled by a separate property, they never touch your
 
 You will need to write and deploy an EdgeWorker on your main property that runs on the origin response and does the following:
 
-- Acts only when the origin response is a `404` to a `GET` or `HEAD` request.
+- Acts only when the origin response is a `404` to a `GET` or `HEAD` request, and skips requests from AI agents that match the user agent list above.
 - Makes one sub-request to the same path and query string on your fallback hostname, adding the `X-Tollbit-Host` header with your site's hostname (without a port), with a short timeout (one to two seconds).
 - If the sub-request returns a redirect, sets the same redirect status and `Location` header on the response.
 - On any other result, including a timeout or error, leaves the response untouched.

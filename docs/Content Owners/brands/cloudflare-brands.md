@@ -119,6 +119,19 @@ The Worker below forwards logs to TollBit by default, so there is nothing to set
 # Set Up the Agent Site Worker
 
 <Callout icon="📘" theme="info">
+  ### Reference Implementation
+
+  The Worker code below is a reference implementation. If your site already has routing, caching or security rules at the edge, you may need to adapt it to fit. However you set it up, it should:
+
+  - Add your `tollbit` subdomain as a second origin.
+  - Send requests from AI agents to that origin, and all other requests to your existing origin.
+  - Serve `GET` and `HEAD` requests from your existing origin instead if your Agent Site errors or does not respond in time.
+  - When your origin returns a `404` to a visitor, check with TollBit whether a destination is configured for that URL, and serve your own error page if not.
+
+  If you are unsure how this fits with your configuration, contact [team@tollbit.com](mailto:team@tollbit.com).
+</Callout>
+
+<Callout icon="📘" theme="info">
   ### Test Before Production
 
   The Worker changes how requests are routed at the edge. Where possible, attach it to a staging hostname first, or to a route that covers a small part of your site, and confirm the results with the test requests in Verifying the Setup before attaching it to the route that serves your live traffic.
@@ -238,6 +251,10 @@ const FORWARD_LOGS = true
 const tollbitLogEndpoint = 'https://log.tollbit.com/log'
 const tollbitToken = 'YOUR_SECRET_KEY_HERE'
 
+// Agent Site failover. GET and HEAD requests are served by your origin instead
+// if your Agent Site responds with a 5xx status or does not respond in time.
+const AGENT_SITE_TIMEOUT_MS = 10000
+
 // Routing visitors from cited content
 const tollbitFallbackOrigin = 'https://fallback.tollbit.com'
 const FALLBACK_TIMEOUT_MS = 2000
@@ -307,7 +324,9 @@ const checkIfBotRequest = (request) => {
   return false
 }
 
-// AI agents: fetch the same path from your tollbit subdomain.
+// AI agents: fetch the same path from your tollbit subdomain. For GET and HEAD
+// requests, returns null if the Agent Site errors or times out, so your origin
+// can serve the request instead.
 async function fetchFromAgentSite(request) {
   const path = request.url.replace('https://' + request.headers.get('host'), '')
   let host = request.headers.get('host') || ''
@@ -316,12 +335,31 @@ async function fetchFromAgentSite(request) {
   }
   const tollbitUrl = 'https://tollbit.' + host + path
 
-  const proxiedResponse = await fetch(new Request(tollbitUrl, {
-    method: request.method,
-    headers: request.headers,
-    body: request.body,
-    redirect: 'manual'
-  }))
+  const canFailover = request.method === 'GET' || request.method === 'HEAD'
+  const controller = new AbortController()
+  const timer = canFailover ? setTimeout(() => controller.abort(), AGENT_SITE_TIMEOUT_MS) : null
+
+  let proxiedResponse
+  try {
+    proxiedResponse = await fetch(new Request(tollbitUrl, {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+      redirect: 'manual',
+      signal: controller.signal
+    }))
+  } catch (err) {
+    if (canFailover) {
+      return null
+    }
+    return new Response(null, { status: 502 })
+  } finally {
+    clearTimeout(timer)
+  }
+
+  if (canFailover && proxiedResponse.status >= 500) {
+    return null
+  }
 
   const responseHeaders = new Headers(proxiedResponse.headers)
   responseHeaders.set('Cache-Control', 'no-store')
@@ -371,7 +409,7 @@ async function handleRequest(event) {
   let response
 
   if (checkIfBotRequest(request)) {
-    response = await fetchFromAgentSite(request)
+    response = (await fetchFromAgentSite(request)) || (await fetch(request))
   } else {
     response = await fetch(request)
 
@@ -477,6 +515,8 @@ With `FORWARD_LOGS` set to `false`, the Worker sends nothing to TollBit. Logpush
 #### Agent Site
 
 AI agents that request your site are served from your Agent Site on your `tollbit` subdomain, while visitors continue to reach your own origin. The Worker matches the `User-Agent` header against the list at the top of the code, without regard to case, and fetches the same path and query string from your `tollbit` subdomain. For `www.example.com` and `example.com`, that is `tollbit.example.com`.
+
+If your Agent Site cannot serve a `GET` or `HEAD` request, the Worker serves it from your origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `5xx` status, including the `52x` and `530` errors Cloudflare returns when it cannot reach the Agent Site, or takes longer than ten seconds to respond. Other requests from AI agents, such as `POST`, are always sent to your Agent Site, and receive a `502` if it cannot be reached. If the Worker forwards your logs, these requests are logged with the status your origin returned.
 
 #### Routing Visitors from Cited Content
 

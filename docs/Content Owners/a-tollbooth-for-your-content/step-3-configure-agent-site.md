@@ -12,7 +12,7 @@ With analytics running, the final step is setting up your Agent Site — a dedic
 
 # What is an Agent Site?
 
-<br />Your Agent Site lives at **tollbit.yourdomain.com**. Rather than letting AI crawlers scrape your main site, this subdomain serves as a purpose-built endpoint for agent traffic — returning content in formats like Markdown that are optimized for how AI systems actually consume it.
+<br />Your Agent Site lives at **tollbit.yourdomain.com**. Rather than letting AI crawlers scrape your main site, this subdomain serves as a purpose-built endpoint for agent traffic — returning content that is optimized for how AI systems actually consume it.
 
 This gives you a clean separation between your human experience and your agent experience, while putting you in control of what bots see, how they access it, and what they pay for it.
 
