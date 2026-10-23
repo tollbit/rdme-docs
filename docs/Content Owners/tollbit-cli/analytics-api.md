@@ -70,63 +70,6 @@ tollbit auth status
 
 <br />This shows the email address and organization you're signed in as.
 
-# Using the API
-
-In order to make the most of the Analytics API, it's best to get familiar with the types of commands and the full table schema available to you.
-
-## Commands
-
-There are two primary command types:
-
-| Command                           | What It Does                                                            |
-| --------------------------------- | ----------------------------------------------------------------------- |
-| `tollbit analytics schema`        | Lists the tables and columns you can query, as JSON. Run this first.    |
-| `tollbit analytics query "<SQL>"` | Runs a single read-only `SELECT` query and returns the results as JSON. |
-
-<br />
-
-**_Note_**_: Always wrap the SQL in double quotes, and use single quotes for values inside it. Without the outer quotes, your shell will try to interpret the query itself and fail._
-
-**Output format.** Results come back as JSON with three parts:
-
-- columns: column names and types
-- rows: the results, in column order
-- meta: row count, whether the results were truncated, bytes scanned and query duration
-
-**Saving Results**
-
-Redirect the output to a file:
-
-```shell
-tollbit analytics query "SELECT ..." > results.json
-```
-
-If you're using an AI agent, ask it to save the results as a CSV file for you.
-
-## Table Schema
-
-All traffic tables contain daily counts: each row is one day (00:00 UTC) for a given combination of site, bot, page and so on.
-
-There are 5 tables available for query
-
-| Table                     | Key columns                                                        | Best for                                                                                                     |
-| ------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `user_agent_aggregate`    | timestamp, host, user_agent, status_code, type, ip_provider, count | Overall bot volume, trends, status codes and IP verification. The smallest table, good for long date ranges. |
-| `agent_logs_by_page`      | timestamp, host, user_agent, path, status_code, count              | Starting from a bot: which pages did GPTBot fetch?                                                           |
-| `page_logs_by_agent`      | timestamp, host, path, user_agent, status_code, count              | Starting from a page: which bots fetched this article?                                                       |
-| `referrer_logs`           | timestamp, host, referrer_domain, landing_path, count              | Starting from a referrer: where did chatgpt.com send visitors?                                               |
-| `page_logs_for_referrers` | timestamp, host, landing_path, referrer_domain, count              | Starting from a page: which referrers sent traffic to it?                                                    |
-
-<br />
-
-A few notes based on the columns shared above:
-
-- **host:&#x20;**&#x79;our site's hostname, without [www](http://www).
-- **user_agent:&#x20;**&#x61; normalized bot or browser name, such as GPTBot, ChatGPT-User or Chrome.
-- **status_code:&#x20;**&#x74;he response class (200, 300, 400 or 500), not the exact code. For example, a 402 Payment Required appears as 400.
-- **type (in user_agent_aggregate only):&#x20;**&#x52;EQUEST for pages, ROBOT for robots.txt, SITEMAP for sitemaps, WELL-KNOWN for /.well-known paths.
-- **ip_provider:** the company that owns the requesting IP range, when verified. It's empty otherwise, which is useful for spotting bots that impersonate real crawlers.
-
 # Querying Data
 
 The CLI provides 2 ways to query your data. 1) Plain English using your chat agent or 2) directly via the CLI using a tool like Terminal.
@@ -215,6 +158,63 @@ If you would like to query your data directly through your CLI, you can choose t
     </tr>
   </tbody>
 </Table>
+
+# Technical API Details
+
+In order to make the most of the Analytics API, it's best to get familiar with the types of commands and the full table schema available to you.
+
+## Commands
+
+There are two primary command types:
+
+| Command                           | What It Does                                                            |
+| --------------------------------- | ----------------------------------------------------------------------- |
+| `tollbit analytics schema`        | Lists the tables and columns you can query, as JSON. Run this first.    |
+| `tollbit analytics query "<SQL>"` | Runs a single read-only `SELECT` query and returns the results as JSON. |
+
+<br />
+
+**_Note_**_: Always wrap the SQL in double quotes, and use single quotes for values inside it. Without the outer quotes, your shell will try to interpret the query itself and fail._
+
+**Output format.** Results come back as JSON with three parts:
+
+- columns: column names and types
+- rows: the results, in column order
+- meta: row count, whether the results were truncated, bytes scanned and query duration
+
+**Saving Results**
+
+Redirect the output to a file:
+
+```shell
+tollbit analytics query "SELECT ..." > results.json
+```
+
+If you're using an AI agent, ask it to save the results as a CSV file for you.
+
+## Table Schema
+
+All traffic tables contain daily counts: each row is one day (00:00 UTC) for a given combination of site, bot, page and so on.
+
+There are 5 tables available for query
+
+| Table                     | Key columns                                                        | Best for                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `user_agent_aggregate`    | timestamp, host, user_agent, status_code, type, ip_provider, count | Overall bot volume, trends, status codes and IP verification. The smallest table, good for long date ranges. |
+| `agent_logs_by_page`      | timestamp, host, user_agent, path, status_code, count              | Starting from a bot: which pages did GPTBot fetch?                                                           |
+| `page_logs_by_agent`      | timestamp, host, path, user_agent, status_code, count              | Starting from a page: which bots fetched this article?                                                       |
+| `referrer_logs`           | timestamp, host, referrer_domain, landing_path, count              | Starting from a referrer: where did chatgpt.com send visitors?                                               |
+| `page_logs_for_referrers` | timestamp, host, landing_path, referrer_domain, count              | Starting from a page: which referrers sent traffic to it?                                                    |
+
+<br />
+
+A few notes based on the columns shared above:
+
+- **host:&#x20;**&#x79;our site's hostname, without [www](http://www).
+- **user_agent:&#x20;**&#x61; normalized bot or browser name, such as GPTBot, ChatGPT-User or Chrome.
+- **status_code:&#x20;**&#x74;he response class (200, 300, 400 or 500), not the exact code. For example, a 402 Payment Required appears as 400.
+- **type (in user_agent_aggregate only):&#x20;**&#x52;EQUEST for pages, ROBOT for robots.txt, SITEMAP for sitemaps, WELL-KNOWN for /.well-known paths.
+- **ip_provider:** the company that owns the requesting IP range, when verified. It's empty otherwise, which is useful for spotting bots that impersonate real crawlers.
 
 # Security & Access
 
