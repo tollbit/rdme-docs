@@ -2,7 +2,7 @@
 title: Analytics Data
 excerpt: Getting started and querying analytics data via the TollBit CLI
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
