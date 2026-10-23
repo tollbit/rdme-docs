@@ -97,7 +97,45 @@ Once your agent is connected, ask questions the way you'd ask a colleague. The a
   The more specific the question (time range, site, bot, section), the more detail you're receive back. If an answer looks off, ask the agent to show the SQL it ran.
 </Callout>
 
-<br />
+#### **Note on TollBit Intelligence:**&#x20;
+
+If you have Tollbit Intelligence enabled, you can query about entity and topic information via Plain English as well.&#x20;
+
+<Table>
+  <thead>
+    <tr>
+      <th style={{ width: "23.9%" }}>
+        Goal
+      </th>
+
+      <th style={{ width: "76%" }}>
+        Example Prompt
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>
+        Brand Insights
+      </td>
+
+      <td>
+        Which brands mentioned in our content got the most AI bot impressions over the last 7 days?
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Content Categories
+      </td>
+
+      <td>
+        What content categories do our articles from the past week fall into?
+      </td>
+    </tr>
+  </tbody>
+</Table>
 
 ## Via SQL&#x20;
 
@@ -161,6 +199,46 @@ Below are some example queries based on the schema the CLI provides. Note, if yo
   </tbody>
 </Table>
 
+#### **Note on TollBit Intelligence:**&#x20;
+
+If you have Tollbit Intelligence enabled, you can query about entity and topic information via SQL as well.&#x20;
+
+<Table>
+  <thead>
+    <tr>
+      <th style={{ width: "23.9%" }}>
+        Goal
+      </th>
+
+      <th style={{ width: "76%" }}>
+        Example Prompt
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>
+        Brand Insights
+      </td>
+
+      <td>
+        tollbit analytics query "SELECT entity_name, SUM(impressions) AS impressions FROM entity_brand_traffic_daily WHERE day >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AND day \< CURRENT_DATE() AND level = 'all' AND entity_name != '' GROUP BY entity_name ORDER BY impressions DESC LIMIT 20"
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Content Categories
+      </td>
+
+      <td>
+        tollbit analytics query "SELECT hostname, category.name FROM entity_pages, UNNEST(categories) AS category WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY) AND timestamp \< CURRENT_TIMESTAMP() LIMIT 20"
+      </td>
+    </tr>
+  </tbody>
+</Table>
+
 # Technical API Details
 
 In order to make the most of the Analytics API, it's best to get familiar with the types of commands and the full table schema available within the CLI.
@@ -217,6 +295,12 @@ A few notes based on the columns shared above:
 - **status_code:&#x20;**&#x74;he response class (200, 300, 400 or 500), not the exact code. For example, a 402 Payment Required appears as 400.
 - **type (in user_agent_aggregate only):&#x20;**&#x52;EQUEST for pages, ROBOT for robots.txt, SITEMAP for sitemaps, WELL-KNOWN for /.well-known paths.
 - **ip_provider:** the company that owns the requesting IP range, when verified. It's empty otherwise, which is useful for spotting bots that impersonate real crawlers.
+
+<Callout icon="far fa-circle-info" theme="info">
+  ### Note on TollBit Inteligence
+
+  Organizations with TollBit Intelligence access also see content and brand tables (entity_data, entity_pages, entity_brand_traffic_daily). Please reach out to support\@tollbit.com if you would like to retreive additional details.
+</Callout>
 
 # Security & Access
 
