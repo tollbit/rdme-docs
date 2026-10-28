@@ -1427,7 +1427,7 @@ A response your origin serves in place of the Agent Site is cached for AI agents
 
 # Routing Visitors from Cited Content
 
-Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
+Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a page on your main site that you configure, such as a specific product page or your home page.
 
 It only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. The function and the `tollbit-fallback` origin above are all it needs; there is nothing further to deploy.
 
@@ -1435,7 +1435,7 @@ It only applies to URLs that your site has no page for, so existing pages and no
 
 1. A visitor requests a URL and your origin responds with a `404`.
 2. CloudFront sends the same request, with the same path and query string, to the TollBit fallback origin, `fallback.tollbit.com`. The `X-Tollbit-Host` header on that origin tells TollBit which site the URL belongs to. Requests without it receive a `400`.
-3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
+3. If TollBit has a destination configured, it responds with a redirect to that page on your main site, and the visitor follows it.
 4. If nothing is configured, TollBit requests the same URL from your site, marked with the `X-Tollbit-Fallback-Probe` header, and returns your site's own `404` page to the visitor. The function serves that marked request directly from your origin, so it cannot loop.
 
 TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from visitors, so no other request does extra work.

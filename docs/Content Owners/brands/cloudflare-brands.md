@@ -520,13 +520,13 @@ If your Agent Site cannot serve a `GET` or `HEAD` request, the Worker serves it 
 
 #### Routing Visitors from Cited Content
 
-Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. The Worker lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
+Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. The Worker lets TollBit route these visitors to a page on your main site that you configure, such as a specific product page or your home page.
 
 This only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
 
 1. A visitor requests a URL and your origin responds with a `404`.
 2. The Worker asks TollBit whether anything is configured for that URL. The request is sent to the TollBit fallback origin, `fallback.tollbit.com`, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header.
-3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The Worker returns that redirect and the visitor follows it.
+3. If TollBit has a destination configured, it responds with a redirect to that page on your main site. The Worker returns that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, takes longer than two seconds, or fails in any way, the response is left untouched and your origin's own error page is served.
 
 TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from visitors, so no other request does extra work.

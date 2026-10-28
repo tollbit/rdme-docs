@@ -302,7 +302,7 @@ Test any change on Staging before activating it to Production, and contact [team
 
 # Routing Visitors from Cited Content
 
-Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
+Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a page on your main site that you configure, such as a specific product page or your home page.
 
 This only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today. The setup uses Akamai EdgeWorkers.
 
@@ -310,7 +310,7 @@ This only applies to URLs that your site has no page for, so existing pages and 
 
 1. A visitor requests a URL and your origin responds with a `404`.
 2. An EdgeWorker asks TollBit whether anything is configured for that URL. The request is sent, with the same path and query string and your site's hostname in the `X-Tollbit-Host` header, to a fallback hostname you own that forwards to the TollBit fallback origin, `fallback.tollbit.com`.
-3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain. The EdgeWorker turns the `404` into that redirect and the visitor follows it.
+3. If TollBit has a destination configured, it responds with a redirect to that page on your main site. The EdgeWorker turns the `404` into that redirect and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, the response is left untouched and your origin's own error page is served.
 
 TollBit is only consulted for `404` responses from your origin to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents, which are routed to your Agent Site, are excluded.

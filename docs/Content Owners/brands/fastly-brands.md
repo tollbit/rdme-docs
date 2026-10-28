@@ -117,13 +117,13 @@ Agent Site and routing visitors from cited content are set up together. Both use
 
 If your Agent Site cannot serve a `GET` or `HEAD` request, Fastly serves it from your origin instead, the same way a visitor's request is served. This happens when the Agent Site responds with a `5xx` status, takes longer than ten seconds to respond, or cannot be reached. Other requests from AI agents, such as `POST`, are always sent to your Agent Site.
 
-**Routing visitors from cited content.** Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a destination that you configure, such as your home page or the published page itself.
+**Routing visitors from cited content.** Content published through the Agent Site CMS lives on your `tollbit` subdomain and is served to AI agents. When an agent cites one of these pages in an answer, the reader can click that citation to visit your site. Since the page was published for agents, the URL may not exist on your main site. This setup lets TollBit route these visitors to a page on your main site that you configure, such as a specific product page or your home page.
 
 Visitor routing only applies to URLs that your site has no page for, so existing pages and normal traffic are not affected. If TollBit has nothing configured for a URL, or TollBit cannot be reached, your site serves its own error page, exactly as it does today.
 
 1. A visitor requests a URL and your origin responds with a `404`.
 2. Fastly sends the same request, with the same path and query string, to the TollBit fallback origin, `fallback.tollbit.com`, through the `tollbit_fallback_origin` host. Your site's hostname is sent in the `X-Tollbit-Host` header, which tells TollBit which site the URL belongs to. Requests without it receive a `400`.
-3. If TollBit has a destination configured, it responds with a redirect, either to that destination or to the published page on your `tollbit` subdomain, and the visitor follows it.
+3. If TollBit has a destination configured, it responds with a redirect to that page on your main site, and the visitor follows it.
 4. If TollBit responds with a `404`, times out, or fails in any way, Fastly requests the URL from your origin again and your origin's own error page is served.
 
 TollBit is only consulted for `404` responses to `GET` and `HEAD` requests from visitors, so no other request does extra work. Requests from AI agents that were routed to your Agent Site are excluded.
