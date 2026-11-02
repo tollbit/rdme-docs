@@ -28,6 +28,8 @@ The TollBit team will notify you once the access is enabled, and you can proceed
 
 **Option A: With your AI agent (recommended)**
 
+**Before you get started, please install a supported desktop version of Claude Code, Codex, or Cursor. The browser-based versions won’t work for this, so the desktop app is the way to go.**
+
 This is the fastest path, and it requires no code. Your agent installs the CLI, learns how to use it, and asks you to approve access.
 
 1. In your TollBit dashboard, go to CLI → Quickstart and select your agent (Claude Code, Codex, Cursor or Other).
